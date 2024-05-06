@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: _register, // Call the register function
-              child: Text('Register'),
+              child: Text('RegisterABCDASDASDFDSFREWFREGFREGERGFDg'),
             ),
           ],
         ),
