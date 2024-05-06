@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
             TextField(
               controller: usernameController,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'UsernameXXX',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -72,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
             TextField(
               controller: emailController,
               decoration: InputDecoration(
-                labelText: 'Email',
+                labelText: 'EmailXXXX',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.emailAddress,
@@ -81,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
             TextField(
               controller: passwordController,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'PasswordXXXX',
                 border: OutlineInputBorder(),
               ),
               obscureText: true,
@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: _register, // Call the register function
-              child: Text('Register'),
+              child: Text('RegisterABCDASDASDFDSFREWFREGFREGERGFDg'),
             ),
           ],
         ),
