@@ -4,9 +4,13 @@ import 'AuthService.dart';
 
 class SyncService {
   final AuthService authService = AuthService();
-  final String getUrl = 'http://146.190.54.51/api/Users';
-  final String loginURL = 'http://146.190.54.51/api/Users/login';
-  final String postUrl= "http://146.190.54.51/api/Users";
+  final String baseUrl = 'http://146.190.54.51/api/Users';
+  final String postUrl = "http://146.190.54.51/api/Users";
+
+  // HTTP Basic Authentication credentials
+  final String username = 'MerlabUser';
+  final String password = 'kWz*7jq8[;71';
+
   Future<void> syncUsers() async {
     await authService.initDb(); // Ensure the database is initialized
 
@@ -20,8 +24,11 @@ class SyncService {
       });
 
       final response = await http.post(
-        Uri.parse(loginURL),
-        headers: {'Content-Type': 'application/json'},
+        Uri.parse('$baseUrl/login'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ${base64Encode(utf8.encode("$username:$password"))}', // Update Basic Auth header
+        },
         body: jsonUser,
       );
 
@@ -32,17 +39,21 @@ class SyncService {
       }
     }
   }
+
   Future<void> syncUsersPost() async {
     final jsonUser = jsonEncode({
-      'username': 'abulu',
+      'username': 'bbb',
       'password': '123456',
-      'email': 'a@gmail.com',
+      'email': 'b@gmail.com',
       'usertypeid': 0 // Ensure it's an integer
     });
 
     final response = await http.post(
       Uri.parse(postUrl),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ${base64Encode(utf8.encode("$username:$password"))}', // Update Basic Auth header
+      },
       body: jsonUser,
     );
 
@@ -68,7 +79,7 @@ class SyncService {
           'isactive': user['isactive'],
           'userTypeId': user['userTypeId'],
           // Convert lists/maps to strings
-         // 'companyUserMappings': jsonEncode(user['companyUserMappings']),
+          // 'companyUserMappings': jsonEncode(user['companyUserMappings']),
         };
         await authService.addUser(dbUser); // Add each user to SQLite
       }
@@ -80,7 +91,9 @@ class SyncService {
   }
 
   Future<List<Map<String, dynamic>>> getUsers() async {
-    final response = await http.get(Uri.parse(getUrl));
+    final response = await http.get(Uri.parse(baseUrl), headers: {
+      'Authorization': 'Basic ${base64Encode(utf8.encode("$username:$password"))}', // Update Basic Auth header
+    });
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
       return List<Map<String, dynamic>>.from(data);
