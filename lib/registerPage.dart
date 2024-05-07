@@ -25,6 +25,8 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _register() async {
     final email = emailController.text;
     final password = passwordController.text;
+    final username = usernameController.text;
+
 
     if (email.isEmpty || password.isEmpty) {
       // Show error message
@@ -35,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      await authService.registerUser(email, password);
+      await authService.registerUser(email, password,username);
       // Show success message or navigate to another page
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Registration successful')),
@@ -64,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
             TextField(
               controller: usernameController,
               decoration: InputDecoration(
-                labelText: 'UsernameXXX',
+                labelText: 'Username',
                 border: OutlineInputBorder(),
               ),
             ),

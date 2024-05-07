@@ -40,11 +40,11 @@ class AuthService {
     }
   }
 
-  Future<void> registerUser(String email, String password) async {
+  Future<void> registerUser(String email, String password,String username) async {
     await initDb();
     await _database!.insert(
       'User',
-      {'email': email, 'password': password, 'username': "abulu",'userTypeId':0,},
+      {'email': email, 'password': password, 'username': username,'userTypeId':0,},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
