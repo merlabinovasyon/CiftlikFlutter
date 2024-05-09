@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:merlabciftlikyonetim/SyncService.dart';
+import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
@@ -14,6 +16,8 @@ class profilPage extends StatefulWidget {
 
 class _profilPageState extends State<profilPage> {
   String _imagePath=''; // Değişiklik burada
+  final SyncService syncService = SyncService(); // syncService tanımı
+  final DatabaseService databaseService = DatabaseService(); // syncService tanımı
 
   @override
   void initState() {
@@ -40,14 +44,38 @@ class _profilPageState extends State<profilPage> {
           onTap: () {
             _showImagePickerDialog();
           },
-          child: Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              shape: BoxShape.circle,
-            ),
-            child: _imagePath.isNotEmpty ? _imageWidget() : _addPhotoIcon(), // Değişiklik burada
+          child: Column(
+            children: [
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  shape: BoxShape.circle,
+                ),
+                child: _imagePath.isNotEmpty ? _imageWidget() : _addPhotoIcon(), // Değişiklik burada
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await _syncUsersFromApiToDatabase(); // syncService kullanımı
+                },
+                child: Text("Mysql to Sqliite"),
+              ),
+              SizedBox(height: 10,),
+              ElevatedButton(
+                onPressed: () async {
+                  await _syncAnimalTypes(); // syncService kullanımı
+                },
+                child: Text("Mysql to Sqliite Animal"),
+              ),
+              SizedBox(height: 10,),
+              ElevatedButton(
+                onPressed: () async {
+                  await _syncAnimalTypesToMySQL(); // syncService kullanımı
+                },
+                child: Text("Sqlite to Mysql Animal"),
+              ),
+            ],
           ),
         ),
       ),
@@ -162,5 +190,69 @@ class _profilPageState extends State<profilPage> {
 
     }
     await db.close();
+  }
+
+  Future<void> _syncUsersFromApiToDatabase() async {
+    try {
+      await syncService.syncUsersFromApiToDatabase(); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
+  }
+  Future<void> _syncAnimalTypes() async {
+    try {
+      await syncService.syncAnimalTypes(context); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
+  }
+  Future<void> _syncAnimalTypesToMySQL() async {
+    try {
+      await syncService.syncAnimalTypesToMySQL(context); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
   }
 }
