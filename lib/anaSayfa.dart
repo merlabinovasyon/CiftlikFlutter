@@ -21,7 +21,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
 
   Future<void> _fetchUsers() async {
     try {
-      final users = await syncService.getUsers();
+      final users = await syncService.getUsersFromMySQL();
       setState(() {
         _users = users;
         _error = '';

@@ -7,7 +7,6 @@ class SyncService {
   final String baseUrl = 'http://146.190.54.51/api/Users';
   final String postUrl = "http://146.190.54.51/api/Users";
 
-  // HTTP Basic Authentication credentials
   final String username = 'MerlabUser';
   final String password = 'kWz*7jq8[;71';
 
@@ -40,6 +39,7 @@ class SyncService {
     }
   }
 
+
   Future<void> syncUsersPost() async {
     final jsonUser = jsonEncode({
       'username': 'bbb',
@@ -66,11 +66,10 @@ class SyncService {
 
   Future<void> syncUsersFromApiToDatabase() async {
     try {
-      final List<Map<String, dynamic>> users = await getUsers();
+      final List<Map<String, dynamic>> users = await getUsersFromMySQL();
       await authService.initDb(); // Ensure the database is initialized
 
       for (var user in users) {
-        // Ensure the data is compatible with SQLite
         final dbUser = {
           'id': user['id'],
           'username': user['username'],
@@ -78,8 +77,6 @@ class SyncService {
           'email': user['email'],
           'isactive': user['isactive'],
           'userTypeId': user['userTypeId'],
-          // Convert lists/maps to strings
-          // 'companyUserMappings': jsonEncode(user['companyUserMappings']),
         };
         await authService.addUser(dbUser); // Add each user to SQLite
       }
@@ -90,15 +87,19 @@ class SyncService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getUsers() async {
-    final response = await http.get(Uri.parse(baseUrl), headers: {
-      'Authorization': 'Basic ${base64Encode(utf8.encode("$username:$password"))}', // Update Basic Auth header
-    });
+  Future<List<Map<String, dynamic>>> getUsersFromMySQL() async {
+    final response = await http.get(
+        Uri.parse(baseUrl),
+        headers: {
+          'Authorization': 'Basic ${base64Encode(utf8.encode("$username:$password"))}'
+        }
+    );
+
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
       return List<Map<String, dynamic>>.from(data);
     } else {
-      throw Exception('Failed to load users');
+      throw Exception('Failed to load users from MySQL');
     }
   }
 }
