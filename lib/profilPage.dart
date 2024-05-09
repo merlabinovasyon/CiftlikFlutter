@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:merlabciftlikyonetim/SyncService.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
-import 'package:path_provider/path_provider.dart';
-=======
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 
@@ -19,9 +17,6 @@ class _profilPageState extends State<profilPage> {
   String _imagePath=''; // Değişiklik burada
   final SyncService syncService = SyncService(); // syncService tanımı
   final DatabaseService databaseService = DatabaseService(); // syncService tanımı
-=======
-  String _imagePath = '';
-  final SyncService syncService = SyncService(); // SyncService sınıfından bir nesne oluştur
 
   @override
   void initState() {
@@ -51,14 +46,6 @@ class _profilPageState extends State<profilPage> {
           child: Column(
             children: [
               Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                _showImagePickerDialog();
-              },
-              child: Container(
                 width: 200,
                 height: 200,
                 decoration: BoxDecoration(
@@ -89,15 +76,6 @@ class _profilPageState extends State<profilPage> {
               ),
             ],
           ),
-                child: _imagePath.isNotEmpty ? _imageWidget() : _addPhotoIcon(),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _syncUsersFromApiToDatabase, // Buton basıldığında fonksiyonu çalıştır
-              child: Text("MySQL'den SQLite'a Kullanıcıları Senkronize Et"),
-            ),
-          ],
         ),
       ),
     );
@@ -161,9 +139,9 @@ class _profilPageState extends State<profilPage> {
 
     if (pickedFile != null) {
       final savedImage = File(pickedFile.path);
-      await _savePhotoToDatabase(savedImage.path);
+      await _savePhotoToDatabase(savedImage.path); // Veritabanına fotoğraf yolu kaydet
       setState(() {
-        _imagePath = savedImage.path;
+        _imagePath = savedImage.path; // Yeni fotoğraf yolunu ayarla
       });
     }
   }
@@ -174,9 +152,9 @@ class _profilPageState extends State<profilPage> {
 
     if (pickedFile != null) {
       final savedImage = File(pickedFile.path);
-      await _savePhotoToDatabase(savedImage.path);
+      await _savePhotoToDatabase(savedImage.path); // Veritabanına fotoğraf yolu kaydet
       setState(() {
-        _imagePath = savedImage.path;
+        _imagePath = savedImage.path; // Yeni fotoğraf yolunu ayarla
       });
     }
   }
@@ -202,12 +180,13 @@ class _profilPageState extends State<profilPage> {
     final List<Map<String, dynamic>> result = await db.query('AnimalType');
     if (result.isNotEmpty) {
       setState(() {
-        _imagePath = result.last['logo'];
+        _imagePath = result.last['logo'] ; // Kayıtlı fotoğraf yolunu al
       });
     } else {
       setState(() {
-        _imagePath = '';
+        _imagePath = ''; // Kayıtlı fotoğraf yoksa başlangıçta boş bir dize olarak ayarla
       });
+
     }
     await db.close();
   }
@@ -272,13 +251,6 @@ class _profilPageState extends State<profilPage> {
           content: Text('Bir hata oluştu: $e'),
           duration: Duration(seconds: 2), // Snackbar süresi
         ),
-      await syncService.syncUsersFromApiToDatabase(); // MySQL'den SQLite'a kullanıcıları senkronize eden metod
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Kullanıcılar başarıyla senkronize edildi."))
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Kullanıcı senkronizasyonu başarısız: $e"))
       );
     }
   }
