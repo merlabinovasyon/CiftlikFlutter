@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart'; // Import animations package
-import 'package:merlabciftlikyonetim/ajandaPage.dart';
-import 'package:merlabciftlikyonetim/anaSayfa.dart';
+import 'package:merlabciftlikyonetim/HomePage.dart';
+import 'package:merlabciftlikyonetim/CalendarPage.dart';
+import 'package:merlabciftlikyonetim/TestPage.dart';
 import 'package:merlabciftlikyonetim/iletisimPage.dart';
 import 'package:merlabciftlikyonetim/profilPage.dart';
 
-class mainMenu extends StatefulWidget {
+class BottomNavigation extends StatefulWidget {
   @override
-  _mainMenuState createState() => _mainMenuState();
+  _BottomNavigationState createState() => _BottomNavigationState();
 }
 
-class _mainMenuState extends State<mainMenu> {
+class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    AnaSayfa(),
-    ajandaPage(),
+    HomePage(),
+    CalendarPage(),
     iletisimPage(),
     profilPage(),
   ];
@@ -43,7 +44,7 @@ class _mainMenuState extends State<mainMenu> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'AnaSayfa', backgroundColor: Colors.deepOrange),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'AnaSayfa', backgroundColor: Colors.cyan),
           BottomNavigationBarItem(icon: Icon(Icons.event_note), label: 'Ajanda', backgroundColor: Colors.blue),
           BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Iletişim', backgroundColor: Colors.deepPurpleAccent),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil', backgroundColor: Colors.cyan),

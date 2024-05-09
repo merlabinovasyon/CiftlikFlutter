@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
-class ajandaPage extends StatelessWidget {
-  const ajandaPage({Key? key});
+
+class CalendarPage extends StatelessWidget {
+  const CalendarPage({Key? key});
 
   @override
   Widget build(BuildContext context) {

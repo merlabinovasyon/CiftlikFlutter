@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
+import 'package:merlabciftlikyonetim/services/SyncService.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 
@@ -13,7 +14,10 @@ class profilPage extends StatefulWidget {
 }
 
 class _profilPageState extends State<profilPage> {
-  String _imagePath=''; // Değişiklik burada
+  String _imagePath = ''; // Değişiklik burada
+  final SyncService syncService = SyncService(); // syncService tanımı
+  final DatabaseService databaseService = DatabaseService(); // syncService tanımı
+  final TextEditingController emailController = TextEditingController(); // Email için controller
 
   @override
   void initState() {
@@ -40,14 +44,65 @@ class _profilPageState extends State<profilPage> {
           onTap: () {
             _showImagePickerDialog();
           },
-          child: Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              shape: BoxShape.circle,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      shape: BoxShape.circle,
+                    ),
+                    child: _imagePath.isNotEmpty ? _imageWidget() : _addPhotoIcon(), // Değişiklik burada
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0,right: 15),
+                  child: TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(labelText: 'Email'),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _syncUsersFromApiToDatabase(); // syncService kullanımı
+                  },
+                  child: Text("Mysql to Sqlite"),
+                ),
+                SizedBox(height: 10,),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _syncAnimalTypes(); // syncService kullanımı
+                  },
+                  child: Text("Mysql to Sqlite Animal"),
+                ),
+                SizedBox(height: 10,),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _syncAnimalTypesToMySQL(); // syncService kullanımı
+                  },
+                  child: Text("Sqlite to Mysql Animal"),
+                ),
+                SizedBox(height: 10,),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _syncAnimalSubtypesToMySQL(); // syncService kullanımı
+                  },
+                  child: Text("Sqlite to Mysql AnimalSubType"),
+                ),
+                SizedBox(height: 10,),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _syncAnimalSubtypes(); // syncService kullanımı
+                  },
+                  child: Text("Mysql to Sqlite AnimalSubType"),
+                ),
+              ],
             ),
-            child: _imagePath.isNotEmpty ? _imageWidget() : _addPhotoIcon(), // Değişiklik burada
           ),
         ),
       ),
@@ -153,14 +208,124 @@ class _profilPageState extends State<profilPage> {
     final List<Map<String, dynamic>> result = await db.query('AnimalType');
     if (result.isNotEmpty) {
       setState(() {
-        _imagePath = result.last['logo'] ; // Kayıtlı fotoğraf yolunu al
+        _imagePath = result.last['logo']; // Kayıtlı fotoğraf yolunu al
       });
     } else {
       setState(() {
         _imagePath = ''; // Kayıtlı fotoğraf yoksa başlangıçta boş bir dize olarak ayarla
       });
-
     }
     await db.close();
+  }
+
+  Future<void> _syncUsersFromApiToDatabase() async {
+    try {
+      final email = emailController.text; // Emaili al
+      await syncService.syncSpecificUserFromApiToDatabase(-1, email); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
+  }
+
+  Future<void> _syncAnimalTypes() async {
+    try {
+      await syncService.syncAnimalTypes(context); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
+  }
+
+  Future<void> _syncAnimalTypesToMySQL() async {
+    try {
+      await syncService.syncAnimalTypesToMySQL(context); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
+  }
+
+  Future<void> _syncAnimalSubtypes() async {
+    try {
+      await syncService.syncAnimalSubtypes(context); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
+  }
+
+  Future<void> _syncAnimalSubtypesToMySQL() async {
+    try {
+      await syncService.syncAnimalSubtypesToMySQL(context); // syncService kullanımı
+
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Veri başarıyla eklendi.'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    } catch (e) {
+      // Snackbar göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bir hata oluştu: $e'),
+          duration: Duration(seconds: 2), // Snackbar süresi
+        ),
+      );
+    }
   }
 }
