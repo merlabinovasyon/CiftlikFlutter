@@ -1,12 +1,18 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:merlabciftlikyonetim/TestPage.dart';
+import 'package:merlabciftlikyonetim/AddBirthKuzuPage.dart';
+import 'package:merlabciftlikyonetim/AddKocPage.dart';
+import 'package:merlabciftlikyonetim/AddSheepPage.dart';
+import 'package:merlabciftlikyonetim/SelectTypePage.dart';
+import 'package:merlabciftlikyonetim/form_page.dart';
 import 'package:merlabciftlikyonetim/profilPage.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'CalendarPage.dart';
 import 'LoginPage.dart';
+import 'SelectBirthTypePage.dart';
 import 'iletisimPage.dart';
-import 'main.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -29,17 +35,18 @@ class HomePage extends StatelessWidget {
             width: 130,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('resimler/logo_v2.png'),
-                  fit: BoxFit.fill
+                image: AssetImage('resimler/logo_v2.png'),
+                fit: BoxFit.fill,
               ),
             ),
           ),
-        ),        actions: [
+        ),
+        actions: [
           Stack(
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications,size: 35,),
+                icon: Icon(Icons.notifications, size: 35),
                 onPressed: () {},
               ),
               Positioned(
@@ -64,7 +71,7 @@ class HomePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -99,78 +106,85 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 25.0),
-        Card(
-          elevation: 0, // Kartın kendi gölgesini kaldırın
-          color: Colors.transparent, // Kartın arka planını şeffaf yapın
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white, // Kart rengini beyaz yapın
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5), // Gölge rengini ayarlayın ve saydamlık verin
-                  spreadRadius: 2, // Gölgenin yayılma yarıçapını ayarlayın
-                  blurRadius: 4, // Gölgenin bulanıklık yarıçapını ayarlayın
-                  offset: Offset(0, 2), // Gölgenin konumunu ayarlayın
-                ),
-              ],
-              borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Ücretli Pakete Geç',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.cyan
-                    ),
+              Card(
+                elevation: 0, // Kartın kendi gölgesini kaldırın
+                color: Colors.transparent, // Kartın arka planını şeffaf yapın
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Kart rengini beyaz yapın
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), // Gölge rengini ayarlayın ve saydamlık verin
+                        spreadRadius: 2, // Gölgenin yayılma yarıçapını ayarlayın
+                        blurRadius: 4, // Gölgenin bulanıklık yarıçapını ayarlayın
+                        offset: Offset(0, 2), // Gölgenin konumunu ayarlayın
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
                       children: [
-                        _buildSubscriptionCard(
-                            'Süt Başlangıç Paketi', '£149,99 (Ay)',0xFFFFD600),
-                        _buildSubscriptionCard(
-                            'Süt Altın Paketi', '£199,99 (Ay)',0xFF26A69A),
-                        _buildSubscriptionCard(
-                            'Süt Platinum Paketi', '£249,99 (Ay)',0xFF8BC34A),
-                        _buildSubscriptionCard(
-                            'Süt Diamond Paketi', '£299,99 (Ay)',0xFF8BC34A),
-                        _buildSubscriptionCard(
-                            'Süt Ultimate Paketi', '£349,99 (Ay)',0xFF8BC34A),
+                        Text(
+                          'Ücretli Pakete Geç',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.cyan,
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              _buildSubscriptionCard(
+                                  'Süt Başlangıç Paketi', '£149,99 (Ay)', 0xFFFFD600),
+                              _buildSubscriptionCard(
+                                  'Süt Altın Paketi', '£199,99 (Ay)', 0xFF26A69A),
+                              _buildSubscriptionCard(
+                                  'Süt Platinum Paketi', '£249,99 (Ay)', 0xFFFF8F00),
+                              _buildSubscriptionCard(
+                                  'Süt Diamond Paketi', '£299,99 (Ay)', 0xFF8BC34A),
+                              _buildSubscriptionCard(
+                                  'Süt Ultimate Paketi', '£349,99 (Ay)', 0xFF8BC34A),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Gizlilik Politikası',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Kullanım Koşulları (EULA)',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0, bottom: 8),
+                          child: Text(
+                            '* Uygulama İçi Satın Alım Gerektirir. Otomatik Yenilenir.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text('Gizlilik Politikası',style: TextStyle(color: Colors.black),),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text('Kullanım Koşulları (EULA)',style: TextStyle(color: Colors.black)),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0,bottom: 8),
-                    child: Text(
-                        '* Uygulama İçi Satın Alım Gerektirir. Otomatik Yenilenir.',textAlign: TextAlign.center,style: TextStyle(fontSize: 12),),
-                  ),
-
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
-
-        SizedBox(height: 25.0),
+              SizedBox(height: 25.0),
               Row(
                 children: [
                   Expanded(
@@ -178,16 +192,24 @@ class HomePage extends StatelessWidget {
                       shadowColor: Colors.cyan, // Gölge rengini ayarlayın
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         tileColor: Colors.white,
                         leading: Icon(Icons.account_balance),
-                        title: Text('Gelir/Gider',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
+                        title: Text(
+                          'Gelir/Gider',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         onTap: () {},
                       ),
                     ),
@@ -197,16 +219,24 @@ class HomePage extends StatelessWidget {
                       shadowColor: Colors.cyan, // Gölge rengini ayarlayın
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         tileColor: Colors.white,
                         leading: Icon(Icons.sync),
-                        title: Text('Sync.',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
+                        title: Text(
+                          'Sync.',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         onTap: () {},
                       ),
                     ),
@@ -221,15 +251,24 @@ class HomePage extends StatelessWidget {
                       shadowColor: Colors.cyan, // Gölge rengini ayarlayın
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
-                        ),tileColor: Colors.white,
+                        ),
+                        tileColor: Colors.white,
                         leading: Icon(Icons.pie_chart),
-                        title: Text('Sürüye Bakış',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
+                        title: Text(
+                          'Sürüye Bakış',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         onTap: () {},
                       ),
                     ),
@@ -239,16 +278,24 @@ class HomePage extends StatelessWidget {
                       shadowColor: Colors.cyan, // Gölge rengini ayarlayın
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         tileColor: Colors.white,
                         leading: Icon(Icons.info),
-                        title: Text('Süt Bilgileri',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
+                        title: Text(
+                          'Süt Bilgileri',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         onTap: () {},
                       ),
                     ),
@@ -263,15 +310,24 @@ class HomePage extends StatelessWidget {
                       shadowColor: Colors.cyan, // Gölge rengini ayarlayın
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
-                        ),tileColor: Colors.white,
+                        ),
+                        tileColor: Colors.white,
                         leading: Icon(Icons.account_balance),
-                        title: Text('Gelir/Gider',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
+                        title: Text(
+                          'Gelir/Gider',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         onTap: () {},
                       ),
                     ),
@@ -281,16 +337,24 @@ class HomePage extends StatelessWidget {
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       shadowColor: Colors.cyan, // Varsayılan gölge rengi
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         tileColor: Colors.white,
                         leading: Icon(Icons.info),
-                        title: Text('Süt Bilgileri',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
+                        title: Text(
+                          'Süt Bilgileri',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         onTap: () {},
                       ),
                     ),
@@ -305,17 +369,25 @@ class HomePage extends StatelessWidget {
                       shadowColor: Colors.cyan, // Gölge rengini ayarlayın
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         tileColor: Colors.white,
                         leading: Icon(Icons.account_balance),
-                        title: Text('Gelir/Gider',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
-                          onTap: () {},
+                        title: Text(
+                          'Gelir/Gider',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        onTap: () {},
                       ),
                     ),
                   ),
@@ -324,16 +396,24 @@ class HomePage extends StatelessWidget {
                       elevation: 4.0, // Gölgenin kalınlığını ayarlayın
                       shadowColor: Colors.cyan, // Varsayılan gölge rengi
                       color: Colors.white, // Kart rengini beyaz yapın
-                      shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                      shape: RoundedRectangleBorder(
+                        // Köşeleri yuvarlatın
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        shape: RoundedRectangleBorder( // Köşeleri yuvarlatın
+                        shape: RoundedRectangleBorder(
+                          // Köşeleri yuvarlatın
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         tileColor: Colors.white,
                         leading: Icon(Icons.info),
-                        title: Text('Süt Bilgileri',style: GoogleFonts.roboto( textStyle: TextStyle(color: Colors.cyan,fontWeight: FontWeight.bold),),),
+                        title: Text(
+                          'Süt Bilgileri',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: Colors.cyan, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         onTap: () {},
                       ),
                     ),
@@ -344,6 +424,8 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: ExpandingFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -365,11 +447,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSubscriptionCard(String title, String price,int color_a) {
+  Widget _buildSubscriptionCard(String title, String price, int color_a) {
     return Container(
       width: 200, // Kartın genişliğini belirler
       child: Padding(
-        padding: const EdgeInsets.only(right: 4.0,left: 4,top: 8),
+        padding: const EdgeInsets.only(right: 4.0, left: 4, top: 8),
         child: Card(
           color: Colors.transparent, // Arka plan rengini beyaz yapar
           elevation: 0, // Gölgeyi kaldırır
@@ -397,7 +479,10 @@ class HomePage extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Color(color_a)),
                     onPressed: () {},
-                    child: Text('Abone Ol',style: TextStyle(color: Colors.white),),
+                    child: Text(
+                      'Abone Ol',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -407,6 +492,7 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildMenuButton(IconData icon, String label) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4.0),
@@ -423,6 +509,137 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+class ExpandingFab extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    final isOpen = useState(false);
+    final animationController = useAnimationController(
+      duration: const Duration(milliseconds: 200),
+    );
+
+    final fabAnimation = Tween<Offset>(
+      begin: Offset(0, 1),
+      end: Offset(0, 0),
+    ).animate(animationController);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        if (isOpen.value)
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+            child: Container(
+              color: Colors.black.withOpacity(0.5),
+            ),
+          ),
+        if (isOpen.value) ...[
+          SlideTransition(
+            position: fabAnimation,
+            child: _buildFabWithText(
+              herotag: 'kuzu',
+              text: 'Yeni Doğan Ekle',
+              icon: Icons.add,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectBirthTypePage()),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 10),
+          SlideTransition(
+            position: fabAnimation,
+            child: _buildFabWithText(
+              herotag: 'genel',
+              text: 'Hayvan Ekle',
+              icon: Icons.add,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectTypePage()),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 10),
+        ],
+        FloatingActionButton(
+          onPressed: () {
+            isOpen.value = !isOpen.value;
+            if (isOpen.value) {
+              animationController.forward();
+            } else {
+              animationController.reverse();
+            }
+          },
+          backgroundColor: Colors.white,
+          child: AnimatedBuilder(
+            animation: animationController,
+            builder: (context, child) {
+              return Transform.rotate(
+                angle: animationController.value * 3.14, // Yarım tur (pi)
+                child: Icon(
+                  isOpen.value ? Icons.close : Icons.add,
+                  color: Colors.black,
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFabWithText({
+    required String text,
+    required IconData icon,
+    required VoidCallback onPressed,
+    required String herotag,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: onPressed,
+          child: Container(
+            width: 145,
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.cyan,
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  blurRadius: 8.0,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 8.0),
+        FloatingActionButton(
+          mini: true,
+          heroTag: herotag,
+          onPressed: onPressed,
+          backgroundColor: Colors.white,
+          child: Icon(icon, color: Colors.black),
+        ),
+      ],
+    );
+  }
+}
+
 class DrawerMenu extends StatefulWidget {
   @override
   _DrawerMenuState createState() => _DrawerMenuState();
@@ -433,10 +650,11 @@ class _DrawerMenuState extends State<DrawerMenu> {
 
   // Örnek bir çıkış yapma fonksiyonu
   void logout() async {
-    // Çıkış yapma işlemleri burada yapılabilir
-    Navigator.of(context).pop();  // Drawer'ı kapat
-    // Gerekirse başka sayfaya yönlendirme yapabilirsiniz
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => LoginPage()));
+    Navigator.of(context).pop(); // Drawer'ı kapat
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => LoginPage()),
+          (Route<dynamic> route) => false, // Bu, tüm önceki sayfaları kaldırır
+    );
   }
 
   @override
@@ -461,7 +679,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 Theme(
                   data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                   child: ExpansionTile(
-                    leading: Icon(Icons.person, color: isExpanded ? Colors.cyan : Colors.black),
+                    leading: Icon(
+                        Icons.person, color: isExpanded ? Colors.cyan : Colors.black),
                     title: Text('Profil'),
                     onExpansionChanged: (bool expanded) {
                       setState(() {
@@ -480,10 +699,12 @@ class _DrawerMenuState extends State<DrawerMenu> {
                       ),
                     ],
                   ),
-
                 ),
                 ListTile(
-                  leading: Icon(Icons.event_note,color: Colors.black,),
+                  leading: Icon(
+                    Icons.event_note,
+                    color: Colors.black,
+                  ),
                   title: Text('Ajanda'),
                   onTap: () {
                     Navigator.push(
@@ -493,7 +714,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.contact_support,color: Colors.black,),
+                  leading: Icon(
+                    Icons.contact_support,
+                    color: Colors.black,
+                  ),
                   title: Text('Bize Ulaşın'),
                   onTap: () {
                     Navigator.push(
@@ -503,12 +727,28 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.contact_support,color: Colors.black,),
+                  leading: Icon(
+                    Icons.contact_support,
+                    color: Colors.black,
+                  ),
                   title: Text('Test'),
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TestPage()),
+                      MaterialPageRoute(builder: (context) => FormPage()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.bike_scooter_rounded,
+                    color: Colors.black,
+                  ),
+                  title: Text('Test'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SelectTypePage()),
                     );
                   },
                 ),
