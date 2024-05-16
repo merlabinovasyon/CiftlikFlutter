@@ -3,6 +3,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 
+import 'drawer_menu.dart';
+
 
 class CalendarPage extends StatelessWidget {
   const CalendarPage({Key? key});
@@ -21,6 +23,7 @@ class CalendarPage extends StatelessWidget {
           ],
         ),
       ),
+      drawer: DrawerMenu(),
       body: AjandaForm(),
     );
   }

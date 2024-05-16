@@ -1,19 +1,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:merlabciftlikyonetim/drawer_menu.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
 import 'package:merlabciftlikyonetim/services/SyncService.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 
-class profilPage extends StatefulWidget {
-  const profilPage({Key? key}) : super(key: key);
+class ProfilPage extends StatefulWidget {
+  const ProfilPage({Key? key}) : super(key: key);
 
   @override
-  _profilPageState createState() => _profilPageState();
+  _ProfilPageState createState() => _ProfilPageState();
 }
 
-class _profilPageState extends State<profilPage> {
+class _ProfilPageState extends State<ProfilPage> {
   String _imagePath = ''; // Değişiklik burada
   final SyncService syncService = SyncService(); // syncService tanımı
   final DatabaseService databaseService = DatabaseService(); // syncService tanımı
@@ -39,6 +40,7 @@ class _profilPageState extends State<profilPage> {
           ],
         ),
       ),
+      drawer: DrawerMenu(),
       body: Center(
         child: GestureDetector(
           onTap: () {

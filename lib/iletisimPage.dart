@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merlabciftlikyonetim/drawer_menu.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -58,6 +59,7 @@ class _iletisimPageState extends State<iletisimPage> {
         shadowColor: Colors.black38,
         title: Text("Bize Ulaşın"),
       ),
+      drawer: DrawerMenu(),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _animalListFuture,
         builder: (context, snapshot) {

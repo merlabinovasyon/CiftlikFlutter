@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart'; // Import animations package
-import 'package:merlabciftlikyonetim/HomePage.dart';
+import 'package:merlabciftlikyonetim/AnaSayfa/HomePage.dart';
 import 'package:merlabciftlikyonetim/CalendarPage.dart';
-import 'package:merlabciftlikyonetim/TestPage.dart';
 import 'package:merlabciftlikyonetim/iletisimPage.dart';
-import 'package:merlabciftlikyonetim/profilPage.dart';
+import 'package:merlabciftlikyonetim/ProfilPage.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -18,7 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     HomePage(),
     CalendarPage(),
     iletisimPage(),
-    profilPage(),
+    ProfilPage(),
   ];
 
   void _onItemTapped(int index) {
