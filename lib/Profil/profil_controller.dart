@@ -53,7 +53,6 @@ class ProfilController extends GetxController {
     await db.rawInsert('''
       INSERT INTO AnimalType (logo) VALUES (?)
     ''', [imagePath]);
-    await db.close();
   }
 
   Future<void> getImagePathFromDatabase() async {
@@ -65,7 +64,6 @@ class ProfilController extends GetxController {
     } else {
       imagePath.value = '';
     }
-    await db.close();
   }
 
   Future<void> syncUsersFromApiToDatabase(BuildContext context) async {

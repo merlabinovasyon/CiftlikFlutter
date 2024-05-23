@@ -1,0 +1,266 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'AddBirthBuzagiController.dart';
+
+void showCounterPicker(BuildContext context, TextEditingController controller,String title) {
+  if (controller.text.isEmpty) {
+    controller.text = '1';
+  }
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext builder) {
+      return Container(
+        height: MediaQuery.of(context).copyWith().size.height / 3.8,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Lütfen $title tipini seçiniz',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Expanded(
+              child: CupertinoPicker(
+                itemExtent: 32.0,
+                onSelectedItemChanged: (int index) {
+                  controller.text = (index + 1).toString();
+                },
+                children: List<Widget>.generate(5, (int index) {
+                  return Center(
+                    child: Text((index + 1).toString()),
+                  );
+                }),
+              ),
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Tamam', style: TextStyle(color: Colors.black)),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+void ShowSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
+  if (title == 'Cinsiyet *') {
+    ShowSimpleSelectionSheet(context, title, options, onSelected);
+    return;
+  }
+
+  TextEditingController searchController = TextEditingController();
+  List<String> filteredOptions = List.from(options);
+
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          searchController.addListener(() {
+            setState(() {
+              filteredOptions = options
+                  .where((option) => option.toLowerCase().contains(searchController.text.toLowerCase()))
+                  .toList();
+            });
+          });
+
+          bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
+
+          return FractionallySizedBox(
+            heightFactor: isKeyboardVisible ? 0.8 : 0.5,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0, top: 25),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            title,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: TextField(
+                          controller: searchController,
+                          decoration: InputDecoration(
+                            labelText: 'Filtrelemek için yazmaya başlayın',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: filteredOptions.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              shadowColor: Colors.cyan,
+                              elevation: 4.0,
+                              color: Colors.white,
+                              margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                              child: ListTile(
+                                title: Text(filteredOptions[index]),
+                                onTap: () {
+                                  onSelected(filteredOptions[index]);
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+void ShowSimpleSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (context) {
+      return FractionallySizedBox(
+        heightFactor: 0.5,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0, top: 25),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        title,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: options.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          shadowColor: Colors.cyan,
+                          elevation: 4.0,
+                          color: Colors.white,
+                          margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                          child: ListTile(
+                            title: Text(options[index]),
+                            onTap: () {
+                              onSelected(options[index]);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 10,
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+void ShowTimePicker(BuildContext context,AddBirthBuzagiController controller) {
+  DateTime initialDateTime = DateTime.now();
+  if (controller.timeController.text.isEmpty) {
+    controller.timeController.text =
+    "${initialDateTime.hour.toString().padLeft(2, '0')}:${initialDateTime.minute.toString().padLeft(2, '0')}";
+  }
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext builder) {
+      return Container(
+        height: MediaQuery.of(context).copyWith().size.height / 3.8,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Lütfen saat ve dakika seçiniz',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Expanded(
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                use24hFormat: true,
+                initialDateTime: initialDateTime,
+                onDateTimeChanged: (DateTime newDateTime) {
+                  controller.timeController.text =
+                  "${newDateTime.hour.toString().padLeft(2, '0')}:${newDateTime.minute.toString().padLeft(2, '0')}";
+                },
+              ),
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Tamam', style: TextStyle(color: Colors.black)),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:merlabciftlikyonetim/AddKocPage.dart';
-import 'package:merlabciftlikyonetim/AddSheepPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalar%C4%B1/SelectTypeBuyukPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalar%C4%B1/SelectTypeKucukPage.dart';
 
-class SelectTypeKucukPage extends StatelessWidget {
-  const SelectTypeKucukPage({super.key});
+class SelectTypePage extends StatelessWidget {
+  const SelectTypePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +44,9 @@ class SelectTypeKucukPage extends StatelessWidget {
         children: [
           SizedBox(height: yukseklik / 10), // Üstten boşluk
           Text(
-            'Ekleyeceğiniz Küçükbaş Hayvanın Türünü Seçiniz',
+            'Ekleyeceğiniz Hayvanın Türünü Seçiniz',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: yukseklik / 30),
           Row(
@@ -57,7 +57,7 @@ class SelectTypeKucukPage extends StatelessWidget {
                   // Birinci karta tıklama işlemi
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddKocPage()),
+                    MaterialPageRoute(builder: (context) => SelectTypeBuyukPage()),
                   );
                 },
                 child: Column(
@@ -70,21 +70,21 @@ class SelectTypeKucukPage extends StatelessWidget {
                           color: Colors.white, // Kart rengini beyaz yapın
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.cyan.withOpacity(0.5), // Gölge rengini ayarlayın ve saydamlık verin
-                              spreadRadius: 2, // Gölgenin yayılma yarıçapını ayarlayın
-                              blurRadius: 4, // Gölgenin bulanıklık yarıçapını ayarlayın
-                              offset: Offset(0, 2), // Gölgenin konumunu ayarlayın
+                              color: Colors.cyan.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
                             ),
                           ],
-                          borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
+                          borderRadius: BorderRadius.circular(15.0),
                           image: DecorationImage(
-                            image: AssetImage('resimler/selecttypekoc.webp'), // Birinci resim dosyasının yolu
+                            image: AssetImage('resimler/selecttypebuyuk.webp'), // Birinci resim dosyasının yolu
                             fit: BoxFit.fill,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: yukseklik / 100), // Resim ile metin arasındaki boşluk
+                    SizedBox(height: yukseklik / 100),
                     Card(
                       color: Colors.cyan,
                       shape: RoundedRectangleBorder(
@@ -93,7 +93,7 @@ class SelectTypeKucukPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Koç',
+                          'Büyükbaş',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
@@ -107,7 +107,7 @@ class SelectTypeKucukPage extends StatelessWidget {
                   // İkinci karta tıklama işlemi
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddSheepPage()),
+                    MaterialPageRoute(builder: (context) => SelectTypeKucukPage()),
                   );
                 },
                 child: Column(
@@ -143,7 +143,7 @@ class SelectTypeKucukPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Koyun',
+                          'Küçükbaş',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),

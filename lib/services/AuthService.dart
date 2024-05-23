@@ -34,6 +34,7 @@ class AuthService {
 
   Future<void> signIn(String email, String password) async {
     await initDb();
+
     List<Map> users = await _database!.query('User', where: 'email = ? AND password = ?', whereArgs: [email, password]);
     if (users.isEmpty) {
       throw Exception('No user found with that email and password');

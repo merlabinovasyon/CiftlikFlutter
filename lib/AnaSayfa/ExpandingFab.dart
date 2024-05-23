@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../SelectBirthTypePage.dart';
-import '../SelectTypePage.dart';
+import '../EklemeSayfaları/SelectBirthTypePage.dart';
+import '../EklemeSayfaları/SelectTypePage.dart';
 
 class ExpandingFab extends StatelessWidget {
   @override

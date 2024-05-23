@@ -2,15 +2,20 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../services/DatabaseService.dart';
+
 class IletisimController extends GetxController {
   var animalList = <Map<String, dynamic>>[].obs;
   final String _databaseName = 'merlab.db';
   final String _tableName = 'AnimalType';
+  final DatabaseService _databaseService = Get.find();
 
   @override
   void onInit() {
     super.onInit();
     _getAnimalList();
+    _databaseService.initializeDatabase();
+
   }
 
   Future<void> _getAnimalList() async {

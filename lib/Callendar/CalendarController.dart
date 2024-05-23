@@ -3,23 +3,26 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../services/DatabaseService.dart';
+
 class CalendarController extends GetxController {
   late Database _database;
   final String _databaseName = 'merlab.db';
   final String _tableName = 'AnimalType';
-
+  final DatabaseService _databaseService = Get.find();
   TextEditingController animalTypeController = TextEditingController();
   TextEditingController typeDescController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
+    _databaseService.initializeDatabase();
     _initializeDatabase();
+
   }
 
   @override
   void onClose() {
-    _database.close();
     animalTypeController.dispose();
     typeDescController.dispose();
     super.onClose();

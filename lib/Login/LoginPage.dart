@@ -4,7 +4,6 @@ import 'auth_controller.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatelessWidget {
-  // FormState'in yeniden oluşturulmasını önlemek için global anahtarı burada tanımlayın
   final _formKey = GlobalKey<FormState>();
 
   @override

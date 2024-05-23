@@ -9,7 +9,6 @@ class LoginController extends GetxController {
   var rememberMe = false.obs;
   var selectedCountryCode = '+90'.obs;
   var obscure2Text = true.obs;
-
   final _countryCodes = ['+90', '+1', '+44', '+49', '+61'];
 
   List<String> get countryCodes => _countryCodes;
@@ -20,7 +19,7 @@ class LoginController extends GetxController {
     _loadSavedLoginInfo();
   }
 
-  _saveLoginInfo() async {
+  void saveLoginInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (rememberMe.value) {
       prefs.setString('email', emailController.text);
@@ -33,7 +32,7 @@ class LoginController extends GetxController {
     }
   }
 
-  _loadSavedLoginInfo() async {
+  void _loadSavedLoginInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     rememberMe.value = prefs.getBool('rememberMe') ?? false;
     if (rememberMe.value) {

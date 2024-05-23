@@ -1,37 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AddBirthBuzagiPage extends StatefulWidget {
-  const AddBirthBuzagiPage({super.key});
+class AddInekPage extends StatefulWidget {
+  const AddInekPage({super.key});
 
   @override
-  State<AddBirthBuzagiPage> createState() => _AddBirthBuzagiPageState();
+  State<AddInekPage> createState() => _AddInekPageState();
 }
 
-class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
+class _AddInekPageState extends State<AddInekPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _countController = TextEditingController();
   final TextEditingController _count1Controller = TextEditingController();
   final TextEditingController _count2Controller = TextEditingController();
-
-  String? _selectedAnimal;
-  String? _selectedKoc;
-  String? _selectedBuzagi;
-  String? _selected1Buzagi;
-  String? _selected2Buzagi;
-  String? _selectedGender1;
-  String? _selectedGender2;
-  String? _selectedGender3;
-  bool _isTwin = false;
-  bool _isTriplet = false;
-
-  final List<String> _animals = ['Hayvan 1', 'Hayvan 2', 'Hayvan 3'];
-  final List<String> _boga = ['Boğa 1', 'Boğa 2', 'Boğa 3'];
-  final List<String> _buzagi = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
-  final List<String> _buzagi1 = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
-  final List<String> _genders = ['Erkek', 'Dişi'];
+  String? _selectedInek;
+  final List<String> _inek = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
 
   @override
   void dispose() {
@@ -44,11 +29,6 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
   }
 
   void _showSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
-    if (title == 'Cinsiyet *') {
-      _showSimpleSelectionSheet(context, title, options, onSelected);
-      return;
-    }
-
     TextEditingController searchController = TextEditingController();
     List<String> filteredOptions = List.from(options);
 
@@ -98,7 +78,7 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(height: 10),
                         Expanded(
                           child: ListView.builder(
                             itemCount: filteredOptions.length,
@@ -136,69 +116,6 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
               ),
             );
           },
-        );
-      },
-    );
-  }
-
-  void _showSimpleSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return FractionallySizedBox(
-          heightFactor: 0.5,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0, top: 25),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          title,
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: options.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            shadowColor: Colors.cyan,
-                            elevation: 4.0,
-                            color: Colors.white,
-                            margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                            child: ListTile(
-                              title: Text(options[index]),
-                              onTap: () {
-                                onSelected(options[index]);
-                                Navigator.pop(context);
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                right: 10,
-                top: 10,
-                child: IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
-          ),
         );
       },
     );
@@ -291,7 +208,7 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Lütfen buzağı tipini seçiniz',
+                  'Lütfen inek tipini seçiniz',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -328,19 +245,6 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
         );
       },
     );
-  }
-
-  void _resetTwinValues() {
-    _selected1Buzagi = null;
-    _selectedGender2 = null;
-    _count1Controller.clear();
-    _resetTripletValues();
-  }
-
-  void _resetTripletValues() {
-    _selected2Buzagi = null;
-    _selectedGender3 = null;
-    _count2Controller.clear();
   }
 
   @override
@@ -412,7 +316,7 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
             children: [
               SizedBox(height: 10),
               Text(
-                'Yeni doğan buzağı/buzağılarınızın bilgilerini giriniz.',
+                'İneğinizin bilgilerini giriniz.',
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 16),
@@ -424,140 +328,30 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Buzağı ağırlık:  kg',
+                    'İnek ağırlık:  kg',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
               ),
               SizedBox(height: 16),
-              _buildSelectionField('Doğuran Hayvan *', _selectedAnimal, _animals, (value) {
-                setState(() {
-                  _selectedAnimal = value;
-                });
-              }),
-              SizedBox(height: 16),
-              _buildSelectionField('Boğanız *', _selectedKoc, _boga, (value) {
-                setState(() {
-                  _selectedKoc = value;
-                });
-              }),
-              SizedBox(height: 16),
-              _buildDateField('Doğum Yaptığı Tarih *', _dobController),
-              SizedBox(height: 16),
-              _buildTimeField('Doğum Zamanı', _timeController),
-              SizedBox(height: 24),
-              Text('1. Buzağı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              SizedBox(height: 16),
               _buildTextField('Küpe No *', 'GEÇİCİ_NO_16032'),
               SizedBox(height: 16),
               _buildTextField('Devlet Küpe No *', 'GEÇİCİ_NO_16032'),
               SizedBox(height: 16),
-              _buildSelectionField('Irk *', _selectedBuzagi, _buzagi, (value) {
+              _buildSelectionField('Irk *', _selectedInek, _inek, (value) {
                 setState(() {
-                  _selectedBuzagi = value;
+                  _selectedInek = value;
                 });
               }),
               SizedBox(height: 16),
               _buildTextField('Hayvan Adı', ''),
               SizedBox(height: 16),
-              _buildSelectionField('Cinsiyet *', _selectedGender1, _genders, (value) {
-                setState(() {
-                  _selectedGender1 = value;
-                });
-              }),
+              _buildCounterField('İnek Tipi', _countController),
               SizedBox(height: 16),
-              _buildCounterField('Buzağı Tipi', _countController),
-              SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('İkiz', style: TextStyle(fontSize: 18)),
-                  Transform.scale(
-                    scale: 0.9,
-                    child: CustomSwitch(
-                      value: _isTwin,
-                      onChanged: (value) {
-                        setState(() {
-                          _isTwin = value;
-                          if (!value) {
-                            _isTriplet = false;
-                            _resetTwinValues();
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              if (_isTwin) ...[
-                SizedBox(height: 24),
-                Text('2. Buzağı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                SizedBox(height: 16),
-                _buildTextField('Küpe No *', ''),
-                SizedBox(height: 16),
-                _buildTextField('Devlet Küpe No *', 'GEÇİCİ_NO_16032'),
-                SizedBox(height: 16),
-                _buildSelectionField('Irk *', _selected1Buzagi, _buzagi1, (value) {
-                  setState(() {
-                    _selected1Buzagi = value;
-                  });
-                }),
-                SizedBox(height: 16),
-                _buildTextField('Hayvan Adı', ''),
-                SizedBox(height: 16),
-                _buildSelectionField('Cinsiyet *', _selectedGender2, _genders, (value) {
-                  setState(() {
-                    _selectedGender2 = value;
-                  });
-                }),
-                SizedBox(height: 16),
-                _buildCounterField('Buzağı Tipi', _count1Controller),
-                SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Üçüz', style: TextStyle(fontSize: 18)),
-                    Transform.scale(
-                      scale: 0.9,
-                      child: CustomSwitch(
-                        value: _isTriplet,
-                        onChanged: (value) {
-                          setState(() {
-                            _isTriplet = value;
-                            if (!value) {
-                              _resetTripletValues();
-                            }
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-              if (_isTriplet) ...[
-                SizedBox(height: 24),
-                Text('3. Buzağı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                SizedBox(height: 16),
-                _buildTextField('Küpe No *', ''),
-                SizedBox(height: 16),
-                _buildTextField('Devlet Küpe No *', 'GEÇİCİ_NO_16032'),
-                SizedBox(height: 16),
-                _buildSelectionField('Irk *', _selected2Buzagi, _buzagi1, (value) {
-                  setState(() {
-                    _selected2Buzagi = value;
-                  });
-                }),
-                SizedBox(height: 16),
-                _buildTextField('Hayvan Adı', ''),
-                SizedBox(height: 16),
-                _buildSelectionField('Cinsiyet *', _selectedGender3, _genders, (value) {
-                  setState(() {
-                    _selectedGender3 = value;
-                  });
-                }),
-                SizedBox(height: 16),
-                _buildCounterField('Buzağı Tipi', _count2Controller),
-              ],
+              _buildDateField('İneğin Kayıt Tarihi *', _dobController),
+              SizedBox(height: 16),
+              _buildTimeField('İneğin Kayıt Zamanı', _timeController),
+              SizedBox(height: 16),
             ],
           ),
         ),
@@ -640,60 +434,6 @@ class _AddBirthBuzagiPageState extends State<AddBirthBuzagiPage> {
       onTap: () {
         _showCounterPicker(context, controller);
       },
-    );
-  }
-}
-
-class CustomSwitch extends StatefulWidget {
-  final bool value;
-  final ValueChanged<bool> onChanged;
-
-  const CustomSwitch({Key? key, required this.value, required this.onChanged}) : super(key: key);
-
-  @override
-  _CustomSwitchState createState() => _CustomSwitchState();
-}
-
-class _CustomSwitchState extends State<CustomSwitch> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.onChanged(!widget.value);
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: 50,
-        height: 28,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: widget.value ? Colors.cyan : Colors.grey,
-          border: Border.all(
-            color: widget.value ? Colors.cyan : Colors.grey,
-            width: 2.0,
-          ),
-        ),
-        child: Stack(
-          children: [
-            AnimatedAlign(
-              duration: const Duration(milliseconds: 200),
-              alignment: widget.value ? Alignment.centerRight : Alignment.centerLeft,
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: Colors.white,
-                  border: Border.all(
-                    color: widget.value ? Colors.cyan : Colors.grey,
-                    width: 2.0,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

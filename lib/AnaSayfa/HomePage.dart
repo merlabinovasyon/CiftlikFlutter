@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/AnaSayfa/BuildSubscriptionSection.dart';
 import '../Drawer/drawer_menu.dart';
 import '../Profil/ProfilPage.dart';
 import '../gebelik_kontrol_page.dart';
@@ -9,7 +10,6 @@ import '../pedometer_page.dart';
 import '../tohumlanmaya_hazir_page.dart';
 import 'BuildIconButton.dart';
 import 'BuildActionCardRow.dart';
-import 'BuildSubscriptionCard.dart';
 import 'ExpandingFab.dart';
 import 'home_controller.dart';
 
@@ -105,7 +105,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 25.0),
-              _buildSubscriptionSection(),
+              BuildSubscriptionSection(),
               SizedBox(height: 25.0),
               BuildActionCardRow(),
               SizedBox(height: 10.0),
@@ -121,79 +121,4 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSubscriptionSection() {
-    return Card(
-      elevation: 0,
-      color: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text(
-                'Ücretli Pakete Geç',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.cyan,
-                ),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    BuildSubscriptionCard(title: 'Süt Başlangıç Paketi', price: '£149,99 (Ay)',color_a: 0xFFFFD600),
-                    BuildSubscriptionCard(title:'Süt Altın Paketi', price: '£199,99 (Ay)', color_a:0xFF26A69A),
-                    BuildSubscriptionCard(title: 'Süt Platinum Paketi', price: '£249,99 (Ay)',color_a: 0xFFFF8F00),
-                    BuildSubscriptionCard(title: 'Süt Diamond Paketi', price: '£299,99 (Ay)',color_a: 0xFF8BC34A),
-                    BuildSubscriptionCard(title: 'Süt Ultimate Paketi', price: '£349,99 (Ay)',color_a: 0xFF8BC34A),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Gizlilik Politikası',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Kullanım Koşulları (EULA)',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 8),
-                child: Text(
-                  '* Uygulama İçi Satın Alım Gerektirir. Otomatik Yenilenir.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:merlabciftlikyonetim/AddBirthBuzagiPage.dart';
-import 'package:merlabciftlikyonetim/AddBirthKuzuPage.dart';
+import 'AddBogaPage.dart';
+import 'AddInekPage.dart';
 
-
-class SelectBirthTypePage extends StatelessWidget {
-  const SelectBirthTypePage({super.key});
+class SelectTypeBuyukPage extends StatelessWidget {
+  const SelectTypeBuyukPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +44,9 @@ class SelectBirthTypePage extends StatelessWidget {
         children: [
           SizedBox(height: yukseklik / 10), // Üstten boşluk
           Text(
-            'Ekleyeceğiniz Yeni Doğan Hayvanın Türünü Seçiniz',
+            'Ekleyeceğiniz Büyükbaş Hayvanın Türünü Seçiniz',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
           ),
           SizedBox(height: yukseklik / 30),
           Row(
@@ -58,7 +57,7 @@ class SelectBirthTypePage extends StatelessWidget {
                   // Birinci karta tıklama işlemi
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddBirthBuzagiPage()),
+                    MaterialPageRoute(builder: (context) => AddBogaPage()),
                   );
                 },
                 child: Column(
@@ -79,7 +78,7 @@ class SelectBirthTypePage extends StatelessWidget {
                           ],
                           borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
                           image: DecorationImage(
-                            image: AssetImage('resimler/selectbirthtypebuyuk.png'), // Birinci resim dosyasının yolu
+                            image: AssetImage('resimler/selecttypeboga.webp'), // Birinci resim dosyasının yolu
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -94,7 +93,7 @@ class SelectBirthTypePage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Buzağı',
+                          'Boğa',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
@@ -108,7 +107,7 @@ class SelectBirthTypePage extends StatelessWidget {
                   // İkinci karta tıklama işlemi
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddBirthKuzuPage()),
+                    MaterialPageRoute(builder: (context) => AddInekPage()),
                   );
                 },
                 child: Column(
@@ -129,7 +128,7 @@ class SelectBirthTypePage extends StatelessWidget {
                           ],
                           borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
                           image: DecorationImage(
-                            image: AssetImage('resimler/selectbirthtypekucuk.webp'), // İkinci resim dosyasının yolu
+                            image: AssetImage('resimler/selecttypeinek.webp'), // İkinci resim dosyasının yolu
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -144,7 +143,7 @@ class SelectBirthTypePage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Kuzu',
+                          'İnek',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
