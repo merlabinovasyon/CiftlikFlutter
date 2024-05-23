@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:animations/animations.dart'; // Import animations package
+import 'package:get/get.dart';
+import 'package:animations/animations.dart';
 import 'package:merlabciftlikyonetim/AnaSayfa/HomePage.dart';
-import 'package:merlabciftlikyonetim/CalendarPage.dart';
-import 'package:merlabciftlikyonetim/iletisimPage.dart';
-import 'package:merlabciftlikyonetim/ProfilPage.dart';
+import 'package:merlabciftlikyonetim/iletisim/iletisimPage.dart';
+import 'package:merlabciftlikyonetim/Profil/ProfilPage.dart';
+import '../Callendar/CalendarPage.dart';
+import 'BottomNavigationController.dart';
 
-class BottomNavigation extends StatefulWidget {
-  @override
-  _BottomNavigationState createState() => _BottomNavigationState();
-}
-
-class _BottomNavigationState extends State<BottomNavigation> {
-  int _selectedIndex = 0;
+class BottomNavigation extends StatelessWidget {
+  final BottomNavigationController bottomNavController = Get.put(BottomNavigationController());
 
   final List<Widget> _pages = [
     HomePage(),
@@ -20,40 +17,36 @@ class _BottomNavigationState extends State<BottomNavigation> {
     ProfilPage(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageTransitionSwitcher(
-        duration: const Duration(milliseconds: 500),
-        transitionBuilder: (child, animation, secondaryAnimation) {
-          return SharedAxisTransition(
-            animation: animation,
-            secondaryAnimation: secondaryAnimation,
-            transitionType: SharedAxisTransitionType.horizontal, // For train-hopping-like animation
-            child: child,
-          );
-        },
-        child: _pages[_selectedIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
+      body: Obx(() {
+        return PageTransitionSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: (child, animation, secondaryAnimation) {
+            return SharedAxisTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              transitionType: SharedAxisTransitionType.horizontal,
+              child: child,
+            );
+          },
+          child: _pages[bottomNavController.selectedIndex.value],
+        );
+      }),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'AnaSayfa', backgroundColor: Colors.cyan),
           BottomNavigationBarItem(icon: Icon(Icons.event_note), label: 'Ajanda', backgroundColor: Colors.blue),
           BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Iletişim', backgroundColor: Colors.deepPurpleAccent),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil', backgroundColor: Colors.cyan),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: bottomNavController.selectedIndex.value,
+        onTap: bottomNavController.onItemTapped,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.shifting,
-      ),
+      )),
     );
   }
 }

@@ -1,27 +1,17 @@
-// lib/widgets/drawer_menu.dart
 import 'package:flutter/material.dart';
-import 'package:merlabciftlikyonetim/iletisimPage.dart';
-import 'package:merlabciftlikyonetim/ProfilPage.dart';
+import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/Profil/ProfilPage.dart';
+import 'package:merlabciftlikyonetim/Callendar/CalendarPage.dart';
+import 'package:merlabciftlikyonetim/Login/LoginPage.dart';
+import 'package:merlabciftlikyonetim/TestPage.dart';
+import 'package:merlabciftlikyonetim/iletisim/iletisimPage.dart';
+import 'DrawerController.dart';
 
-import 'CalendarPage.dart';
-import 'LoginPage.dart';
-import 'TestPage.dart';
-
-class DrawerMenu extends StatefulWidget {
-  @override
-  _DrawerMenuState createState() => _DrawerMenuState();
-}
-
-class _DrawerMenuState extends State<DrawerMenu> {
-  bool isExpanded = false;
-
-  void logout() async {
-    Navigator.of(context).pop();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => LoginPage()));
-  }
-
+class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final DrawerMenuController drawerController = Get.put(DrawerMenuController());
+
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -41,55 +31,41 @@ class _DrawerMenuState extends State<DrawerMenu> {
               children: <Widget>[
                 Theme(
                   data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                  child: ExpansionTile(
-                    leading: Icon(Icons.person, color: isExpanded ? Colors.cyan : Colors.black),
+                  child: Obx(() => ExpansionTile(
+                    leading: Icon(Icons.person, color: drawerController.isExpanded.value ? Colors.cyan : Colors.black),
                     title: Text('Profil'),
                     onExpansionChanged: (bool expanded) {
-                      setState(() {
-                        isExpanded = expanded;
-                      });
+                      drawerController.toggleExpanded();
                     },
                     children: [
                       ListTile(
                         title: Text('Profil'),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ProfilPage()),
-                          );
+                          drawerController.navigateTo('/profil');
                         },
                       ),
                     ],
-                  ),
+                  )),
                 ),
                 ListTile(
                   leading: Icon(Icons.event_note, color: Colors.black,),
                   title: Text('Ajanda'),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CalendarPage()),
-                    );
+                    drawerController.navigateTo('/calendar');
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.contact_support, color: Colors.black,),
                   title: Text('Bize Ulaşın'),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => iletisimPage()),
-                    );
+                    drawerController.navigateTo('/iletisim');
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.contact_support, color: Colors.black,),
                   title: Text('Test'),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TestPage()),
-                    );
+                    drawerController.navigateTo('/test');
                   },
                 ),
               ],
@@ -99,7 +75,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             leading: Icon(Icons.exit_to_app),
             title: Text('Çıkış Yap'),
             onTap: () {
-              logout();
+              drawerController.logout();
             },
           ),
         ],
