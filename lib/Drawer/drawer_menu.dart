@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/Profil/ProfilPage.dart';
-import 'package:merlabciftlikyonetim/Callendar/CalendarPage.dart';
-import 'package:merlabciftlikyonetim/Login/LoginPage.dart';
-import 'package:merlabciftlikyonetim/TestPage.dart';
-import 'package:merlabciftlikyonetim/iletisim/iletisimPage.dart';
 import 'DrawerController.dart';
 
 class DrawerMenu extends StatelessWidget {
