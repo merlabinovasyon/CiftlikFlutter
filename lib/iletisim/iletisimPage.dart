@@ -3,13 +3,27 @@ import 'package:get/get.dart';
 import '../Drawer/drawer_menu.dart';
 import 'iletisim_controller.dart';
 
-class iletisimPage extends StatelessWidget {
+class iletisimPage extends StatefulWidget {
   const iletisimPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final IletisimController iletisimController = Get.put(IletisimController());
+  _IletisimPageState createState() => _IletisimPageState();
+}
 
+class _IletisimPageState extends State<iletisimPage> {
+  late IletisimController iletisimController;
+
+  @override
+  void initState() {
+    super.initState();
+    iletisimController = Get.put(IletisimController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      iletisimController.refreshAnimalList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent,
