@@ -20,7 +20,7 @@ class BuildIconButton extends StatelessWidget {
             },
             child: Image.asset(assetPath, width: 40.0, height: 40.0),
           ),
-          SizedBox(height: 4.0),
+          const SizedBox(height: 4.0),
           Text(label, textAlign: TextAlign.center),
         ],
       ),

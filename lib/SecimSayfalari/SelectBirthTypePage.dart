@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'AddBogaPage.dart';
-import 'AddInekPage.dart';
+import 'package:get/get.dart';
 
-class SelectTypeBuyukPage extends StatelessWidget {
-  const SelectTypeBuyukPage({super.key});
+import '../EklemeSayfalari/BuzagiEkleme/AddBirthBuzagiPage.dart';
+import '../EklemeSayfalari/KuzuEkleme/AddBirthKuzuPage.dart';
+
+
+class SelectBirthTypePage extends StatelessWidget {
+  const SelectBirthTypePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +15,10 @@ class SelectTypeBuyukPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            );
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Get.back();
           },
         ),
         backgroundColor: Colors.white,
@@ -29,7 +28,7 @@ class SelectTypeBuyukPage extends StatelessWidget {
             child: Container(
               height: 40,
               width: 130,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('resimler/logo_v2.png'),
                   fit: BoxFit.fill,
@@ -43,10 +42,10 @@ class SelectTypeBuyukPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: yukseklik / 10), // Üstten boşluk
-          Text(
-            'Ekleyeceğiniz Büyükbaş Hayvanın Türünü Seçiniz',
+          const Text(
+            'Ekleyeceğiniz Yeni Doğan Hayvanın Türünü Seçiniz',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: yukseklik / 30),
           Row(
@@ -54,11 +53,7 @@ class SelectTypeBuyukPage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Birinci karta tıklama işlemi
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddBogaPage()),
-                  );
+                  Get.to(() => AddBirthBuzagiPage());
                 },
                 child: Column(
                   children: [
@@ -73,12 +68,12 @@ class SelectTypeBuyukPage extends StatelessWidget {
                               color: Colors.cyan.withOpacity(0.5), // Gölge rengini ayarlayın ve saydamlık verin
                               spreadRadius: 2, // Gölgenin yayılma yarıçapını ayarlayın
                               blurRadius: 4, // Gölgenin bulanıklık yarıçapını ayarlayın
-                              offset: Offset(0, 2), // Gölgenin konumunu ayarlayın
+                              offset: const Offset(0, 2), // Gölgenin konumunu ayarlayın
                             ),
                           ],
                           borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
-                          image: DecorationImage(
-                            image: AssetImage('resimler/selecttypeboga.webp'), // Birinci resim dosyasının yolu
+                          image: const DecorationImage(
+                            image: AssetImage('resimler/selectbirthtypebuyuk.png'), // Birinci resim dosyasının yolu
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -90,10 +85,10 @@ class SelectTypeBuyukPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
-                          'Boğa',
+                          'Buzağı',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
@@ -104,11 +99,7 @@ class SelectTypeBuyukPage extends StatelessWidget {
               SizedBox(width: yukseklik / 30),
               GestureDetector(
                 onTap: () {
-                  // İkinci karta tıklama işlemi
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddInekPage()),
-                  );
+                  Get.to(() => AddBirthKuzuPage());
                 },
                 child: Column(
                   children: [
@@ -123,12 +114,12 @@ class SelectTypeBuyukPage extends StatelessWidget {
                               color: Colors.cyan.withOpacity(0.5), // Gölge rengini ayarlayın ve saydamlık verin
                               spreadRadius: 2, // Gölgenin yayılma yarıçapını ayarlayın
                               blurRadius: 4, // Gölgenin bulanıklık yarıçapını ayarlayın
-                              offset: Offset(0, 2), // Gölgenin konumunu ayarlayın
+                              offset: const Offset(0, 2), // Gölgenin konumunu ayarlayın
                             ),
                           ],
                           borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
-                          image: DecorationImage(
-                            image: AssetImage('resimler/selecttypeinek.webp'), // İkinci resim dosyasının yolu
+                          image: const DecorationImage(
+                            image: AssetImage('resimler/selectbirthtypekucuk.webp'), // İkinci resim dosyasının yolu
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -140,10 +131,10 @@ class SelectTypeBuyukPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
-                          'İnek',
+                          'Kuzu',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),

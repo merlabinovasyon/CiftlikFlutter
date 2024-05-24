@@ -18,7 +18,7 @@ class BuildSubscriptionSection extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 4,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
           borderRadius: BorderRadius.circular(15.0),
@@ -27,7 +27,7 @@ class BuildSubscriptionSection extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text(
+              const Text(
                 'Ücretli Pakete Geç',
                 style: TextStyle(
                   fontSize: 18.0,
@@ -35,7 +35,7 @@ class BuildSubscriptionSection extends StatelessWidget {
                   color: Colors.cyan,
                 ),
               ),
-              SingleChildScrollView(
+              const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -53,22 +53,22 @@ class BuildSubscriptionSection extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Gizlilik Politikası',
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Kullanım Koşulları (EULA)',
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 8),
+              const Padding(
+                padding: EdgeInsets.only(top: 4.0, bottom: 8),
                 child: Text(
                   '* Uygulama İçi Satın Alım Gerektirir. Otomatik Yenilenir.',
                   textAlign: TextAlign.center,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Drawer/drawer_menu.dart';
+import '../Drawer/DrawerMenu.dart';
 import 'CalendarController.dart';
 
 
@@ -17,14 +17,14 @@ class CalendarPage extends StatelessWidget {
         backgroundColor: Colors.blue,
         elevation: 4,
         shadowColor: Colors.black38,
-        title: Row(
+        title: const Row(
           children: [
             SizedBox(width: 90),
             Text("Ajanda"),
           ],
         ),
       ),
-      drawer: DrawerMenu(),
+      drawer: const DrawerMenu(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -32,21 +32,21 @@ class CalendarPage extends StatelessWidget {
           children: [
             TextField(
               controller: calendarController.animalTypeController,
-              decoration: InputDecoration(labelText: 'Hayvan Türü'),
+              decoration: const InputDecoration(labelText: 'Hayvan Türü'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: calendarController.typeDescController,
-              decoration: InputDecoration(labelText: 'Tür Açıklaması'),
+              decoration: const InputDecoration(labelText: 'Tür Açıklaması'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 String animalType = calendarController.animalTypeController.text;
                 String typeDesc = calendarController.typeDescController.text;
                 calendarController.insertAnimal(animalType, typeDesc);
               },
-              child: Text('Kaydet'),
+              child: const Text('Kaydet'),
             ),
           ],
         ),

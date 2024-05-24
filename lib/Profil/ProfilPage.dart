@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/Profil/profil_controller.dart';
-import '../Drawer/drawer_menu.dart';
+import '../Drawer/DrawerMenu.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({Key? key}) : super(key: key);
@@ -16,14 +16,14 @@ class ProfilPage extends StatelessWidget {
         backgroundColor: Colors.cyan,
         elevation: 4,
         shadowColor: Colors.black38,
-        title: Row(
+        title: const Row(
           children: [
             SizedBox(width: 90),
             Text("Profil"),
           ],
         ),
       ),
-      drawer: DrawerMenu(),
+      drawer: const DrawerMenu(),
       body: Center(
         child: GestureDetector(
           onTap: () {
@@ -50,7 +50,7 @@ class ProfilPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 15.0, right: 15),
                   child: TextField(
                     controller: profilController.emailController,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: const InputDecoration(labelText: 'Email'),
                     keyboardType: TextInputType.emailAddress,
                   ),
                 ),
@@ -58,35 +58,35 @@ class ProfilPage extends StatelessWidget {
                   onPressed: () async {
                     await profilController.syncUsersFromApiToDatabase(context);
                   },
-                  child: Text("Mysql to Sqlite"),
+                  child: const Text("Mysql to Sqlite"),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 ElevatedButton(
                   onPressed: () async {
                     await profilController.syncAnimalTypes(context);
                   },
-                  child: Text("Mysql to Sqlite Animal"),
+                  child: const Text("Mysql to Sqlite Animal"),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 ElevatedButton(
                   onPressed: () async {
                     await profilController.syncAnimalTypesToMySQL(context);
                   },
-                  child: Text("Sqlite to Mysql Animal"),
+                  child: const Text("Sqlite to Mysql Animal"),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 ElevatedButton(
                   onPressed: () async {
                     await profilController.syncAnimalSubtypesToMySQL(context);
                   },
-                  child: Text("Sqlite to Mysql AnimalSubType"),
+                  child: const Text("Sqlite to Mysql AnimalSubType"),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 ElevatedButton(
                   onPressed: () async {
                     await profilController.syncAnimalSubtypes(context);
                   },
-                  child: Text("Mysql to Sqlite AnimalSubType"),
+                  child: const Text("Mysql to Sqlite AnimalSubType"),
                 ),
               ],
             ),
@@ -109,7 +109,7 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _addPhotoIcon() {
-    return Center(
+    return const Center(
       child: Icon(
         Icons.add_a_photo,
         size: 50,
@@ -122,21 +122,21 @@ class ProfilPage extends StatelessWidget {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Fotoğraf Ekle"),
+        title: const Text("Fotoğraf Ekle"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: Icon(Icons.photo_library),
-              title: Text("Galeriden Seç"),
+              leading: const Icon(Icons.photo_library),
+              title: const Text("Galeriden Seç"),
               onTap: () {
                 profilController.getImageFromGallery();
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: Icon(Icons.camera_alt),
-              title: Text("Fotoğraf Çek"),
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Fotoğraf Çek"),
               onTap: () {
                 profilController.getImageFromCamera();
                 Navigator.pop(context);

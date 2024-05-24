@@ -28,6 +28,7 @@ class AddBirthBuzagiController extends GetxController {
 
   @override
   void onClose() {
+    resetForm();
     dobController.dispose();
     timeController.dispose();
     countController.dispose();
@@ -46,6 +47,24 @@ class AddBirthBuzagiController extends GetxController {
   void resetTripletValues() {
     selected2Buzagi.value = null;
     selectedGender3.value = null;
+    count2Controller.clear();
+  }
+
+  void resetForm() {
+    selectedAnimal.value = null;
+    selectedKoc.value = null;
+    selectedBuzagi.value = null;
+    selected1Buzagi.value = null;
+    selected2Buzagi.value = null;
+    selectedGender1.value = null;
+    selectedGender2.value = null;
+    selectedGender3.value = null;
+    isTwin.value = false;
+    isTriplet.value = false;
+    dobController.clear();
+    timeController.clear();
+    countController.clear();
+    count1Controller.clear();
     count2Controller.clear();
   }
 }

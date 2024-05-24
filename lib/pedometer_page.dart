@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 
 class PedometerPage extends StatelessWidget {
+  const PedometerPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pedometre'),
+        title: const Text('Pedometre'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Pedometre Sayfası'),
       ),
     );

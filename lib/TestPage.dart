@@ -50,7 +50,7 @@ class _TestPageState extends State<TestPage> {
     try {
       await syncService.syncUsersPost();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Synchronization successful')),
+        const SnackBar(content: Text('Synchronization successful')),
       );
       _fetchUsers();
     } catch (e) {
@@ -64,10 +64,10 @@ class _TestPageState extends State<TestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0277BD),
+        backgroundColor: const Color(0xFF0277BD),
         elevation: 4,
         shadowColor: Colors.black38,
-        title: Text("Test Page"),
+        title: const Text("Test Page"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

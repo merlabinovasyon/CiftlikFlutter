@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 
 class MastiProPage extends StatelessWidget {
+  const MastiProPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MastiPro'),
+        title: const Text('MastiPro'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('MastiPro Sayfası'),
       ),
     );

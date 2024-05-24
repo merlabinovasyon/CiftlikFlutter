@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'DrawerController.dart';
 
 class DrawerMenu extends StatelessWidget {
+  const DrawerMenu({super.key});
+
   @override
   Widget build(BuildContext context) {
     final DrawerMenuController drawerController = Get.put(DrawerMenuController());
@@ -28,13 +30,13 @@ class DrawerMenu extends StatelessWidget {
                   data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                   child: Obx(() => ExpansionTile(
                     leading: Icon(Icons.person, color: drawerController.isExpanded.value ? Colors.cyan : Colors.black),
-                    title: Text('Profil'),
+                    title: const Text('Profil'),
                     onExpansionChanged: (bool expanded) {
                       drawerController.toggleExpanded();
                     },
                     children: [
                       ListTile(
-                        title: Text('Profil'),
+                        title: const Text('Profil'),
                         onTap: () {
                           drawerController.navigateTo('/profil');
                         },
@@ -43,22 +45,22 @@ class DrawerMenu extends StatelessWidget {
                   )),
                 ),
                 ListTile(
-                  leading: Icon(Icons.event_note, color: Colors.black,),
-                  title: Text('Ajanda'),
+                  leading: const Icon(Icons.event_note, color: Colors.black,),
+                  title: const Text('Ajanda'),
                   onTap: () {
                     drawerController.navigateTo('/calendar');
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.contact_support, color: Colors.black,),
-                  title: Text('Bize Ulaşın'),
+                  leading: const Icon(Icons.contact_support, color: Colors.black,),
+                  title: const Text('Bize Ulaşın'),
                   onTap: () {
                     drawerController.navigateTo('/iletisim');
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.contact_support, color: Colors.black,),
-                  title: Text('Test'),
+                  leading: const Icon(Icons.contact_support, color: Colors.black,),
+                  title: const Text('Test'),
                   onTap: () {
                     drawerController.navigateTo('/test');
                   },
@@ -67,8 +69,8 @@ class DrawerMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Çıkış Yap'),
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text('Çıkış Yap'),
             onTap: () {
               drawerController.logout();
             },

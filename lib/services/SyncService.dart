@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
@@ -212,7 +211,7 @@ class SyncService {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('All animal types synced successfully to MySQL.'),
           duration: Duration(seconds: 2),
         ),
@@ -221,7 +220,7 @@ class SyncService {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to sync animal types to MySQL: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
       print('Failed to sync animal types to MySQL: $e');
@@ -294,7 +293,7 @@ class SyncService {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('All animal subtypes synced successfully to MySQL.'),
           duration: Duration(seconds: 2),
         ),
@@ -303,7 +302,7 @@ class SyncService {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to sync animal subtypes to MySQL: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
       print('Failed to sync animal subtypes to MySQL: $e');

@@ -5,9 +5,9 @@ import 'package:path/path.dart';
 
 class DatabaseService extends GetxService {
   late Database _database;
-  String _databaseName = 'merlab.db';
-  String _animalTypeTableName = 'AnimalType';
-  String _animalSubtypeTableName = 'AnimalSubtype';
+  final String _databaseName = 'merlab.db';
+  final String _animalTypeTableName = 'AnimalType';
+  final String _animalSubtypeTableName = 'AnimalSubtype';
 
   Future<void> initializeDatabase() async {
     String directory = await getDatabasesPath();
@@ -42,7 +42,7 @@ class DatabaseService extends GetxService {
 
     // Eklenen veri için başarı mesajı göster
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('Veri başarıyla eklendi.'),
         duration: Duration(seconds: 2),
       ),
@@ -59,7 +59,7 @@ class DatabaseService extends GetxService {
 
     // Eklenen veri için başarı mesajı göster
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('Animal subtype data added successfully.'),
         duration: Duration(seconds: 2),
       ),

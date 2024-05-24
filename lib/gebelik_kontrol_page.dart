@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 
 class GebelikKontrolPage extends StatelessWidget {
+  const GebelikKontrolPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gebelik Kontrol'),
+        title: const Text('Gebelik Kontrol'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Gebelik Kontrol Sayfası'),
       ),
     );
