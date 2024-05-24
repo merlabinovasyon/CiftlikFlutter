@@ -13,7 +13,7 @@ class BottomNavigation extends StatelessWidget {
   final List<Widget> _pages = [
     HomePage(),
     CalendarPage(),
-    iletisimPage(),
+    IletisimPage(),
     ProfilPage(),
   ];
 
