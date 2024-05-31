@@ -16,7 +16,7 @@ class AuthService {
     await File(path).writeAsBytes(bytes);
   }
   Future<void> addUser(Map<String, dynamic> user) async {
-    final db = await _database;
+    final db = _database;
 
     await db?.insert(
       'User', // Your users table name

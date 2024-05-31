@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'auth_controller.dart';
-import 'login_controller.dart';
+import 'AuthController.dart';
+import 'LoginController.dart';
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class LoginPage extends StatelessWidget {
           child: Container(
             height: 40,
             width: 130,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('resimler/logo_v2.png'),
                 fit: BoxFit.fill,
@@ -35,7 +37,7 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.all(MediaQuery.of(context).size.height / 54),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 54),
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [Colors.white, Colors.white],
             ),
           ),
@@ -56,7 +58,7 @@ class LoginPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
                       ),
-                      prefixIcon: Icon(Icons.email),
+                      prefixIcon: const Icon(Icons.email),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -99,7 +101,7 @@ class LoginPage extends StatelessWidget {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
                             ),
-                            prefixIcon: Icon(Icons.phone_android),
+                            prefixIcon: const Icon(Icons.phone_android),
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -120,7 +122,7 @@ class LoginPage extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(loginController.obscure2Text.value
                             ? Icons.visibility
@@ -152,12 +154,12 @@ class LoginPage extends StatelessWidget {
                         'Beni Hatırla',
                         style: TextStyle(fontSize: MediaQuery.of(context).size.width / 27),
                       ),
-                      SizedBox(width: 50),
+                      const SizedBox(width: 50),
                     ],
                   )),
                   Obx(() => ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF0277BD),
+                      backgroundColor: const Color(0xFF0277BD),
                     ),
                     onPressed: authController.isLoading.value
                         ? null
@@ -170,7 +172,7 @@ class LoginPage extends StatelessWidget {
                       }
                     },
                     child: authController.isLoading.value
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                       color: Colors.blueAccent,
                     )
                         : Text(
@@ -208,7 +210,7 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Center(
                     child: Text(
                       'Şifremi unuttum',

@@ -4,7 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:merlabciftlikyonetim/AnaSayfa/HomePage.dart';
 import 'package:merlabciftlikyonetim/iletisim/iletisimPage.dart';
 import 'package:merlabciftlikyonetim/Profil/ProfilPage.dart';
-import '../Callendar/CalendarPage.dart';
+import '../Calendar/CalendarPage.dart';
 import 'BottomNavigationController.dart';
 
 class BottomNavigation extends StatelessWidget {
@@ -12,10 +12,12 @@ class BottomNavigation extends StatelessWidget {
 
   final List<Widget> _pages = [
     HomePage(),
-    CalendarPage(),
-    IletisimPage(),
-    ProfilPage(),
+    const CalendarPage(),
+    const IletisimPage(),
+    const ProfilPage(),
   ];
+
+  BottomNavigation({super.key});
 
   @override
   Widget build(BuildContext context) {

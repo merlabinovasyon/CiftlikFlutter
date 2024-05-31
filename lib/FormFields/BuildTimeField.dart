@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../buzagi_ekleme/AddBirthBuzagiController.dart';
-import '../buzagi_ekleme/buzagi_utils.dart';
 
 class BuildTimeField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final AddBirthBuzagiController controller1;
-  const BuildTimeField({super.key,required this.label,required this.controller,required this.controller1});
+  final Function(BuildContext, TextEditingController) onTap;
+
+  const BuildTimeField({
+    Key? key,
+    required this.label,
+    required this.controller,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        suffixIcon: Icon(Icons.keyboard_arrow_down), // İkon ekleme
+        suffixIcon: const Icon(Icons.keyboard_arrow_down), // İkon ekleme
         labelText: label,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
       readOnly: true,
-      onTap: () {
-        ShowTimePicker(Get.context!,controller1);
-      },
-    );  }
+      onTap: () => onTap(context, controller),
+    );
+  }
 }

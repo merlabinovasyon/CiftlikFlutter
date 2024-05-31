@@ -54,7 +54,7 @@ class CalendarController extends GetxController {
       ''');
     });
     // Eklenen veri için başarı mesajı göster
-    Get.snackbar('Başarı', 'Veri başarıyla eklendi.', snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 2));
+    Get.snackbar('Başarı', 'Veri başarıyla eklendi.', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 2));
     // Veri eklendikten sonra textfield'ları temizle
     animalTypeController.clear();
     typeDescController.clear();

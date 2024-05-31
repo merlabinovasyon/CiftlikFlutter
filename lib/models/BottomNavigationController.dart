@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import '../iletisim/iletisim_controller.dart';
-import '../Callendar/CalendarController.dart';
+import '../Calendar/CalendarController.dart';
 import '../Profil/profil_controller.dart';
 
 class BottomNavigationController extends GetxController {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalar%C4%B1/SelectTypeBuyukPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalar%C4%B1/SelectTypeKucukPage.dart';
+import 'package:get/get.dart';
+import '../EklemeSayfalari/BogaEkleme/AddBogaPage.dart';
+import '../EklemeSayfalari/InekEkleme/AddInekPage.dart';
 
-class SelectTypePage extends StatelessWidget {
-  const SelectTypePage({super.key});
+class SelectTypeBuyukPage extends StatelessWidget {
+  const SelectTypeBuyukPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +13,10 @@ class SelectTypePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            );
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Get.back();
           },
         ),
         backgroundColor: Colors.white,
@@ -29,7 +26,7 @@ class SelectTypePage extends StatelessWidget {
             child: Container(
               height: 40,
               width: 130,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('resimler/logo_v2.png'),
                   fit: BoxFit.fill,
@@ -43,8 +40,8 @@ class SelectTypePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: yukseklik / 10), // Üstten boşluk
-          Text(
-            'Ekleyeceğiniz Hayvanın Türünü Seçiniz',
+          const Text(
+            'Ekleyeceğiniz Büyükbaş Hayvanın Türünü Seçiniz',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -54,61 +51,7 @@ class SelectTypePage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Birinci karta tıklama işlemi
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SelectTypeBuyukPage()),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Card(
-                      child: Container(
-                        width: genislik / 2.5,
-                        height: yukseklik / 4,
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Kart rengini beyaz yapın
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.cyan.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(15.0),
-                          image: DecorationImage(
-                            image: AssetImage('resimler/selecttypebuyuk.webp'), // Birinci resim dosyasının yolu
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: yukseklik / 100),
-                    Card(
-                      color: Colors.cyan,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Büyükbaş',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: yukseklik / 30),
-              GestureDetector(
-                onTap: () {
-                  // İkinci karta tıklama işlemi
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SelectTypeKucukPage()),
-                  );
+                  Get.to(() => AddBogaPage());
                 },
                 child: Column(
                   children: [
@@ -123,12 +66,12 @@ class SelectTypePage extends StatelessWidget {
                               color: Colors.cyan.withOpacity(0.5), // Gölge rengini ayarlayın ve saydamlık verin
                               spreadRadius: 2, // Gölgenin yayılma yarıçapını ayarlayın
                               blurRadius: 4, // Gölgenin bulanıklık yarıçapını ayarlayın
-                              offset: Offset(0, 2), // Gölgenin konumunu ayarlayın
+                              offset: const Offset(0, 2), // Gölgenin konumunu ayarlayın
                             ),
                           ],
                           borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
-                          image: DecorationImage(
-                            image: AssetImage('resimler/selecttypekucuk.webp'), // İkinci resim dosyasının yolu
+                          image: const DecorationImage(
+                            image: AssetImage('resimler/selecttypeboga.webp'), // Birinci resim dosyasının yolu
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -140,10 +83,56 @@ class SelectTypePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
-                          'Küçükbaş',
+                          'Boğa',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: yukseklik / 30),
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => AddInekPage());
+                },
+                child: Column(
+                  children: [
+                    Card(
+                      child: Container(
+                        width: genislik / 2.5,
+                        height: yukseklik / 4,
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Kart rengini beyaz yapın
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.cyan.withOpacity(0.5), // Gölge rengini ayarlayın ve saydamlık verin
+                              spreadRadius: 2, // Gölgenin yayılma yarıçapını ayarlayın
+                              blurRadius: 4, // Gölgenin bulanıklık yarıçapını ayarlayın
+                              offset: const Offset(0, 2), // Gölgenin konumunu ayarlayın
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(15.0), // Köşeleri yuvarlayın
+                          image: const DecorationImage(
+                            image: AssetImage('resimler/selecttypeinek.webp'), // İkinci resim dosyasının yolu
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: yukseklik / 100), // Resim ile metin arasındaki boşluk
+                    Card(
+                      color: Colors.cyan,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'İnek',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),

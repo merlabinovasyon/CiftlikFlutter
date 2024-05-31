@@ -7,7 +7,7 @@ class CustomButtonCard extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  CustomButtonCard({required this.icon, required this.title, required this.onTap});
+  const CustomButtonCard({super.key, required this.icon, required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CustomButtonCard extends StatelessWidget {
           title: Text(
             title,
             style: GoogleFonts.roboto(
-              textStyle: TextStyle(color: Colors.cyan, fontWeight: FontWeight.bold),
+              textStyle: const TextStyle(color: Colors.cyan, fontWeight: FontWeight.bold),
             ),
           ),
           onTap: onTap,

@@ -8,7 +8,7 @@ class BuildSubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 200,
       child: Padding(
         padding: const EdgeInsets.only(right: 4.0, left: 4, top: 8),
@@ -23,7 +23,7 @@ class BuildSubscriptionCard extends StatelessWidget {
                   color: Color(color_a).withOpacity(0.5),
                   spreadRadius: 2,
                   blurRadius: 4,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
               borderRadius: BorderRadius.circular(15.0),
@@ -32,14 +32,14 @@ class BuildSubscriptionCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8.0),
-                  Text(price, style: TextStyle(color: Colors.blue)),
-                  SizedBox(height: 8.0),
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8.0),
+                  Text(price, style: const TextStyle(color: Colors.blue)),
+                  const SizedBox(height: 8.0),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Color(color_a)),
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Abone Ol',
                       style: TextStyle(color: Colors.white),
                     ),

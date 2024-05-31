@@ -71,7 +71,7 @@ class ProfilController extends GetxController {
       final email = emailController.text;
       await syncService.syncSpecificUserFromApiToDatabase(-1, email);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Veri başarıyla eklendi.'),
           duration: Duration(seconds: 2),
         ),
@@ -80,7 +80,7 @@ class ProfilController extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bir hata oluştu: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -90,7 +90,7 @@ class ProfilController extends GetxController {
     try {
       await syncService.syncAnimalTypes(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Veri başarıyla eklendi.'),
           duration: Duration(seconds: 2),
         ),
@@ -99,7 +99,7 @@ class ProfilController extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bir hata oluştu: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -109,7 +109,7 @@ class ProfilController extends GetxController {
     try {
       await syncService.syncAnimalTypesToMySQL(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Veri başarıyla eklendi.'),
           duration: Duration(seconds: 2),
         ),
@@ -118,7 +118,7 @@ class ProfilController extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bir hata oluştu: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -128,7 +128,7 @@ class ProfilController extends GetxController {
     try {
       await syncService.syncAnimalSubtypes(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Veri başarıyla eklendi.'),
           duration: Duration(seconds: 2),
         ),
@@ -137,7 +137,7 @@ class ProfilController extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bir hata oluştu: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -147,7 +147,7 @@ class ProfilController extends GetxController {
     try {
       await syncService.syncAnimalSubtypesToMySQL(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Veri başarıyla eklendi.'),
           duration: Duration(seconds: 2),
         ),
@@ -156,7 +156,7 @@ class ProfilController extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bir hata oluştu: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }

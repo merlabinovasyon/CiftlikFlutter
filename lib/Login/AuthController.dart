@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import '../services/AuthService.dart';
-import 'login_controller.dart'; // LoginController'ı import edin
+import 'LoginController.dart'; // LoginController'ı import edin
 
 class AuthController extends GetxController {
   var isLoading = false.obs;
@@ -12,10 +12,12 @@ class AuthController extends GetxController {
     try {
       await authService.signIn(email, password);
       loginController.saveLoginInfo(); // Giriş başarılıysa bilgileri kaydedin
-      Get.offAllNamed('/bottomNavigation');  // Giriş başarılıysa BottomNavigation sayfasına yönlendirin
-    } catch (e) {
+      Get.snackbar('Başarılı', 'Giriş başarılı');
+      Future.delayed(const Duration(seconds: 1), () {
+        Get.offAllNamed('/bottomNavigation'); // Giriş sayfasına yönlendirme
+      });    } catch (e) {
       print('Hata: $e');  // Hataları konsola yazdır
-      Get.snackbar('Error', 'Kullanıcı adı veya şifre hatalı');
+      Get.snackbar('Hata', 'Kullanıcı adı veya şifre hatalı');
     } finally {
       isLoading(false);
     }

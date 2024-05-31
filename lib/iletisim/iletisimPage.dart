@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Drawer/drawer_menu.dart';
+import '../Drawer/DrawerMenu.dart';
 import 'iletisim_controller.dart';
 
 class IletisimPage extends StatelessWidget {
@@ -15,12 +15,12 @@ class IletisimPage extends StatelessWidget {
         backgroundColor: Colors.deepPurpleAccent,
         elevation: 4,
         shadowColor: Colors.black38,
-        title: Text("Bize Ulaşın"),
+        title: const Text("Bize Ulaşın"),
       ),
-      drawer: DrawerMenu(),
+      drawer: const DrawerMenu(),
       body: Obx(() {
         if (iletisimController.animalList.isEmpty) {
-          return Center(child: Text('Veri bulunamadı.'));
+          return const Center(child: Text('Veri bulunamadı.'));
         } else {
           return RefreshIndicator(
             onRefresh: iletisimController.refreshAnimalList,
@@ -32,24 +32,24 @@ class IletisimPage extends StatelessWidget {
                   title: Text(animal['animaltype'] ?? 'Belirtilmemiş'),
                   subtitle: Text(animal['typedesc'] ?? 'Belirtilmemiş'),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
+                    icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Veriyi Sil'),
-                          content: Text('Bu veriyi silmek istediğinizden emin misiniz?'),
+                          title: const Text('Veriyi Sil'),
+                          content: const Text('Bu veriyi silmek istediğinizden emin misiniz?'),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(),
-                              child: Text('İptal'),
+                              child: const Text('İptal'),
                             ),
                             TextButton(
                               onPressed: () async {
                                 await iletisimController.deleteAnimal(animal['id']);
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Sil'),
+                              child: const Text('Sil'),
                             ),
                           ],
                         ),
