@@ -38,15 +38,15 @@ class BottomNavigation extends StatelessWidget {
       }),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'AnaSayfa', backgroundColor: Colors.cyan),
-          BottomNavigationBarItem(icon: Icon(Icons.event_note), label: 'Ajanda', backgroundColor: Colors.blue),
-          BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Iletişim', backgroundColor: Colors.deepPurpleAccent),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil', backgroundColor: Colors.cyan),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'AnaSayfa', backgroundColor: Colors.black87),
+          BottomNavigationBarItem(icon: Icon(Icons.event_note), label: 'Ajanda', backgroundColor: Colors.black87),
+          BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Iletişim', backgroundColor: Colors.black87),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil', backgroundColor: Colors.black87),
         ],
         currentIndex: bottomNavController.selectedIndex.value,
         onTap: bottomNavController.onItemTapped,
         selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
+        unselectedItemColor: Colors.white70,
         type: BottomNavigationBarType.shifting,
       )),
     );

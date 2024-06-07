@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/BogaEkleme/AddBogaPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/BuzagiEkleme/AddBirthBuzagiPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/InekEkleme/AddInekPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/InekSutOlcumEkleme/InekSutOlcumPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/KocEkleme/AddKocPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/KoyunEkleme/AddSheepPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/KoyunSutOlcumEkleme/KoyunSutOlcumPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/KuzuEkleme/AddBirthKuzuPage.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/WeanedBuzagiOlcumEkleme/WeanedBuzagiOlcumPage.dart';
 import 'AnaSayfa/HomePage.dart';
 import 'Calendar/CalendarPage.dart';
+import 'EklemeSayfalari/WeanedKuzuOlcumEkleme/WeanedKuzuOlcumPage.dart';
 import 'Login/LoginPage.dart';
 import 'Profil/ProfilPage.dart';
 import 'Register/RegisterPage.dart';
@@ -11,9 +21,14 @@ import 'iletisim/iletisimPage.dart';
 import 'TestPage.dart';
 import 'models/BottomNavigation.dart';
 import 'initial_bindings.dart'; // Yeni oluşturduğumuz InitialBinding dosyasını import edin
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'; // Bu satırı ekleyin
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('tr', null);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +43,15 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialBinding: InitialBinding(), // Tüm bağımlılıkları başlatan binding
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'), // İngilizce
+        const Locale('tr', 'TR'), // Türkçe
+      ],
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
         GetPage(name: '/bottomNavigation', page: () => BottomNavigation()),
@@ -39,8 +63,19 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/Home', page: () => HomePage(),binding: HomeBinding()),
         GetPage(name: '/register', page: () => const RegisterPage(),binding: RegisterBinding()),
         GetPage(name: '/kockatim', page: () =>  KocKatimPage(),binding: KocKatimBinding()),
+        GetPage(name: '/addBirthKuzuPage', page: () => AddBirthKuzuPage()),
+        GetPage(name: '/addBirthBuzagiPage', page: () => AddBirthBuzagiPage()),
+        GetPage(name: '/addSheepPage', page: () => AddSheepPage()),
+        GetPage(name: '/addKocPage', page: () => AddKocPage()),
+        GetPage(name: '/addInekPage', page: () => AddInekPage()),
+        GetPage(name: '/addBogaPage', page: () => AddBogaPage()),
+        GetPage(name: '/koyunSutOlcumPage', page: () => KoyunSutOlcumPage()),
+        GetPage(name: '/inekSutOlcumPage', page: () => InekSutOlcumPage()),
+        GetPage(name: '/weanedKuzuOlcumPage', page: () => WeanedKuzuOlcumPage()),
+        GetPage(name: '/weanedBuzagiOlcumPage', page: () => WeanedBuzagiOlcumPage()),
 
       ],
+
       home: LoginPage(),
     );
   }

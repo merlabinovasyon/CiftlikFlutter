@@ -12,14 +12,15 @@ class SelectTypeBuyukPage extends StatelessWidget {
     final double genislik = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Get.back();
           },
         ),
-        backgroundColor: Colors.white,
         title: Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 60.0),

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/InekSutOlcumEkleme/InekSutOlcumController.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/BuildSelectionField.dart';
 import '../../FormFields/FormButton.dart';
-import 'KocKatimController.dart';
+import '../../FormFields/WeightField.dart';
 
-class KocKatimPage extends StatelessWidget {
-  final KocKatimController controller = Get.put(KocKatimController());
+class InekSutOlcumPage extends StatelessWidget {
+  final InekSutOlcumController controller = Get.put(InekSutOlcumController());
   final FormUtils utils = FormUtils();
 
-  KocKatimPage({super.key});
+  InekSutOlcumPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,41 +49,39 @@ class KocKatimPage extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               const Text(
-                'Koyun ve koçunuzu seçerek eşleme yapınız.',
+                'Süt ölçümü yapılan ineğinizi seçiniz.',
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
+              WeightField(),
+              const SizedBox(height: 25),
               BuildSelectionField(
-                label: 'Koyununuz *',
-                value: controller.selectedAnimal,
-                options: controller.animals,
+                label: 'İneğiniz *',
+                value: controller.selectedType,
+                options: controller.types,
                 onSelected: (value) {
-                  controller.selectedAnimal.value = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              BuildSelectionField(
-                label: 'Koçunuz *',
-                value: controller.selectedKoc,
-                options: controller.koc,
-                onSelected: (value) {
-                  controller.selectedKoc.value = value;
+                  controller.selectedType.value = value;
                 },
               ),
               SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
+                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
                   onPressed: () {
                     if (controller.formKey.currentState!.validate()) {
-                      Get.snackbar(
-                        'Başarılı',
-                        'Eşleme başarılı',
-                      );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Get.offAllNamed('/bottomNavigation');
-                      });
+                      String? selectedType = controller.selectedType.value;
+                      if (selectedType != null) {
+                        if (selectedType.startsWith('İnek')) {
+                          Get.snackbar(
+                            'Başarılı',
+                            'Kayıt başarılı',
+                          );
+                          Future.delayed(const Duration(seconds: 1), () {
+                            Get.offAllNamed('/bottomNavigation');
+                          });
+                        }
+                      }
                     }
                   },
                 ),

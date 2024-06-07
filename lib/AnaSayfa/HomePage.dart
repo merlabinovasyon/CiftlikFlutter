@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/AnaSayfa/BuildSubscriptionSection.dart';
+import 'package:merlabciftlikyonetim/AsiTakvimi/AsiPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimPage.dart';
 import 'package:merlabciftlikyonetim/GraphicPage.dart';
+import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
 import '../Drawer/DrawerMenu.dart';
 import '../Profil/ProfilPage.dart';
 import '../gebelik_kontrol_page.dart';
@@ -25,7 +27,9 @@ class HomePage extends StatelessWidget {
         return false; // Geri tuşuna basıldığında hiçbir şey yapılmamasını sağlar
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           leading: Builder(
             builder: (context) => IconButton(
               icon: const Icon(Icons.menu),
@@ -102,7 +106,7 @@ class HomePage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      BuildIconButton(assetPath: 'resimler/hayvanlarim.png', label: 'Tüm Hayvanlar', page: ProfilPage()),
+                      BuildIconButton(assetPath: 'resimler/hayvanlarim.png', label: 'Tüm Hayvanlar', page: AnimalPage()),
                       BuildIconButton(assetPath: 'resimler/koc_1.png', label: 'Tohumlanmaya Hazır', page: TohumlanmayaHazirPage()),
                       BuildIconButton(assetPath: 'resimler/koc_katim_1.png', label: 'Koç Katım', page: KocKatimPage()),
                       BuildIconButton(assetPath: 'resimler/süt_olcum.png', label: 'Pedometre', page: PedometerPage()),
@@ -158,6 +162,8 @@ class HomePage extends StatelessWidget {
                   icon1: Icons.event_note,
                   onTap1: () {
                     // Handle tap for Aşı Takvimi
+                    Get.to(() => AsiPage());
+
                   },
                   title2: 'Hastalık Takibi',
                   icon2: Icons.local_hospital,

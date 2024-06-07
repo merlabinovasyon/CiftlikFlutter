@@ -39,14 +39,15 @@ class _GraphicPageState extends State<GraphicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Get.back();
           },
         ),
-        backgroundColor: Colors.white,
         title: Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 60.0),
