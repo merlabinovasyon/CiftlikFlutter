@@ -46,6 +46,7 @@ dependencies:
   table_calendar:
   intl:
   intl_translation:
+  flutter_slidable:
   flutter_localizations:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.
@@ -78,6 +79,7 @@ flutter:
   assets:
     - resimler/
     - databases/merlab.db
+    - resimler/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

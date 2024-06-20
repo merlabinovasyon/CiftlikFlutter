@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../HayvanDetaySayfasi/AnimalDetailPage.dart';
 import 'AnimalController.dart';
 import 'FilterableTabBar.dart';
 
@@ -31,6 +32,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -88,91 +90,56 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
   }
 }
 
-class AnimalCard extends StatefulWidget {
+class AnimalCard extends StatelessWidget {
   final Animal animal;
 
   const AnimalCard({Key? key, required this.animal}) : super(key: key);
 
   @override
-  _AnimalCardState createState() => _AnimalCardState();
-}
-
-class _AnimalCardState extends State<AnimalCard> {
-  bool isExpanded = false;
-
-  @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      elevation: 4.0,
-      shadowColor: Colors.cyan,
-      margin: const EdgeInsets.only(bottom: 10.0),
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          onExpansionChanged: (bool expanding) => setState(() => isExpanded = expanding),
-          leading: ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: Image.asset(
-              widget.animal.image,
-              height: 50,
-              width: 50,
-              fit: BoxFit.cover,
-            ),
-          ),
-          title: isExpanded
-              ? const Text('Detaylar')
-              : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => AnimalDetailPage(), duration: Duration(milliseconds: 650));
+      },
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 4.0,
+        shadowColor: Colors.cyan,
+        margin: const EdgeInsets.only(bottom: 10.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
             children: [
-              Text('Küpe No: ${widget.animal.kupeNo}'),
-              Text('Hayvan Adı: ${widget.animal.hayvanAdi}'),
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.white,
+                child: Image.asset(
+                  animal.image,
+                  width: 55,
+                  height: 55,
+                ),
+              ),
+              const SizedBox(width: 16.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Küpe No: ${animal.kupeNo}',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(height: 4.0),
+                    Text(animal.hayvanAdi),
+                    const SizedBox(height: 4.0),
+                    Text(animal.dogumTarihi),
+                  ],
+                ),
+              ),
             ],
           ),
-          tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          childrenPadding: const EdgeInsets.all(8.0),
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Image.asset(
-                widget.animal.image,
-                height: 100,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Kuzunun Koyunu: ${widget.animal.koyun}'),
-                      Text('Kuzunun Koçu: ${widget.animal.koc}'),
-                      Text('Doğum Saati: ${widget.animal.dogumSaati}'),
-                      Text('Doğum Tarihi: ${widget.animal.dogumTarihi}'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Küpe No: ${widget.animal.kupeNo}'),
-                      Text('Devlet Küpe No: ${widget.animal.devletKupeNo}'),
-                      Text('Hayvan Adı: ${widget.animal.hayvanAdi}'),
-                      Text('Cinsiyet: ${widget.animal.cinsiyet}'),
-                      Text('Kuzu Tipi: ${widget.animal.kuzuTipi}'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );

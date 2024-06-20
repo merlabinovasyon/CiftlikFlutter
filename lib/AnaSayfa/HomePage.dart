@@ -3,10 +3,13 @@ import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/AnaSayfa/BuildSubscriptionSection.dart';
 import 'package:merlabciftlikyonetim/AsiTakvimi/AsiPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimPage.dart';
+import 'package:merlabciftlikyonetim/GelirGiderHesaplama/FinancePage.dart';
 import 'package:merlabciftlikyonetim/GraphicPage.dart';
+import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
+import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
+import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
 import '../Drawer/DrawerMenu.dart';
-import '../Profil/ProfilPage.dart';
 import '../gebelik_kontrol_page.dart';
 import '../pedometer_page.dart';
 import '../tohumlanmaya_hazir_page.dart';
@@ -29,6 +32,7 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          scrolledUnderElevation: 0.0,
           backgroundColor: Colors.white,
           leading: Builder(
             builder: (context) => IconButton(
@@ -119,12 +123,14 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 25.0),
                 BuildActionCardRow(
                   title1: 'Gelir/Gider',
-                  icon1: Icons.account_balance,
+                  iconAsset1: 'resimler/icons/calculator_icon_black.png',
                   onTap1: () {
                     // Handle tap for Gelir/Gider
+                    Get.to(() => FinancePage(),duration: Duration(milliseconds: 650));
+
                   },
                   title2: 'Sync',
-                  icon2: Icons.sync,
+                  iconAsset2: 'resimler/icons/bank_icon_black.png',
                   onTap2: () {
                     // Handle tap for Sync
                   },
@@ -132,54 +138,60 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Sürü Takip',
-                  icon1: Icons.pie_chart,
+                  iconAsset1: 'resimler/icons/flock_with_analysis_icon_black.png',
                   onTap1: () {
                     // Handle tap for Sürüye Bakış
-                    Get.to(() => GraphicPage());
+                    Get.to(() => GraphicPage(),duration: Duration(milliseconds: 650));
                   },
                   title2: 'Analiz',
-                  icon2: Icons.analytics,
+                  iconAsset2: 'resimler/icons/bank_icon_black.png',
                   onTap2: () {
                     // Handle tap for Analiz
                   },
                 ),
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
-                  title1: 'Hayvan Detayı',
-                  icon1: Icons.details,
+                  title1: 'Konum Yönetimi',
+                  iconAsset1: 'resimler/icons/barn_with_location_icon_black.png',
                   onTap1: () {
                     // Handle tap for Hayvan Detayı
+                    Get.to(() => KonumYonetimiPage(),duration: Duration(milliseconds: 650),
+                    );
+
                   },
                   title2: 'Yem Yönetimi',
-                  icon2: Icons.food_bank,
+                  iconAsset2: 'resimler/icons/corn_icon_black.png',
                   onTap2: () {
                     // Handle tap for Yem Yönetimi
+                    Get.to(() => FeedStockPage(),duration: Duration(milliseconds: 650),
+                    );
                   },
                 ),
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Aşı Takvimi',
-                  icon1: Icons.event_note,
+                  iconAsset1: 'resimler/icons/calendar_with_vaccine_icon_black.png',
                   onTap1: () {
                     // Handle tap for Aşı Takvimi
-                    Get.to(() => AsiPage());
+                    Get.to(() => AsiPage(),duration: Duration(milliseconds: 650));
 
                   },
                   title2: 'Hastalık Takibi',
-                  icon2: Icons.local_hospital,
+                  iconAsset2: 'resimler/icons/sheep_with_illness_icon_black.png',
                   onTap2: () {
                     // Handle tap for Hastalık Takibi
+                    Get.to(() => DiseasePage(),duration: Duration(milliseconds: 650));
                   },
                 ),
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Raporlar',
-                  icon1: Icons.report,
+                  iconAsset1: 'resimler/icons/bank_icon_black.png',
                   onTap1: () {
                     // Handle tap for Raporlar
                   },
                   title2: 'Kayıtlar',
-                  icon2: Icons.book,
+                  iconAsset2: 'resimler/icons/bank_icon_black.png',
                   onTap2: () {
                     // Handle tap for Kayıtlar
                   },

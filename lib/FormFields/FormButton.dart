@@ -54,13 +54,13 @@ class _FormButtonState extends State<FormButton> with SingleTickerProviderStateM
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             gradient: LinearGradient(
-              colors: [Colors.green, Colors.yellow],
+              colors: [Colors.cyan, Colors.blue],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.purple.withOpacity(0.5),
+                color: Colors.grey,
                 spreadRadius: 2,
                 blurRadius: 5,
                 offset: const Offset(0, 3),

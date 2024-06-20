@@ -18,7 +18,7 @@ class AnimalController extends GetxController {
         hayvanAdi: 'Kuzu 1',
         cinsiyet: 'Erkek',
         kuzuTipi: 'Sütten Kesilmiş',
-        image: 'resimler/login_screen_2.png',
+        image: 'resimler/icons/sheep_and_lamb_icon_black.png',
       ),
       Animal(
         koyun: 'Koyun 1',
@@ -30,7 +30,7 @@ class AnimalController extends GetxController {
         hayvanAdi: 'Kuzu 1',
         cinsiyet: 'Erkek',
         kuzuTipi: 'Sütten Kesilmiş',
-        image: 'resimler/login_screen_2.png',
+        image: 'resimler/icons/hornless_sheep_with_straight_ears_icon_black.png',
       ),
       Animal(
         koyun: 'Koyun 1',
@@ -42,7 +42,7 @@ class AnimalController extends GetxController {
         hayvanAdi: 'Kuzu 1',
         cinsiyet: 'Erkek',
         kuzuTipi: 'Sütten Kesilmiş',
-        image: 'resimler/login_screen_2.png',
+        image: 'resimler/icons/hornless_sheep_with_straight_ears_icon_black.png',
       ),
       // Daha fazla hayvan ekleyin
     ]);

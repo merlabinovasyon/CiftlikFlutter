@@ -3,19 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 
 class BuildActionCardRow extends StatelessWidget {
   final String title1;
-  final IconData icon1;
+  final String iconAsset1;
   final VoidCallback onTap1;
   final String title2;
-  final IconData icon2;
+  final String iconAsset2;
   final VoidCallback onTap2;
 
   const BuildActionCardRow({
     super.key,
     required this.title1,
-    required this.icon1,
+    required this.iconAsset1,
     required this.onTap1,
     required this.title2,
-    required this.icon2,
+    required this.iconAsset2,
     required this.onTap2,
   });
 
@@ -36,11 +36,16 @@ class BuildActionCardRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               tileColor: Colors.white,
-              leading: Icon(icon1),
+              leading: Image.asset(
+                iconAsset1,
+                width: 33,
+                height: 33,
+              ),
               title: Text(
                 title1,
                 style: GoogleFonts.roboto(
-                  textStyle: const TextStyle(color: Colors.cyan, fontWeight: FontWeight.bold),
+                  textStyle: const TextStyle(
+                      color: Colors.cyan, fontWeight: FontWeight.bold),
                 ),
               ),
               onTap: onTap1,
@@ -61,11 +66,16 @@ class BuildActionCardRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               tileColor: Colors.white,
-              leading: Icon(icon2),
+              leading: Image.asset(
+                iconAsset2,
+                width: 33,
+                height: 33,
+              ),
               title: Text(
                 title2,
                 style: GoogleFonts.roboto(
-                  textStyle: const TextStyle(color: Colors.cyan, fontWeight: FontWeight.bold),
+                  textStyle: const TextStyle(
+                      color: Colors.cyan, fontWeight: FontWeight.bold),
                 ),
               ),
               onTap: onTap2,

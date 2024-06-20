@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../FormFields/FormButton.dart';
 
 class FormUtils {
   void showTimePicker(BuildContext context, TextEditingController controller) {
@@ -9,6 +12,7 @@ class FormUtils {
       "${initialDateTime.hour.toString().padLeft(2, '0')}:${initialDateTime.minute.toString().padLeft(2, '0')}";
     }
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       builder: (BuildContext builder) {
         return SizedBox(
@@ -39,12 +43,12 @@ class FormUtils {
               ),
               const SizedBox(height: 8),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
+                padding: const EdgeInsets.all(16.0),
+                child: FormButton(
+                  title: 'Tamam',
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
-                  child: const Text('Tamam', style: TextStyle(color: Colors.black)),
                 ),
               ),
             ],
@@ -58,6 +62,7 @@ class FormUtils {
       controller.text = '1';
     }
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       builder: (BuildContext builder) {
         return SizedBox(
@@ -90,12 +95,12 @@ class FormUtils {
               ),
               const SizedBox(height: 8),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
+                padding: const EdgeInsets.all(16.0),
+                child: FormButton(
+                  title: 'Tamam',
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
-                  child: const Text('Tamam', style: TextStyle(color: Colors.black)),
                 ),
               ),
             ],
@@ -114,6 +119,7 @@ class FormUtils {
     List<String> filteredOptions = List.from(options);
 
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       builder: (context) {
@@ -150,11 +156,17 @@ class FormUtils {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
+                            cursorColor: Colors.black54,
                             controller: searchController,
                             decoration: InputDecoration(
                               labelText: 'Filtrelemek için yazmaya başlayın',
+                              labelStyle: TextStyle(color: Colors.black), // Label rengi
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                               ),
                             ),
                           ),
@@ -203,6 +215,7 @@ class FormUtils {
   }
   void ShowSimpleSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       builder: (context) {

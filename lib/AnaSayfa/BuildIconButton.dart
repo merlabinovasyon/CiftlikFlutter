@@ -16,7 +16,7 @@ class BuildIconButton extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(page);
+              Get.to(page,duration: Duration(milliseconds: 650));
             },
             child: Image.asset(assetPath, width: 40.0, height: 40.0),
           ),

@@ -15,6 +15,7 @@ class SelectTypeKucukPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -53,7 +54,7 @@ class SelectTypeKucukPage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.to(() => AddKocPage());
+                  Get.to(() => AddKocPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [
@@ -99,7 +100,7 @@ class SelectTypeKucukPage extends StatelessWidget {
               SizedBox(width: yukseklik / 30),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => AddSheepPage());
+                  Get.to(() => AddSheepPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [

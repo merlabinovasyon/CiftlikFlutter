@@ -16,6 +16,7 @@ class SelectBirthTypePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -54,7 +55,7 @@ class SelectBirthTypePage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.to(() => AddBirthBuzagiPage());
+                  Get.to(() => AddBirthBuzagiPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [
@@ -100,7 +101,7 @@ class SelectBirthTypePage extends StatelessWidget {
               SizedBox(width: yukseklik / 30),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => AddBirthKuzuPage());
+                  Get.to(() => AddBirthKuzuPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [

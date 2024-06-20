@@ -10,6 +10,8 @@ import 'package:merlabciftlikyonetim/EklemeSayfalari/KoyunEkleme/AddSheepPage.da
 import 'package:merlabciftlikyonetim/EklemeSayfalari/KoyunSutOlcumEkleme/KoyunSutOlcumPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/KuzuEkleme/AddBirthKuzuPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/WeanedBuzagiOlcumEkleme/WeanedBuzagiOlcumPage.dart';
+import 'package:merlabciftlikyonetim/GelirGiderHesaplama/FinancePage.dart';
+import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'AnaSayfa/HomePage.dart';
 import 'Calendar/CalendarPage.dart';
 import 'EklemeSayfalari/WeanedKuzuOlcumEkleme/WeanedKuzuOlcumPage.dart';
@@ -24,10 +26,24 @@ import 'initial_bindings.dart'; // Yeni oluşturduğumuz InitialBinding dosyası
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; // Bu satırı ekleyin
+import 'package:flutter/services.dart'; // SystemChrome kullanımı için import edin
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('tr', null);
+
+  // Navigation bar rengini ayarlamak ve dikey moda zorlamak için SystemChrome kullanıyoruz
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.black, // Burada istediğiniz rengi kullanabilirsiniz
+    systemNavigationBarIconBrightness: Brightness.light, // Simge rengini belirleyin (light/dark)
+  ));
+
+  // Yalnızca dikey modda çalışmasını sağlamak
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(MyApp());
 }
 
@@ -60,9 +76,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/profil', page: () => const ProfilPage(), binding: ProfilBinding()),
         GetPage(name: '/test', page: () => const TestPage()),
         GetPage(name: '/login', page: () => LoginPage(), binding: AuthBinding()),
-        GetPage(name: '/Home', page: () => HomePage(),binding: HomeBinding()),
-        GetPage(name: '/register', page: () => const RegisterPage(),binding: RegisterBinding()),
-        GetPage(name: '/kockatim', page: () =>  KocKatimPage(),binding: KocKatimBinding()),
+        GetPage(name: '/Home', page: () => HomePage(), binding: HomeBinding()),
+        GetPage(name: '/register', page: () => const RegisterPage(), binding: RegisterBinding()),
+        GetPage(name: '/kockatim', page: () => KocKatimPage(), binding: KocKatimBinding()),
         GetPage(name: '/addBirthKuzuPage', page: () => AddBirthKuzuPage()),
         GetPage(name: '/addBirthBuzagiPage', page: () => AddBirthBuzagiPage()),
         GetPage(name: '/addSheepPage', page: () => AddSheepPage()),
@@ -73,9 +89,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/inekSutOlcumPage', page: () => InekSutOlcumPage()),
         GetPage(name: '/weanedKuzuOlcumPage', page: () => WeanedKuzuOlcumPage()),
         GetPage(name: '/weanedBuzagiOlcumPage', page: () => WeanedBuzagiOlcumPage()),
-
+        GetPage(name: '/diseasePage', page: () => DiseasePage()),
+        GetPage(name: '/financePage', page: () => FinancePage()),
       ],
-
       home: LoginPage(),
     );
   }

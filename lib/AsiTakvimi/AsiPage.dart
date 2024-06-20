@@ -14,6 +14,7 @@ class AsiPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -43,12 +44,12 @@ class AsiPage extends StatelessWidget {
           Obx(() {
             return Container(
               decoration: BoxDecoration(
-                color: Colors.black, // Takvim arka planını siyah yapar
+                color: Colors.white, // Takvim arka planını siyah yapar
                 borderRadius: BorderRadius.circular(16.0), // Kenarları yumuşatır
                 border: Border.all(color: Colors.white), // Sınır çizgisi ekler
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.cyan.withOpacity(0.5), // Gölge rengi
+                    color: Colors.grey, // Gölge rengi
                     spreadRadius: 2,
                     blurRadius: 5,
                     offset: Offset(0, 4), // Gölgenin pozisyonu
@@ -78,9 +79,9 @@ class AsiPage extends StatelessWidget {
                     color: Colors.cyan.withOpacity(0.5),
                     shape: BoxShape.circle,
                   ),
-                  todayTextStyle: TextStyle(color: Colors.white),
-                  defaultTextStyle: TextStyle(color: Colors.white),
-                  weekendTextStyle: TextStyle(color: Colors.white),
+                  todayTextStyle: TextStyle(color: Colors.black),
+                  defaultTextStyle: TextStyle(color: Colors.black),
+                  weekendTextStyle: TextStyle(color: Colors.black),
                   outsideTextStyle: TextStyle(color: Colors.grey),
                   cellMargin: EdgeInsets.all(2.0), // Hücreler arasındaki boşluk
                   markerDecoration: BoxDecoration(
@@ -89,14 +90,14 @@ class AsiPage extends StatelessWidget {
                   ),
                 ),
                 daysOfWeekStyle: DaysOfWeekStyle(
-                  weekdayStyle: TextStyle(color: Colors.white),
-                  weekendStyle: TextStyle(color: Colors.white),
+                  weekdayStyle: TextStyle(color: Colors.black),
+                  weekendStyle: TextStyle(color: Colors.black),
                 ),
                 headerStyle: HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
-                  leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
-                  rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
+                  leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
+                  rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black),
                 ),
                 calendarBuilders: CalendarBuilders(
                   headerTitleBuilder: (context, day) {
@@ -130,7 +131,7 @@ class AsiPage extends StatelessWidget {
                       child: Center(
                         child: Text(
                           DateFormat('d MMMM y', 'tr').format(controller.selectedDay.value),
-                          style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black87),
                         ),
                       ),
                     );
@@ -143,10 +144,18 @@ class AsiPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              cursorColor: Colors.black54,
               controller: controller.eventController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Not Ekle',
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.black), // Label rengi
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                ),
               ),
             ),
           ),
