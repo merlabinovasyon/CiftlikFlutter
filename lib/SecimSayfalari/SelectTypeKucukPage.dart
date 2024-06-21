@@ -13,14 +13,16 @@ class SelectTypeKucukPage extends StatelessWidget {
     final double genislik = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Get.back();
           },
         ),
-        backgroundColor: Colors.white,
         title: Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 60.0),
@@ -52,7 +54,7 @@ class SelectTypeKucukPage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.to(() => AddKocPage());
+                  Get.to(() => AddKocPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [
@@ -98,7 +100,7 @@ class SelectTypeKucukPage extends StatelessWidget {
               SizedBox(width: yukseklik / 30),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => AddSheepPage());
+                  Get.to(() => AddSheepPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [

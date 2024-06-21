@@ -20,64 +20,32 @@ class AddBirthKuzuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                controller.resetForm();
-                Get.back();
-              },
-            );
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            controller.resetForm();
+            Get.back();
           },
         ),
         title: Center(
-          child: Container(
-            height: 40,
-            width: 130,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('resimler/logo_v2.png'),
-                fit: BoxFit.fill,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 60.0),
+            child: Container(
+              height: 40,
+              width: 130,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('resimler/logo_v2.png'),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),
         ),
-        actions: [
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.notifications, size: 35),
-                onPressed: () {},
-              ),
-              Positioned(
-                right: 11,
-                top: 11,
-                child: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  constraints: BoxConstraints(
-                    minWidth: 18,
-                    minHeight: 18,
-                  ),
-                  child: Text(
-                    '20',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -247,6 +215,7 @@ class AddBirthKuzuPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
                 child: FormButton(
+                  title: 'Kaydet',
                   onPressed: () {
                     if (controller.formKey.currentState!.validate()) {
                       Get.snackbar(

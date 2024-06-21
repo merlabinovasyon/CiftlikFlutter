@@ -12,14 +12,16 @@ class RegisterPage extends StatelessWidget {
     final double genislik = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Get.back();
           },
         ),
-        backgroundColor: Colors.white,
         elevation: 4,
         shadowColor: Colors.black38,
         title: Center(

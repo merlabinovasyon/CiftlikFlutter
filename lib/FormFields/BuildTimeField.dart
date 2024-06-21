@@ -19,8 +19,13 @@ class BuildTimeField extends StatelessWidget {
       decoration: InputDecoration(
         suffixIcon: const Icon(Icons.keyboard_arrow_down), // İkon ekleme
         labelText: label,
+        labelStyle: TextStyle(color: Colors.black), // Label rengi
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
         ),
       ),
       readOnly: true,

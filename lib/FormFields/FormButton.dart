@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class FormButton extends StatefulWidget {
   final VoidCallback onPressed;
+  final String title;
 
-  const FormButton({Key? key, required this.onPressed}) : super(key: key);
+
+  const FormButton({Key? key, required this.onPressed, required this.title}) : super(key: key);
 
   @override
   _FormButtonState createState() => _FormButtonState();
@@ -52,13 +54,13 @@ class _FormButtonState extends State<FormButton> with SingleTickerProviderStateM
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             gradient: LinearGradient(
-              colors: [Colors.green, Colors.yellow],
+              colors: [Colors.cyan, Colors.blue],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.purple.withOpacity(0.5),
+                color: Colors.grey,
                 spreadRadius: 2,
                 blurRadius: 5,
                 offset: const Offset(0, 3),
@@ -66,8 +68,8 @@ class _FormButtonState extends State<FormButton> with SingleTickerProviderStateM
             ],
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-          child: const Text(
-            'Kaydet',
+          child:  Text(
+            widget.title,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,

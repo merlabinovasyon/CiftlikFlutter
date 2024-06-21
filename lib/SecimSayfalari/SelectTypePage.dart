@@ -14,14 +14,16 @@ class SelectTypePage extends StatelessWidget {
     final double genislik = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Get.back();
           },
         ),
-        backgroundColor: Colors.white,
         title: Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 60.0),
@@ -53,7 +55,7 @@ class SelectTypePage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const SelectTypeBuyukPage());
+                  Get.to(() => const SelectTypeBuyukPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [
@@ -99,7 +101,7 @@ class SelectTypePage extends StatelessWidget {
               SizedBox(width: yukseklik / 30),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const SelectTypeKucukPage());
+                  Get.to(() => const SelectTypeKucukPage(),duration: Duration(milliseconds: 650));
                 },
                 child: Column(
                   children: [

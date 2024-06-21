@@ -7,6 +7,7 @@ import 'package:merlabciftlikyonetim/FormFields/BuildTextField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildCounterField.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/FormButton.dart';
+import '../../FormFields/WeightField.dart';
 import 'AddKocController.dart';
 
 class AddKocPage extends StatelessWidget {
@@ -18,64 +19,32 @@ class AddKocPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                controller.resetForm();
-                Get.back();
-              },
-            );
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            controller.resetForm();
+            Get.back();
           },
         ),
         title: Center(
-          child: Container(
-            height: 40,
-            width: 130,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('resimler/logo_v2.png'),
-                fit: BoxFit.fill,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 60.0),
+            child: Container(
+              height: 40,
+              width: 130,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('resimler/logo_v2.png'),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),
         ),
-        actions: [
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.notifications, size: 35),
-                onPressed: () {},
-              ),
-              Positioned(
-                right: 11,
-                top: 11,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 18,
-                    minHeight: 18,
-                  ),
-                  child: const Text(
-                    '20',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -88,20 +57,8 @@ class AddKocPage extends StatelessWidget {
                 'Koçunuzun bilgilerini giriniz.',
                 style: TextStyle(fontSize: 16),
               ),
-              const SizedBox(height: 16),
-              const Card(
-                shadowColor: Colors.cyan,
-                elevation: 4.0,
-                color: Colors.white,
-                margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Koç ağırlık:  kg',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
+              const SizedBox(height: 5),
+              const WeightField(),
               const SizedBox(height: 16),
               const BuildTextField(label: 'Küpe No *', hint: 'GEÇİCİ_NO_16032'),
               const SizedBox(height: 16),
@@ -127,6 +84,7 @@ class AddKocPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
                 child: FormButton(
+                  title: 'Kaydet',
                   onPressed: () {
                     if (controller.formKey.currentState!.validate()) {
                       Get.snackbar(

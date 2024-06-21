@@ -14,7 +14,9 @@ class LoginPage extends StatelessWidget {
     final LoginController loginController = Get.find<LoginController>();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         elevation: 4,
         shadowColor: Colors.black38,

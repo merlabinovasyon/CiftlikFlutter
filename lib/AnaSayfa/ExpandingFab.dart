@@ -2,11 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/OlcumEkleme/OlcumPage.dart';
 
 import '../SecimSayfalari/SelectBirthTypePage.dart';
 import '../SecimSayfalari/SelectTypePage.dart';
-
-
 
 class ExpandingFab extends StatelessWidget {
   const ExpandingFab({super.key});
@@ -40,9 +39,10 @@ class ExpandingFab extends StatelessWidget {
             position: fabAnimation,
             child: _buildFabWithText(
               text: 'Yeni Doğan Ekle',
-              icon: Icons.add,
+              assetPath: 'resimler/icons/lamb_and_calf_with_plus_above_icon_black.png',
               onPressed: () {
-                Get.to(() => const SelectBirthTypePage());
+                Get.to(() => const SelectBirthTypePage(),
+                    duration: Duration(milliseconds: 650));
               },
               herotag: 'kuzu',
             ),
@@ -52,11 +52,25 @@ class ExpandingFab extends StatelessWidget {
             position: fabAnimation,
             child: _buildFabWithText(
               text: 'Hayvan Ekle',
-              icon: Icons.add,
+              assetPath: 'resimler/icons/sheep_and_cow_with_plus_above_icon_black.png',
               onPressed: () {
-                Get.to(() => const SelectTypePage());
+                Get.to(() => const SelectTypePage(),
+                    duration: Duration(milliseconds: 650));
               },
               herotag: 'genel',
+            ),
+          ),
+          const SizedBox(height: 10),
+          SlideTransition(
+            position: fabAnimation,
+            child: _buildFabWithText(
+              text: 'Ölçüm Yap',
+              assetPath: 'resimler/icons/sheep_with_scale_icon_black.png',
+              onPressed: () {
+                Get.to(() => OlcumPage(),
+                    duration: Duration(milliseconds: 650));
+              },
+              herotag: 'olcum',
             ),
           ),
           const SizedBox(height: 10),
@@ -90,7 +104,7 @@ class ExpandingFab extends StatelessWidget {
 
   Widget _buildFabWithText({
     required String text,
-    required IconData icon,
+    required String assetPath,
     required VoidCallback onPressed,
     required String herotag,
   }) {
@@ -128,7 +142,11 @@ class ExpandingFab extends StatelessWidget {
           heroTag: herotag,
           onPressed: onPressed,
           backgroundColor: Colors.white,
-          child: Icon(icon, color: Colors.black),
+          child: Image.asset(
+            assetPath,
+            width: 35,
+            height: 35,
+          ),
         ),
       ],
     );

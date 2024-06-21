@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/OlcumEkleme/OlcumPage.dart';
+import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
+import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
+import '../GelirGiderHesaplama/FinancePage.dart';
+import '../HayvanDetaySayfasi/AnimalDetailPage.dart';
 import 'DrawerController.dart';
 
 class DrawerMenu extends StatelessWidget {
@@ -10,6 +15,7 @@ class DrawerMenu extends StatelessWidget {
     final DrawerMenuController drawerController = Get.put(DrawerMenuController());
 
     return Drawer(
+      backgroundColor: Colors.white,
       child: Column(
         children: <Widget>[
           Container(
@@ -62,8 +68,7 @@ class DrawerMenu extends StatelessWidget {
                   leading: const Icon(Icons.contact_support, color: Colors.black,),
                   title: const Text('Test'),
                   onTap: () {
-                    drawerController.navigateTo('/test');
-                  },
+                    Get.to(() => FeedStockPage()) ;              },
                 ),
               ],
             ),
