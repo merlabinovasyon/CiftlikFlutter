@@ -85,7 +85,7 @@ class ActionsGrid extends StatelessWidget {
         ),
         ActionCard(
           title: 'Grup',
-          assetPath: 'resimler/icons/sheep_with_vaccine_icon_black.png',
+          assetPath: 'resimler/icons/sheep_and_cow_side_by_side_icon.png',
           onTap: () {
             print('Grup tapped');
           },

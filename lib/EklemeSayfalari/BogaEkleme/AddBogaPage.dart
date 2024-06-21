@@ -7,6 +7,7 @@ import 'package:merlabciftlikyonetim/FormFields/BuildTextField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildCounterField.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/FormButton.dart';
+import '../../FormFields/WeightField.dart';
 import 'AddBogaController.dart';
 
 class AddBogaPage extends StatelessWidget {
@@ -56,20 +57,8 @@ class AddBogaPage extends StatelessWidget {
                 'Boğanızın bilgilerini giriniz.',
                 style: TextStyle(fontSize: 16),
               ),
-              const SizedBox(height: 16),
-              const Card(
-                shadowColor: Colors.cyan,
-                elevation: 4.0,
-                color: Colors.white,
-                margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Boğa ağırlık:  kg',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
+              const SizedBox(height: 5),
+              WeightField(),
               const SizedBox(height: 16),
               const BuildTextField(label: 'Küpe No *', hint: 'GEÇİCİ_NO_16032'),
               const SizedBox(height: 16),

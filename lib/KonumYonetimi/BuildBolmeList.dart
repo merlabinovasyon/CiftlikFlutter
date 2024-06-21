@@ -25,7 +25,7 @@ class BuildBolmeList extends StatelessWidget {
                 icon: Icon(Icons.add),
                 onPressed: () {
                   if (controller.ahirList.isEmpty) {
-                    Get.snackbar('Uyarı', 'Önce bir ahır ekleyin');
+                    Get.snackbar('Uyarı', 'Lütfen önce ahır ekleyin');
                     return;
                   }
                   showDialog(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/AnaSayfa/BuildSubscriptionSection.dart';
+import 'package:merlabciftlikyonetim/AsiSayfasi/VaccinePage.dart';
 import 'package:merlabciftlikyonetim/AsiTakvimi/AsiPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimPage.dart';
 import 'package:merlabciftlikyonetim/GelirGiderHesaplama/FinancePage.dart';
@@ -97,11 +98,16 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
+                  cursorColor: Colors.black54,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
                     hintText: 'Küpe No, Hayvan Adı, Kemer No',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                     ),
                   ),
                 ),
@@ -143,10 +149,11 @@ class HomePage extends StatelessWidget {
                     // Handle tap for Sürüye Bakış
                     Get.to(() => GraphicPage(),duration: Duration(milliseconds: 650));
                   },
-                  title2: 'Analiz',
-                  iconAsset2: 'resimler/icons/bank_icon_black.png',
+                  title2: 'Aşılama',
+                  iconAsset2: 'resimler/icons/vaccine_syringe_icon_black.png',
                   onTap2: () {
                     // Handle tap for Analiz
+                    Get.to(() => VaccinePage(),duration: Duration(milliseconds: 650));
                   },
                 ),
                 const SizedBox(height: 10.0),

@@ -43,7 +43,7 @@ class BuildSlidableTransactionFeedCard extends StatelessWidget {
         child: ListTile(
           leading: Icon(
             transaction.type == 'purchase' ? Icons.shopping_cart : Icons.remove_shopping_cart,
-            color: Colors.orange,
+            color: Colors.black,
           ),
           title: Text('${transaction.date} - ${transaction.type == 'purchase' ? 'Alış' : 'Tüketim'}'),
           subtitle: Column(

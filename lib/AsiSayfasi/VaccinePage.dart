@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/HastalikSayfalari/AddDiseasePage.dart';
-import 'DiseaseCard.dart';
-import 'DiseaseController.dart';
+import 'AddVaccinePage.dart';
+import 'VaccineCard.dart';
+import 'VaccineController.dart';
 
-class DiseasePage extends StatefulWidget {
-  DiseasePage({super.key});
+class VaccinePage extends StatefulWidget {
+  VaccinePage({super.key});
 
   @override
-  _DiseasePageState createState() => _DiseasePageState();
+  _VaccinePageState createState() => _VaccinePageState();
 }
 
-class _DiseasePageState extends State<DiseasePage> {
-  final DiseaseController controller = Get.put(DiseaseController());
+class _VaccinePageState extends State<VaccinePage> {
+  final VaccineController controller = Get.put(VaccineController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _DiseasePageState extends State<DiseasePage> {
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                hintText: 'Hastalık Adı',
+                hintText: 'Aşı Adı',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -67,15 +67,15 @@ class _DiseasePageState extends State<DiseasePage> {
               children: [
                 TextButton(
                   onPressed: () {
-                    // Hastalık ekleme işlemi burada yapılabilir
-                    Get.to(() => AddDiseasePage(),duration: Duration(milliseconds: 650));
+                    // Aşı ekleme işlemi burada yapılabilir
+                    Get.to(() => AddVaccinePage(),duration: Duration(milliseconds: 650));
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
                   ),
                   child: Row(
                     children: [
-                      Text('Hastalık Ekle', style: TextStyle(color: Colors.black)),
+                      Text('Aşı Ekle', style: TextStyle(color: Colors.black)),
                       Icon(Icons.add, color: Colors.black),
                     ],
                   ),
@@ -86,10 +86,10 @@ class _DiseasePageState extends State<DiseasePage> {
             Expanded(
               child: Obx(
                     () => ListView.builder(
-                  itemCount: controller.diseases.length,
+                  itemCount: controller.vaccines.length,
                   itemBuilder: (context, index) {
-                    final disease = controller.diseases[index];
-                    return DiseaseCard(disease: disease);
+                    final vaccine = controller.vaccines[index];
+                    return VaccineCard(vaccine: vaccine);
                   },
                 ),
               ),

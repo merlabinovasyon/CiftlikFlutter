@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../FormFields/FormButton.dart';
 import 'FinanceController.dart';
 import 'TransactionTypeSelectionField.dart'; // Import the new TransactionTypeSelectionField
@@ -10,7 +11,7 @@ class AddTransactionPage extends StatelessWidget {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
   final _noteController = TextEditingController();
-  final _dateController = TextEditingController(text: '11/06/2024');
+  final _selectedDate = DateTime.now().obs; // Observable date
   final _transactionType = Rxn<TransactionType>();
 
   @override
@@ -110,32 +111,52 @@ class AddTransactionPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
-              TextFormField(
-                controller: _dateController,
-                decoration: InputDecoration(
-                  labelText: 'Tarih*',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
-                  suffixIcon: Icon(Icons.calendar_today),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+              Obx(
+                    () => InkWell(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: _selectedDate.value,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                      locale: const Locale('tr', 'TR'),
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData.dark().copyWith(
+                            colorScheme: ColorScheme.dark(
+                              primary: Colors.cyan.withOpacity(0.5),
+                              onPrimary: Colors.white,
+                              surface: Colors.black,
+                              onSurface: Colors.white,
+                            ),
+                            dialogBackgroundColor: Colors.blueGrey[800],
+                          ),
+                          child: child!,
+                        );
+                      },
+                    );
+                    if (pickedDate != null) {
+                      _selectedDate.value = pickedDate;
+                    }
+                  },
+                  child: IgnorePointer(
+                    child: TextFormField(
+                      controller: TextEditingController(text: DateFormat('d MMMM y', 'tr').format(_selectedDate.value)),
+                      decoration: InputDecoration(
+                        labelText: 'Tarih*',
+                        labelStyle: TextStyle(color: Colors.black), // Label rengi
+                        suffixIcon: Icon(Icons.calendar_today),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-                  if (pickedDate != null) {
-                    _dateController.text = pickedDate.toLocal().toString().split(' ')[0];
-                  }
-                },
               ),
               SizedBox(height: 16),
               TransactionTypeSelectionField(
@@ -148,13 +169,13 @@ class AddTransactionPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
+                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       final transaction = Transaction(
-                        date: _dateController.text,
+                        date: DateFormat('d MMMM y', 'tr').format(_selectedDate.value),
                         name: _nameController.text,
                         note: _noteController.text,
                         amount: double.parse(_amountController.text) *
@@ -166,7 +187,6 @@ class AddTransactionPage extends StatelessWidget {
                         Get.back();
                         Get.snackbar('Başarılı', 'İşlem Kaydedildi');
                       });
-
                     }
                   },
                 ),

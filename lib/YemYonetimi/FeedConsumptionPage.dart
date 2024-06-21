@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/FormFields/FormButton.dart';
+import 'package:intl/intl.dart'; // Import intl package
 import 'FeedConsumptionController.dart';
+import '../FormFields/FormButton.dart';
 
 class FeedConsumptionPage extends StatelessWidget {
   final FeedConsumptionController controller = Get.put(FeedConsumptionController());
@@ -113,32 +114,50 @@ class FeedConsumptionPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Obx(
-                    () => TextFormField(
-                  controller: TextEditingController(text: controller.date.value),
-                  decoration: InputDecoration(
-                    labelText: 'Tarih*',
-                    labelStyle: TextStyle(color: Colors.black), // Label rengi
-                    suffixIcon: Icon(Icons.calendar_today),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
-                    ),
-                  ),
-                  readOnly: true,
+                    () => InkWell(
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2100),
+                      locale: const Locale('tr', 'TR'),
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData.dark().copyWith(
+                            colorScheme: ColorScheme.dark(
+                              primary: Colors.cyan.withOpacity(0.5),
+                              onPrimary: Colors.white,
+                              surface: Colors.black,
+                              onSurface: Colors.white,
+                            ),
+                            dialogBackgroundColor: Colors.blueGrey[800],
+                          ),
+                          child: child!,
+                        );
+                      },
                     );
                     if (pickedDate != null) {
-                      controller.date.value = pickedDate.toLocal().toString().split(' ')[0];
+                      controller.date.value = DateFormat('d MMMM y', 'tr').format(pickedDate);
                     }
                   },
+                  child: IgnorePointer(
+                    child: TextFormField(
+                      controller: TextEditingController(text: controller.date.value),
+                      decoration: InputDecoration(
+                        labelText: 'Tarih*',
+                        labelStyle: TextStyle(color: Colors.black), // Label rengi
+                        suffixIcon: Icon(Icons.calendar_today),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 16),

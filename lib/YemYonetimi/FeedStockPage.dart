@@ -45,11 +45,16 @@ class FeedStockPage extends StatelessWidget {
         child: Column(
           children: [
             TextField(
+              cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Ara...',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                 ),
               ),
               onChanged: (value) {

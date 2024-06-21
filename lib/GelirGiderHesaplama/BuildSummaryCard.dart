@@ -6,9 +6,15 @@ class BuildSummaryCard extends StatelessWidget {
   final String title;
   final double amount;
   final bool isIncome;
+  final String assetPath;
   final FinanceController controller = Get.find();
 
-  BuildSummaryCard({required this.title, required this.amount, required this.isIncome});
+  BuildSummaryCard({
+    required this.title,
+    required this.amount,
+    required this.isIncome,
+    required this.assetPath,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +23,12 @@ class BuildSummaryCard extends StatelessWidget {
         controller.selectedType.value = isIncome ? TransactionType.Gelir : TransactionType.Gider;
       },
       child: Obx(() {
+        bool isSelected = controller.selectedType.value == (isIncome ? TransactionType.Gelir : TransactionType.Gider);
         return Card(
-          color: controller.selectedType.value == (isIncome ? TransactionType.Gelir : TransactionType.Gider)
-              ? Colors.cyan[50]
-              : Colors.white,
+          color: isSelected ? Colors.cyan[50] : Colors.white,
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: controller.selectedType.value == (isIncome ? TransactionType.Gelir : TransactionType.Gider)
-                  ? Colors.black87
-                  : Colors.transparent,
+              color: isSelected ? Colors.black87 : Colors.transparent,
               width: 2.0,
             ),
             borderRadius: BorderRadius.circular(12.0),
@@ -37,7 +40,31 @@ class BuildSummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title),
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: isSelected ? Colors.black12 : Colors.transparent,
+                          width: 2.0,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        radius: 17, // yarıçapı ayarlandı, ikon büyüklüğünde
+                        backgroundColor: Colors.white,
+                        child: Image.asset(
+                          assetPath,
+                          height: 25,
+                          width: 25,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8.0),
+                    Text(title,style: TextStyle(fontSize: 17)),
+                  ],
+                ),
                 SizedBox(height: 4.0),
                 Text(
                   'TRY ${amount.toStringAsFixed(2)}',

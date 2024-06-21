@@ -75,8 +75,8 @@ class FinancePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      BuildSummaryCard(title: 'Gelir', amount: controller.gelir.value, isIncome: true),
-                      BuildSummaryCard(title: 'Gider', amount: controller.gider.value, isIncome: false),
+                      BuildSummaryCard(title: 'Gelir', amount: controller.gelir.value, isIncome: true,assetPath: 'resimler/icons/graph_with_income_arrow_icon_white_bg.png',),
+                      BuildSummaryCard(title: 'Gider', amount: controller.gider.value, isIncome: false, assetPath: 'resimler/icons/graph_with_downward_arrow_straight_icon.png',),
                     ],
                   ),
                 ],
@@ -85,10 +85,15 @@ class FinancePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
                   hintText: 'Tarih, Ad, Notlar',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                  ),
                 ),
               ),
             ),
