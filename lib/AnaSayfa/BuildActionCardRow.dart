@@ -31,24 +31,29 @@ class BuildActionCardRow extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              tileColor: Colors.white,
-              leading: Image.asset(
-                iconAsset1,
-                width: 33,
-                height: 33,
-              ),
-              title: Text(
-                title1,
-                style: GoogleFonts.roboto(
-                  textStyle: const TextStyle(
-                      color: Colors.cyan, fontWeight: FontWeight.bold),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15.0),
+              highlightColor: Colors.grey.shade50, // Uzun basıldığında çıkan rengin ayarlanması
+              splashColor: Colors.grey.shade50, // Splash renginin ayarlanması
+              onTap: onTap1,
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                tileColor: Colors.white,
+                leading: Image.asset(
+                  iconAsset1,
+                  width: 33,
+                  height: 33,
+                ),
+                title: Text(
+                  title1,
+                  style: GoogleFonts.roboto(
+                    textStyle: const TextStyle(
+                        color: Colors.cyan, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-              onTap: onTap1,
             ),
           ),
         ),
@@ -61,24 +66,29 @@ class BuildActionCardRow extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              tileColor: Colors.white,
-              leading: Image.asset(
-                iconAsset2,
-                width: 33,
-                height: 33,
-              ),
-              title: Text(
-                title2,
-                style: GoogleFonts.roboto(
-                  textStyle: const TextStyle(
-                      color: Colors.cyan, fontWeight: FontWeight.bold),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15.0),
+              highlightColor: Colors.grey.shade50, // Uzun basıldığında çıkan rengin ayarlanması
+              splashColor: Colors.grey.shade50, // Splash renginin ayarlanması
+              onTap: onTap2,
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                tileColor: Colors.white,
+                leading: Image.asset(
+                  iconAsset2,
+                  width: 33,
+                  height: 33,
+                ),
+                title: Text(
+                  title2,
+                  style: GoogleFonts.roboto(
+                    textStyle: const TextStyle(
+                        color: Colors.cyan, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-              onTap: onTap2,
             ),
           ),
         ),

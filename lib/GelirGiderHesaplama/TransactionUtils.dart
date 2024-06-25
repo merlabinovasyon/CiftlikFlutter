@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TransactionUtils {
   void showTimePicker(BuildContext context, TextEditingController controller) {
@@ -42,7 +43,7 @@ class TransactionUtils {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: const Text('Tamam', style: TextStyle(color: Colors.black)),
                 ),
@@ -94,7 +95,7 @@ class TransactionUtils {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: const Text('Tamam', style: TextStyle(color: Colors.black)),
                 ),
@@ -177,7 +178,7 @@ class TransactionUtils {
                                   title: Text(filteredOptions[index]),
                                   onTap: () {
                                     onSelected(filteredOptions[index]);
-                                    Navigator.pop(context);
+                                    Get.back();
                                   },
                                 ),
                               );
@@ -193,7 +194,7 @@ class TransactionUtils {
                     child: IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                     ),
                   ),
@@ -242,7 +243,7 @@ class TransactionUtils {
                               title: Text(options[index]),
                               onTap: () {
                                 onSelected(options[index]);
-                                Navigator.pop(context);
+                                Get.back();
                               },
                             ),
                           );
@@ -258,7 +259,7 @@ class TransactionUtils {
                 child: IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
               ),

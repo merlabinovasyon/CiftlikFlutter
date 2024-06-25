@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'FeedDetailController.dart';
-import 'TransactionModel.dart';
+import 'AnimalVaccineController.dart';
 
-class BuildSlidableTransactionFeedCard extends StatelessWidget {
-  final Transaction transaction;
-  final FeedDetailController controller;
+class AnimalVaccineCard extends StatelessWidget {
+  final Vaccine vaccine;
+  final AnimalVaccineController controller = Get.find();
 
-  BuildSlidableTransactionFeedCard({required this.transaction, required this.controller});
+  AnimalVaccineCard({Key? key, required this.vaccine}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: ValueKey(transaction.id),
+      key: ValueKey(vaccine),
       endActionPane: ActionPane(
         motion: ScrollMotion(),
         extentRatio: 0.17,
         children: [
           SlidableAction(
             onPressed: (context) {
-              controller.deleteTransaction(transaction.id);
-              Get.snackbar('Başarılı', 'İşlem silindi');
+              controller.removeVaccine(vaccine);
+              Get.snackbar('Başarılı', 'Aşı silindi');
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -35,31 +34,27 @@ class BuildSlidableTransactionFeedCard extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            elevation: 4,
-            shadowColor: Colors.cyan,
             color: Colors.white,
-            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(15.0),
             ),
+            elevation: 2.0,
+            shadowColor: Colors.cyan,
+            margin: const EdgeInsets.only(bottom: 10.0, right: 10),
             child: ListTile(
-              leading: Icon(
-                transaction.type == 'purchase' ? Icons.shopping_cart : Icons.remove_shopping_cart,
-                color: Colors.black,
-              ),
-              title: Text('${transaction.date} - ${transaction.type == 'purchase' ? 'Alış' : 'Tüketim'}'),
+              leading: Icon(Icons.medical_services),
+              title: Text(vaccine.date),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${transaction.quantity} kg'),
-                  Text('Notlar: ${transaction.notes}'),
+                  Text(vaccine.vaccineName ?? 'Bilinmiyor'), // Null kontrolü
+                  Text(vaccine.notes),
                 ],
               ),
-              trailing: Text('${transaction.price} TRY', style: TextStyle(color: Colors.red)),
             ),
           ),
           Positioned(
-            top: 10,
+            top: 9,
             right: 16,
             child: Icon(
               Icons.swipe_left,

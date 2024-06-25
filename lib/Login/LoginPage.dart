@@ -53,12 +53,18 @@ class LoginPage extends StatelessWidget {
                   Image.asset('resimler/login_screen_2.png', height: MediaQuery.of(context).size.height / 4),
                   SizedBox(height: MediaQuery.of(context).size.height / 50),
                   TextFormField(
+                    cursorColor: Colors.black54,
                     controller: loginController.emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'E-posta',
+                      labelStyle: TextStyle(color: Colors.black), // Label rengi
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
+                        borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                       ),
                       prefixIcon: const Icon(Icons.email),
                     ),
@@ -117,12 +123,18 @@ class LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 50),
                   Obx(() => TextFormField(
+                    cursorColor: Colors.black54,
                     controller: loginController.passwordController,
                     obscureText: loginController.obscure2Text.value,
                     decoration: InputDecoration(
                       labelText: 'Şifre',
+                      labelStyle: TextStyle(color: Colors.black), // Label rengi
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
+                        borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                       ),
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(

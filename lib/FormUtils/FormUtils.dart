@@ -185,7 +185,7 @@ class FormUtils {
                                   title: Text(filteredOptions[index]),
                                   onTap: () {
                                     onSelected(filteredOptions[index]);
-                                    Navigator.pop(context);
+                                    Get.back();
                                   },
                                 ),
                               );
@@ -201,7 +201,7 @@ class FormUtils {
                     child: IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                     ),
                   ),
@@ -250,7 +250,7 @@ class FormUtils {
                               title: Text(options[index]),
                               onTap: () {
                                 onSelected(options[index]);
-                                Navigator.pop(context);
+                                Get.back();
                               },
                             ),
                           );
@@ -266,7 +266,7 @@ class FormUtils {
                 child: IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
               ),

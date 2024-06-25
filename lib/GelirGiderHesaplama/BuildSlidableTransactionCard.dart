@@ -31,44 +31,57 @@ class BuildSlidableTransactionCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Card(
-        elevation: 2,
-        shadowColor: Colors.cyan,
-        color: Colors.white,
-        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: ListTile(
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                transaction.date,
-                style: TextStyle(fontWeight: FontWeight.bold),
+      child: Stack(
+        children: [
+          Card(
+            elevation: 2,
+            shadowColor: Colors.cyan,
+            color: Colors.white,
+            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: ListTile(
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    transaction.date,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(transaction.name),
+                ],
               ),
-              Text(transaction.name),
-            ],
+              title: Row(
+                children: [
+                  Expanded(child: Text(transaction.note)),
+                  Container(
+                    width: 1.0,
+                    height: 40.0,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(width: 8.0),
+                  Text(
+                    'TRY ${transaction.amount.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      color: transaction.type == TransactionType.Gelir ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          title: Row(
-            children: [
-              Expanded(child: Text(transaction.note)),
-              Container(
-                width: 1.0,
-                height: 40.0,
-                color: Colors.grey,
-              ),
-              SizedBox(width: 8.0),
-              Text(
-                'TRY ${transaction.amount.toStringAsFixed(2)}',
-                style: TextStyle(
-                  color: transaction.type == TransactionType.Gelir ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+          Positioned(
+            top: 10,
+            right: 20,
+            child: Icon(
+              Icons.swipe_left,
+              size: 18,
+              color: Colors.red,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
