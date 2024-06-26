@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/HayvanAsiSayfasi/AnimalVaccinePage.dart';
+import 'package:merlabciftlikyonetim/HayvanGebelikKontrolSayfasi/PregnancyCheckPage.dart';
+import 'package:merlabciftlikyonetim/HayvanGrupSayfasi/AnimalGroupPage.dart';
+import 'package:merlabciftlikyonetim/HayvanKonumSayfasi/AnimalLocationPage.dart';
+import 'package:merlabciftlikyonetim/HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
+import 'package:merlabciftlikyonetim/HayvanNotSayfasi/AnimalNotePage.dart';
 import 'ActionCard.dart';
 
 class ActionsGrid extends StatelessWidget {
@@ -29,9 +36,9 @@ class ActionsGrid extends StatelessWidget {
         ),
         ActionCard(
           title: 'Gebelik Kontrolü',
-          assetPath: 'resimler/icons/sheep_with_vaccine_icon_black.png',
+          assetPath: 'resimler/icons/cow_with_magnifying_glass_icon.png',
           onTap: () {
-            print('Gebelik Kontrolü tapped');
+            Get.to(() => PregnancyCheckPage(),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
@@ -59,14 +66,14 @@ class ActionsGrid extends StatelessWidget {
           title: 'Muayene',
           assetPath: 'resimler/icons/stethoscope_icon_black.png',
           onTap: () {
-            print('Muayene tapped');
+            Get.to(() => AnimalExaminationPage(),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Aşılama',
           assetPath: 'resimler/icons/vaccine_syringe_icon_black.png',
           onTap: () {
-            print('Aşılama tapped');
+            Get.to(() => AnimalVaccinePage(),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
@@ -80,21 +87,21 @@ class ActionsGrid extends StatelessWidget {
           title: 'Lokasyon',
           assetPath: 'resimler/icons/barn_with_location_icon_black.png',
           onTap: () {
-            print('Lokasyon tapped');
+            Get.to(() => AnimalLocationPage(),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Grup',
           assetPath: 'resimler/icons/sheep_and_cow_side_by_side_icon.png',
           onTap: () {
-            print('Grup tapped');
+            Get.to(() => AnimalGroupPage(),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Notlar',
           assetPath: 'resimler/icons/notes_icon_black.png',
           onTap: () {
-            print('Notlar tapped');
+            Get.to(() => AnimalNotePage(),duration: Duration(milliseconds: 650));
           },
         ),
       ],

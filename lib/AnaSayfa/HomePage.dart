@@ -9,6 +9,7 @@ import 'package:merlabciftlikyonetim/GraphicPage.dart';
 import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
 import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
+import 'package:merlabciftlikyonetim/RasyonHesaplama/RationWizardMainPage.dart';
 import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
 import '../Drawer/DrawerMenu.dart';
 import '../gebelik_kontrol_page.dart';
@@ -193,14 +194,15 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Raporlar',
-                  iconAsset1: 'resimler/icons/bank_icon_black.png',
+                  iconAsset1: 'resimler/icons/report_icon.png',
                   onTap1: () {
                     // Handle tap for Raporlar
                   },
-                  title2: 'Kayıtlar',
-                  iconAsset2: 'resimler/icons/bank_icon_black.png',
+                  title2: 'Rasyon',
+                  iconAsset2: 'resimler/icons/magic_wand_with_sparkles_icon.png',
                   onTap2: () {
                     // Handle tap for Kayıtlar
+                    Get.to(() => RationWizardMainPage(),duration: Duration(milliseconds: 650));
                   },
                 ),
                 SizedBox(height: 30.0),

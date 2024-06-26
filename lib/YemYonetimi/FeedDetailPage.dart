@@ -40,6 +40,7 @@ class FeedDetailPage extends StatelessWidget {
             onPressed: () {
               // Delete all functionality
               Get.defaultDialog(
+                backgroundColor: Colors.white,
                 title: "Silme İşlemi",
                 middleText: "Tüm işlemleri silmek istediğinize emin misiniz?",
                 textConfirm: "Evet",

@@ -58,6 +58,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.black54,
+          selectionColor: Colors.cyan.shade700, // Seçim rengi (yarı saydam)
+          selectionHandleColor: Colors.cyan.shade800, // Seçim imleci rengi
+        ),
       ),
       initialBinding: InitialBinding(), // Tüm bağımlılıkları başlatan binding
       localizationsDelegates: [

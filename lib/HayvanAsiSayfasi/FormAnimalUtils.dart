@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TransactionUtils {
-  void showTransactionTypeSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
+class FormAnimalUtils {
+  void ShowSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
     TextEditingController searchController = TextEditingController();
     List<String> filteredOptions = List.from(options);
 
@@ -49,7 +48,6 @@ class TransactionUtils {
                                   ),
                                 ),
                               ),
-
                               const SizedBox(height: 10),
                               Align(
                                 alignment: Alignment.center,

@@ -63,11 +63,16 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
             FilterableTabBar(tabController: _tabController),
             const SizedBox(height: 8.0),
             TextField(
+              cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
                 hintText: 'Küpe No, Hayvan Adı, Kemer No',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                 ),
               ),
             ),
