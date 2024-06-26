@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/HayvanAsiSayfasi/AnimalVaccinePage.dart';
+import 'package:merlabciftlikyonetim/HayvanGebelikKontrolSayfasi/PregnancyCheckPage.dart';
 import 'package:merlabciftlikyonetim/HayvanGrupSayfasi/AnimalGroupPage.dart';
 import 'package:merlabciftlikyonetim/HayvanKonumSayfasi/AnimalLocationPage.dart';
 import 'package:merlabciftlikyonetim/HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
+import 'package:merlabciftlikyonetim/HayvanNotSayfasi/AnimalNotePage.dart';
 import 'ActionCard.dart';
 
 class ActionsGrid extends StatelessWidget {
@@ -34,9 +36,9 @@ class ActionsGrid extends StatelessWidget {
         ),
         ActionCard(
           title: 'Gebelik Kontrolü',
-          assetPath: 'resimler/icons/sheep_with_vaccine_icon_black.png',
+          assetPath: 'resimler/icons/cow_with_magnifying_glass_icon.png',
           onTap: () {
-            print('Gebelik Kontrolü tapped');
+            Get.to(() => PregnancyCheckPage(),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
@@ -99,7 +101,7 @@ class ActionsGrid extends StatelessWidget {
           title: 'Notlar',
           assetPath: 'resimler/icons/notes_icon_black.png',
           onTap: () {
-            print('Notlar tapped');
+            Get.to(() => AnimalNotePage(),duration: Duration(milliseconds: 650));
           },
         ),
       ],

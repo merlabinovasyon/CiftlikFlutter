@@ -140,17 +140,35 @@ class FormUtils {
               child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0, top: 25),
+                    padding: const EdgeInsets.only(bottom: 16.0, top: 13),
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              title,
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 30,
+                                height: 4.3, // Divider yüksekliğini belirleyin
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey.shade400, // Border rengini belirleyin
+                                      width: 4.3, // Border genişliğini belirleyin
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  title,
+                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
@@ -213,6 +231,7 @@ class FormUtils {
       },
     );
   }
+
   void ShowSimpleSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
     showModalBottomSheet(
       backgroundColor: Colors.white,
@@ -224,17 +243,35 @@ class FormUtils {
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 16.0, top: 25),
+                padding: const EdgeInsets.only(bottom: 16.0, top: 13),
                 child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          title,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 4.3, // Divider yüksekliğini belirleyin
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey.shade400, // Border rengini belirleyin
+                                  width: 4.3, // Border genişliğini belirleyin
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              title,
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(

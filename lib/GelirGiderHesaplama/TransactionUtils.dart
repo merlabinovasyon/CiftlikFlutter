@@ -3,110 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TransactionUtils {
-  void showTimePicker(BuildContext context, TextEditingController controller) {
-    DateTime initialDateTime = DateTime.now();
-    if (controller.text.isEmpty) {
-      controller.text =
-      "${initialDateTime.hour.toString().padLeft(2, '0')}:${initialDateTime.minute.toString().padLeft(2, '0')}";
-    }
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        return SizedBox(
-          height: MediaQuery.of(context).copyWith().size.height / 3.8,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Lütfen saat ve dakika seçiniz',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.time,
-                  use24hFormat: true,
-                  initialDateTime: initialDateTime,
-                  onDateTimeChanged: (DateTime newDateTime) {
-                    controller.text =
-                    "${newDateTime.hour.toString().padLeft(2, '0')}:${newDateTime.minute.toString().padLeft(2, '0')}";
-                  },
-                ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: const Text('Tamam', style: TextStyle(color: Colors.black)),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void showCounterPicker(BuildContext context, TextEditingController controller, String title) {
-    if (controller.text.isEmpty) {
-      controller.text = '1';
-    }
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        return SizedBox(
-          height: MediaQuery.of(context).copyWith().size.height / 3.8,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Lütfen $title tipini seçiniz',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: CupertinoPicker(
-                  itemExtent: 32.0,
-                  onSelectedItemChanged: (int index) {
-                    controller.text = (index + 1).toString();
-                  },
-                  children: List<Widget>.generate(5, (int index) {
-                    return Center(
-                      child: Text((index + 1).toString()),
-                    );
-                  }),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: const Text('Tamam', style: TextStyle(color: Colors.black)),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   void showTransactionTypeSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
     TextEditingController searchController = TextEditingController();
     List<String> filteredOptions = List.from(options);
@@ -133,17 +29,36 @@ class TransactionUtils {
               child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0, top: 25),
+                    padding: const EdgeInsets.only(bottom: 16.0, top: 13),
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              title,
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 30,
+                                height: 4.3, // Divider yüksekliğini belirleyin
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey.shade400, // Border rengini belirleyin
+                                      width: 4.3, // Border genişliğini belirleyin
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  title,
+                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
@@ -202,69 +117,6 @@ class TransactionUtils {
               ),
             );
           },
-        );
-      },
-    );
-  }
-
-  void showSimpleSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return FractionallySizedBox(
-          heightFactor: 0.5,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0, top: 25),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          title,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: options.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            shadowColor: Colors.cyan,
-                            elevation: 4.0,
-                            color: Colors.white,
-                            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                            child: ListTile(
-                              title: Text(options[index]),
-                              onTap: () {
-                                onSelected(options[index]);
-                                Get.back();
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                right: 10,
-                top: 10,
-                child: IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-              ),
-            ],
-          ),
         );
       },
     );
