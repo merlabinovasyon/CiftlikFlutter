@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 class BuildTextField extends StatelessWidget {
   final String label;
   final String hint;
-  const BuildTextField({super.key, required this.label, required this.hint});
+  final TextEditingController? controller;
+
+  const BuildTextField({super.key, required this.label, required this.hint, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       cursorColor: Colors.black54,
       decoration: InputDecoration(
         labelText: label,
@@ -27,5 +30,6 @@ class BuildTextField extends StatelessWidget {
         }
         return null;
       },
-    );  }
+    );
+  }
 }

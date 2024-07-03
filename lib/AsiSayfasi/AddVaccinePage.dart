@@ -54,14 +54,14 @@ class AddVaccinePage extends StatelessWidget {
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Aşı Adı *',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey, width: 1.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
                 onChanged: (value) {
@@ -79,14 +79,14 @@ class AddVaccinePage extends StatelessWidget {
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Aşı Açıklaması *',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey, width: 1.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
                 onChanged: (value) {
@@ -104,17 +104,7 @@ class AddVaccinePage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      Get.snackbar(
-                        'Başarılı',
-                        'Kayıt Başarılı',
-                      );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Get.offNamedUntil('/vaccinePage', (route) => route.isFirst);
-                      });
-                    }
-                  },
+                  onPressed: controller.saveVaccineData,
                 ),
               ),
             ],

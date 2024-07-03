@@ -5,6 +5,8 @@ import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/BuildSelectionField.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/WeightField.dart';
+import '../../FormFields/BuildDateField.dart';
+import '../../FormFields/BuildTimeField.dart';
 
 class InekSutOlcumPage extends StatelessWidget {
   final InekSutOlcumController controller = Get.put(InekSutOlcumController());
@@ -64,27 +66,23 @@ class InekSutOlcumPage extends StatelessWidget {
                   controller.selectedType.value = value;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
+              BuildDateField(
+                label: 'Tarih',
+                controller: controller.dateController,
+              ),
+              const SizedBox(height: 16),
+              BuildTimeField(
+                label: 'Saat',
+                controller: controller.timeController,
+                onTap: utils.showTimePicker,
+              ),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      String? selectedType = controller.selectedType.value;
-                      if (selectedType != null) {
-                        if (selectedType.startsWith('İnek')) {
-                          Get.snackbar(
-                            'Başarılı',
-                            'Kayıt başarılı',
-                          );
-                          Future.delayed(const Duration(seconds: 1), () {
-                            Get.offAllNamed('/bottomNavigation');
-                          });
-                        }
-                      }
-                    }
-                  },
+                  onPressed: controller.saveSutOlcumInekData,
                 ),
               ),
             ],

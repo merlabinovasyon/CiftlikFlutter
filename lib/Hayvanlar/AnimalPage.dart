@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../HayvanDetaySayfasi/AnimalDetailPage.dart';
 import 'AnimalController.dart';
 import 'FilterableTabBar.dart';
+import 'AnimalCard.dart'; // Yeni dosyayı içe aktarın
 
 class AnimalPage extends StatefulWidget {
   AnimalPage({super.key});
@@ -19,6 +19,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 8, vsync: this);
+    controller.fetchAnimals('lambTable'); // Default fetch on first tab
   }
 
   @override
@@ -79,72 +80,24 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
             const SizedBox(height: 8.0),
             Expanded(
               child: Obx(
-                    () => ListView.builder(
-                  itemCount: controller.animals.length,
-                  itemBuilder: (context, index) {
-                    final animal = controller.animals[index];
-                    return AnimalCard(animal: animal);
-                  },
-                ),
+                    () {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator(color: Colors.black,));
+                  } else if (controller.animals.isEmpty) {
+                    return Center(child: Text('Hayvan bulunamadı'));
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.animals.length,
+                      itemBuilder: (context, index) {
+                        final animal = controller.animals[index];
+                        return AnimalCard(animal: animal, tableName: _tabController.index == 6 || _tabController.index == 7 ? 'weaned' : '');
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AnimalCard extends StatelessWidget {
-  final Animal animal;
-
-  const AnimalCard({Key? key, required this.animal}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => AnimalDetailPage(), duration: Duration(milliseconds: 650));
-      },
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        elevation: 4.0,
-        shadowColor: Colors.cyan,
-        margin: const EdgeInsets.only(bottom: 10.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.white,
-                child: Image.asset(
-                  animal.image,
-                  width: 55,
-                  height: 55,
-                ),
-              ),
-              const SizedBox(width: 16.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Küpe No: ${animal.kupeNo}',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Text(animal.hayvanAdi),
-                    const SizedBox(height: 4.0),
-                    Text(animal.dogumTarihi),
-                  ],
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

@@ -85,13 +85,21 @@ class _DiseasePageState extends State<DiseasePage> {
             const SizedBox(height: 8.0),
             Expanded(
               child: Obx(
-                    () => ListView.builder(
-                  itemCount: controller.diseases.length,
-                  itemBuilder: (context, index) {
-                    final disease = controller.diseases[index];
-                    return DiseaseCard(disease: disease);
-                  },
-                ),
+                    () {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (controller.diseases.isEmpty) {
+                    return Center(child: Text('Hastalık bulunamadı'));
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.diseases.length,
+                      itemBuilder: (context, index) {
+                        final disease = controller.diseases[index];
+                        return DiseaseCard(disease: disease);
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],

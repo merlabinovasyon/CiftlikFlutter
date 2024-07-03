@@ -30,7 +30,7 @@ class _VaccineCardState extends State<VaccineCard> {
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
             child: Image.asset(
-              widget.vaccine.image,
+              'resimler/login_screen_2.png',
               height: 50,
               width: 50,
               fit: BoxFit.cover,
@@ -43,7 +43,7 @@ class _VaccineCardState extends State<VaccineCard> {
             ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: Image.asset(
-                widget.vaccine.image,
+                'resimler/login_screen_2.png',
                 height: 100,
                 width: double.infinity,
                 fit: BoxFit.cover,

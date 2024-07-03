@@ -60,9 +60,36 @@ class AddInekPage extends StatelessWidget {
               const SizedBox(height: 5),
               const WeightField(),
               const SizedBox(height: 16),
-              const BuildTextField(label: 'Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+              Row(
+                children: [
+                  Expanded(
+                    child: BuildTextField(
+                      label: 'Küpe No *',
+                      hint: 'GEÇİCİ_NO_16032',
+                      controller: controller.tagNoController,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0,bottom: 2,left: 10),
+                    child: SizedBox(
+                      width: 100, // İstediğiniz genişlik
+                      height: 50, // İstediğiniz yükseklik
+                      child: FormButton(
+                        title: 'Tara',
+                        onPressed: () {
+                          // Kontrol etme işlemi burada yapılacak
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 16),
-              const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+              BuildTextField(
+                label: 'Devlet Küpe No *',
+                hint: 'GEÇİCİ_NO_16032',
+                controller: controller.govTagNoController,
+              ),
               const SizedBox(height: 16),
               BuildSelectionField(
                 label: 'Irk *',
@@ -73,31 +100,37 @@ class AddInekPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              const BuildTextField(label: 'Hayvan Adı', hint: ''),
+              BuildTextField(
+                label: 'Hayvan Adı',
+                hint: '',
+                controller: controller.nameController,
+              ),
               const SizedBox(height: 16),
-              BuildCounterField(label: 'İnek Tipi', controller: controller.countController, title: 'inek'),
+              BuildCounterField(
+                label: 'İnek Tipi',
+                controller: controller.countController,
+                title: 'inek',
+              ),
               const SizedBox(height: 16),
-              BuildDateField(label: 'İneğin Kayıt Tarihi *', controller: controller.dobController),
+              BuildDateField(
+                label: 'İneğin Kayıt Tarihi *',
+                controller: controller.dobController,
+              ),
               const SizedBox(height: 16),
-              BuildTimeField(label: 'İneğin Kayıt Zamanı', controller: controller.timeController, onTap: utils.showTimePicker),
+              BuildTimeField(
+                label: 'İneğin Kayıt Zamanı',
+                controller: controller.timeController,
+                onTap: utils.showTimePicker,
+              ),
               SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
                 child: FormButton(
                   title: 'Kaydet',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      Get.snackbar(
-                        'Başarılı',
-                        'Kayıt başarılı',
-                      );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Get.offAllNamed('/bottomNavigation');
-                      });
-                    }
-                  },
+                  onPressed: controller.saveInekData,
                 ),
-              ),            ],
+              ),
+            ],
           ),
         ),
       ),

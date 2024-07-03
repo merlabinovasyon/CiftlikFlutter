@@ -1,76 +1,67 @@
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/Hayvanlar/DatabaseAnimalHelper.dart';
 
 class AnimalController extends GetxController {
   var animals = <Animal>[].obs;
+  var isLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    // Örnek veri; gerçek verilerle değiştirin
-    animals.assignAll([
-      Animal(
-        koyun: 'Koyun 1',
-        koc: 'Koç 1',
-        dogumSaati: '10:00',
-        dogumTarihi: '2023-01-01',
-        kupeNo: '12345',
-        devletKupeNo: '54321',
-        hayvanAdi: 'Kuzu 1',
-        cinsiyet: 'Erkek',
-        kuzuTipi: 'Sütten Kesilmiş',
-        image: 'resimler/icons/sheep_and_lamb_icon_black.png',
-      ),
-      Animal(
-        koyun: 'Koyun 1',
-        koc: 'Koç 1',
-        dogumSaati: '10:00',
-        dogumTarihi: '2023-01-01',
-        kupeNo: '12345',
-        devletKupeNo: '54321',
-        hayvanAdi: 'Kuzu 1',
-        cinsiyet: 'Erkek',
-        kuzuTipi: 'Sütten Kesilmiş',
-        image: 'resimler/icons/hornless_sheep_with_straight_ears_icon_black.png',
-      ),
-      Animal(
-        koyun: 'Koyun 1',
-        koc: 'Koç 1',
-        dogumSaati: '10:00',
-        dogumTarihi: '2023-01-01',
-        kupeNo: '123456789',
-        devletKupeNo: '54321',
-        hayvanAdi: 'Kuzu 1',
-        cinsiyet: 'Erkek',
-        kuzuTipi: 'Sütten Kesilmiş',
-        image: 'resimler/icons/hornless_sheep_with_straight_ears_icon_black.png',
-      ),
-      // Daha fazla hayvan ekleyin
-    ]);
+  // Önceden yüklenmiş verileri tutmak için bir harita oluşturun
+  Map<String, List<Animal>> cachedAnimals = {};
+
+  // Önbellek boyutunu sınırlayın
+  final int cacheSizeLimit = 100;
+
+  Future<void> fetchAnimals(String tableName) async {
+    if (cachedAnimals.containsKey(tableName)) {
+      // Eğer veriler önceden yüklenmişse, doğrudan önbellekten alın
+      animals.assignAll(cachedAnimals[tableName]!);
+    } else {
+      isLoading(true);
+      try {
+        List<Map<String, dynamic>> data = await DatabaseAnimalHelper.instance.getAnimals(tableName);
+        List<Animal> fetchedAnimals = data.map((item) => Animal.fromMap(item, tableName)).toList();
+        animals.assignAll(fetchedAnimals);
+        // Verileri önbelleğe kaydedin
+        cachedAnimals[tableName] = fetchedAnimals;
+
+        // Önbellek boyutunu kontrol edin ve gerekirse temizleyin
+        if (cachedAnimals.length > cacheSizeLimit) {
+          cachedAnimals.remove(cachedAnimals.keys.first);
+        }
+      } finally {
+        isLoading(false);
+      }
+    }
   }
 }
 
 class Animal {
-  final String koyun;
-  final String koc;
-  final String dogumSaati;
-  final String dogumTarihi;
-  final String kupeNo;
-  final String devletKupeNo;
-  final String hayvanAdi;
-  final String cinsiyet;
-  final String kuzuTipi;
-  final String image;
+  final String? tagNo;
+  final String? name;
+  final String? dob;
+  final String? type;
+  final String? date;
 
   Animal({
-    required this.koyun,
-    required this.koc,
-    required this.dogumSaati,
-    required this.dogumTarihi,
-    required this.kupeNo,
-    required this.devletKupeNo,
-    required this.hayvanAdi,
-    required this.cinsiyet,
-    required this.kuzuTipi,
-    required this.image,
+    this.tagNo,
+    this.name,
+    this.dob,
+    this.type,
+    this.date,
   });
+
+  factory Animal.fromMap(Map<String, dynamic> map, String tableName) {
+    if (tableName == 'weanedKuzuTable' || tableName == 'weanedBuzagiTable') {
+      return Animal(
+        type: map['type'],
+        date: map['date'],
+      );
+    } else {
+      return Animal(
+        tagNo: map['tagNo'],
+        name: map['name'],
+        dob: map['dob'],
+      );
+    }
+  }
 }

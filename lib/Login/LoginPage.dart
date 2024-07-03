@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'AuthController.dart';
 import 'LoginController.dart';
+import 'FormLoginButton.dart'; // Yeni oluşturduğumuz dosyayı import edin
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -45,7 +46,7 @@ class LoginPage extends StatelessWidget {
           ),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey, // Form anahtarını burada kullanın
+              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,13 +59,13 @@ class LoginPage extends StatelessWidget {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'E-posta',
-                      labelStyle: TextStyle(color: Colors.black), // Label rengi
+                      labelStyle: TextStyle(color: Colors.black),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
-                        borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                        borderSide: BorderSide(color: Colors.black),
                       ),
                       prefixIcon: const Icon(Icons.email),
                     ),
@@ -76,65 +77,19 @@ class LoginPage extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 50),
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 2,
-                        child: Obx(() => DropdownButtonFormField<String>(
-                          value: loginController.selectedCountryCode.value,
-                          items: loginController.countryCodes
-                              .map((code) => DropdownMenuItem(
-                            value: code,
-                            child: Text(code),
-                          ))
-                              .toList(),
-                          onChanged: (value) {
-                            loginController.selectedCountryCode.value = value!;
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
-                            ),
-                          ),
-                        )),
-                      ),
-                      SizedBox(width: MediaQuery.of(context).size.height / 50),
-                      Flexible(
-                        flex: 5,
-                        child: TextFormField(
-                          controller: loginController.phoneController,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            labelText: 'Telefon',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
-                            ),
-                            prefixIcon: const Icon(Icons.phone_android),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Telefon boş olamaz';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 50),
                   Obx(() => TextFormField(
                     cursorColor: Colors.black54,
                     controller: loginController.passwordController,
                     obscureText: loginController.obscure2Text.value,
                     decoration: InputDecoration(
                       labelText: 'Şifre',
-                      labelStyle: TextStyle(color: Colors.black), // Label rengi
+                      labelStyle: TextStyle(color: Colors.black),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 50),
-                        borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                        borderSide: BorderSide(color: Colors.black),
                       ),
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
@@ -171,10 +126,8 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(width: 50),
                     ],
                   )),
-                  Obx(() => ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0277BD),
-                    ),
+                  Obx(() => FormLoginButton(
+                    title: 'Giriş Yap',
                     onPressed: authController.isLoading.value
                         ? null
                         : () {
@@ -185,15 +138,7 @@ class LoginPage extends StatelessWidget {
                         );
                       }
                     },
-                    child: authController.isLoading.value
-                        ? const CircularProgressIndicator(
-                      color: Colors.blueAccent,
-                    )
-                        : Text(
-                      'Giriş Yap',
-                      style: TextStyle(
-                          color: Colors.white, fontSize: MediaQuery.of(context).size.width / 30),
-                    ),
+                    isLoading: authController.isLoading.value,
                   )),
                   SizedBox(height: MediaQuery.of(context).size.height / 40),
                   InkWell(
