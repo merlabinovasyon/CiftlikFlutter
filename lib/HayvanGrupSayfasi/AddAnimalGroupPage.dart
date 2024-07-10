@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'AnimalGroupController.dart';
+import 'AddAnimalGroupController.dart';
 import '../FormFields/FormButton.dart';
 import '../HayvanAsiSayfasi/BuildAnimalSelectionField.dart';
 
 class AddAnimalGroupPage extends StatelessWidget {
-  final AnimalGroupController controller = Get.find<AnimalGroupController>();
+  final AddAnimalGroupController controller = Get.put(AddAnimalGroupController());
+  final String tagNo;
+
+  AddAnimalGroupPage({Key? key, required this.tagNo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         controller.resetForm();
-        return true;
+        return true; // Pop işleminin devam etmesini sağla
       },
       child: Dialog(
         backgroundColor: Colors.white,
@@ -41,7 +44,7 @@ class AddAnimalGroupPage extends StatelessWidget {
                 BuildAnimalSelectionField(
                   label: 'Grup Seçimi *',
                   value: controller.selectedGroup,
-                  options: controller.availableGroups, // Güncellenen grup listesini kullan
+                  options: ['Grup 1', 'Grup 2', 'Grup 3'],
                   onSelected: (value) => controller.selectedGroup.value = value,
                 ),
                 SizedBox(height: 16),
@@ -49,9 +52,9 @@ class AddAnimalGroupPage extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 8.0, left: 8),
                   child: FormButton(
                     title: 'Kaydet',
-                    onPressed: () {
+                    onPressed: () async {
                       if (controller.formKey.currentState!.validate()) {
-                        controller.saveGroup();
+                        await controller.addGroup(tagNo); // addGroup fonksiyonunu async olarak çağırıyoruz
                         controller.resetForm();
                         Get.back();
                         Get.snackbar('Başarılı', 'Grup Kaydedildi');

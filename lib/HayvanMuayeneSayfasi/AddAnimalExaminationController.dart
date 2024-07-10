@@ -1,27 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'AnimalExaminationController.dart';
+import 'DatabaseAddAnimalExaminationHelper.dart';
 
 class AddAnimalExaminationController extends GetxController {
   var formKey = GlobalKey<FormState>();
   var notes = ''.obs;
   var examType = Rxn<String>();
-  var date = ''.obs; // Tarihi tutmak için yeni bir değişken ekledik
+  var date = ''.obs;
 
   void resetForm() {
     notes.value = '';
     examType.value = null;
-    date.value = ''; // Tarih alanını da sıfırla
+    date.value = '';
   }
 
-  void addExamination() {
+  void addExamination(String tagNo) async {
     final examController = Get.find<AnimalExaminationController>();
-    examController.examinations.add(
+    final examDetails = {
+      'tagNo': tagNo,
+      'date': date.value,
+      'examName': examType.value,
+      'notes': notes.value,
+    };
+
+    int id = await DatabaseAddAnimalExaminationHelper.instance.addExamination(examDetails);
+
+    examController.addExamination(
       Examination(
+        id: id,
+        tagNo: tagNo,
         date: date.value,
         examName: examType.value,
         notes: notes.value,
       ),
     );
+
+    examController.fetchExaminationsByTagNo(tagNo);
   }
 }

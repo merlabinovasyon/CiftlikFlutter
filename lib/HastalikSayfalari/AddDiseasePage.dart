@@ -19,7 +19,7 @@ class AddDiseasePage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             controller.resetForm();
-            Get.back();
+            Get.back(result: false);
           },
         ),
         title: Center(

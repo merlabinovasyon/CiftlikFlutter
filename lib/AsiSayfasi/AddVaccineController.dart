@@ -23,10 +23,11 @@ class AddVaccineController extends GetxController {
       };
 
       await DatabaseVaccineHelper.instance.insertVaccine(vaccineData);
-      Get.snackbar('Başarılı', 'Kayıt başarılı');
-      Future.delayed(const Duration(seconds: 1), () {
-        Get.offAllNamed('/bottomNavigation');
+      Future.delayed(const Duration(milliseconds: 600), () {
+        Get.back(result: true); // Burada Get.offAllNamed yerine Get.back kullanıyoruz
+        Get.snackbar('Başarılı', 'Kayıt başarılı');
       });
     }
   }
+
 }

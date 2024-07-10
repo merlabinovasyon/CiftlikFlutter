@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'AnimalController.dart';
 import 'FilterableTabBar.dart';
-import 'AnimalCard.dart'; // Yeni dosyayı içe aktarın
+import 'AnimalCard.dart';
 
 class AnimalPage extends StatefulWidget {
   AnimalPage({super.key});
@@ -20,12 +20,67 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 8, vsync: this);
     controller.fetchAnimals('lambTable'); // Default fetch on first tab
+
+    // Tab değiştiğinde hayvanları yeniden yükle
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        switch (_tabController.index) {
+          case 0:
+            controller.fetchAnimals('lambTable');
+            break;
+          case 1:
+            controller.fetchAnimals('buzagiTable');
+            break;
+          case 2:
+            controller.fetchAnimals('koyunTable');
+            break;
+          case 3:
+            controller.fetchAnimals('kocTable');
+            break;
+          case 4:
+            controller.fetchAnimals('inekTable');
+            break;
+          case 5:
+            controller.fetchAnimals('bogaTable');
+            break;
+          case 6:
+            controller.fetchAnimals('weanedKuzuTable');
+            break;
+          case 7:
+            controller.fetchAnimals('weanedBuzagiTable');
+            break;
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  String getTableName() {
+    switch (_tabController.index) {
+      case 0:
+        return 'lambTable';
+      case 1:
+        return 'buzagiTable';
+      case 2:
+        return 'koyunTable';
+      case 3:
+        return 'kocTable';
+      case 4:
+        return 'inekTable';
+      case 5:
+        return 'bogaTable';
+      case 6:
+        return 'weanedKuzuTable';
+      case 7:
+        return 'weanedBuzagiTable';
+      default:
+        return 'lambTable';
+    }
   }
 
   @override
@@ -82,7 +137,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
               child: Obx(
                     () {
                   if (controller.isLoading.value) {
-                    return Center(child: CircularProgressIndicator(color: Colors.black,));
+                    return Center(child: CircularProgressIndicator(color: Colors.black));
                   } else if (controller.animals.isEmpty) {
                     return Center(child: Text('Hayvan bulunamadı'));
                   } else {
@@ -90,7 +145,10 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
                       itemCount: controller.animals.length,
                       itemBuilder: (context, index) {
                         final animal = controller.animals[index];
-                        return AnimalCard(animal: animal, tableName: _tabController.index == 6 || _tabController.index == 7 ? 'weaned' : '');
+                        final tableName = _tabController.index == 6 || _tabController.index == 7
+                            ? (_tabController.index == 6 ? 'weanedKuzuTable' : 'weanedBuzagiTable')
+                            : getTableName();
+                        return AnimalCard(animal: animal, tableName: tableName);
                       },
                     );
                   }

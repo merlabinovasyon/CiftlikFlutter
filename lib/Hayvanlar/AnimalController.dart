@@ -33,9 +33,36 @@ class AnimalController extends GetxController {
       }
     }
   }
+
+  Future<void> removeAnimal(int id, String tableName) async {
+    await DatabaseAnimalHelper.instance.deleteAnimal(id, tableName);
+    // Önce listedeki hayvanı çıkar
+    animals.removeWhere((animal) => animal.id == id);
+    // Önbellekteki hayvanı da çıkar
+    cachedAnimals[tableName]?.removeWhere((animal) => animal.id == id);
+  }
+
+  void updateAnimal(int id, String tableName, Map<String, dynamic> updatedDetails) {
+    int index = animals.indexWhere((animal) => animal.id == id);
+    if (index != -1) {
+      Animal updatedAnimal = Animal.fromMap(updatedDetails, tableName);
+      animals[index] = updatedAnimal;
+
+      if (cachedAnimals.containsKey(tableName)) {
+        List<Animal> cachedList = List<Animal>.from(cachedAnimals[tableName]!);
+        int cachedIndex = cachedList.indexWhere((animal) => animal.id == id);
+        if (cachedIndex != -1) {
+          cachedList[cachedIndex] = updatedAnimal;
+          cachedAnimals[tableName] = cachedList;
+        }
+      }
+    }
+  }
+
 }
 
 class Animal {
+  final int id;
   final String? tagNo;
   final String? name;
   final String? dob;
@@ -43,6 +70,7 @@ class Animal {
   final String? date;
 
   Animal({
+    required this.id,
     this.tagNo,
     this.name,
     this.dob,
@@ -53,11 +81,13 @@ class Animal {
   factory Animal.fromMap(Map<String, dynamic> map, String tableName) {
     if (tableName == 'weanedKuzuTable' || tableName == 'weanedBuzagiTable') {
       return Animal(
+        id: map['id'],
         type: map['type'],
         date: map['date'],
       );
     } else {
       return Animal(
+        id: map['id'],
         tagNo: map['tagNo'],
         name: map['name'],
         dob: map['dob'],

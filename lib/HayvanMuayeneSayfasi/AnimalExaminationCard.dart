@@ -19,8 +19,7 @@ class AnimalExaminationCard extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {
-              controller.removeExamination(examination);
-              Get.snackbar('Başarılı', 'Muayene silindi');
+              controller.removeExamination(examination.id);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,

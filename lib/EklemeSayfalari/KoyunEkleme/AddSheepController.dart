@@ -44,9 +44,9 @@ class AddSheepController extends GetxController {
         'weight': countController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'breedSpecies': selectedSheep.value,
+        'species': selectedSheep.value,
         'name': nameController.text,
-        'koyunType': countController.text,
+        'type': countController.text,
         'dob': dobController.text,
         'time': timeController.text,
       };

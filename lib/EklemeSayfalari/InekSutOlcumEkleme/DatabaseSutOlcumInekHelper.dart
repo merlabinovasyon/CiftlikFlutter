@@ -42,4 +42,15 @@ class DatabaseSutOlcumInekHelper {
     final int result = await db!.insert(sutOlcumInekTable, sutOlcumInek);
     return result;
   }
+
+  Future<List<Map<String, dynamic>>> getSutOlcumInek() async {
+    Database? db = await this.db;
+    final List<Map<String, dynamic>> result = await db!.query(sutOlcumInekTable);
+    return result;
+  }
+
+  Future<int> deleteSutOlcumInek(int id) async {
+    Database? db = await this.db;
+    return await db!.delete(sutOlcumInekTable, where: 'id = ?', whereArgs: [id]);
+  }
 }

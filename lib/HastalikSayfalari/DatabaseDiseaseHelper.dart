@@ -46,4 +46,10 @@ class DatabaseDiseaseHelper {
     final List<Map<String, dynamic>> result = await db!.query(diseaseTable);
     return result;
   }
+
+  Future<int> deleteDisease(int id) async {
+    Database? db = await this.db;
+    final int result = await db!.delete(diseaseTable, where: '$colId = ?', whereArgs: [id]);
+    return result;
+  }
 }

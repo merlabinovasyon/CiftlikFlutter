@@ -5,7 +5,9 @@ import 'AnimalVaccineController.dart';
 import 'AnimalVaccineCard.dart';
 
 class AnimalVaccinePage extends StatefulWidget {
-  AnimalVaccinePage({Key? key}) : super(key: key);
+  final String tagNo;
+
+  AnimalVaccinePage({Key? key, required this.tagNo}) : super(key: key);
 
   @override
   _AnimalVaccinePageState createState() => _AnimalVaccinePageState();
@@ -13,6 +15,12 @@ class AnimalVaccinePage extends StatefulWidget {
 
 class _AnimalVaccinePageState extends State<AnimalVaccinePage> {
   final AnimalVaccineController controller = Get.put(AnimalVaccineController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchVaccinesByTagNo(widget.tagNo);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +51,7 @@ class _AnimalVaccinePageState extends State<AnimalVaccinePage> {
           IconButton(
             icon: Icon(Icons.add, size: 30,),
             onPressed: () {
-              Get.dialog(AddAnimalVaccinePage());
+              Get.dialog(AddAnimalVaccinePage(tagNo: widget.tagNo));
             },
           ),
         ],

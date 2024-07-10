@@ -15,6 +15,18 @@ class _DiseasePageState extends State<DiseasePage> {
   final DiseaseController controller = Get.put(DiseaseController());
 
   @override
+  void initState() {
+    super.initState();
+    controller.fetchDiseases();
+  }
+
+  Future<void> _refreshDiseases() async {
+    controller.isLoading.value = true;
+    await controller.fetchDiseases();
+    controller.isLoading.value = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -66,9 +78,11 @@ class _DiseasePageState extends State<DiseasePage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    // Hastalık ekleme işlemi burada yapılabilir
-                    Get.to(() => AddDiseasePage(),duration: Duration(milliseconds: 650));
+                  onPressed: () async {
+                    final result = await Get.to(() => AddDiseasePage(), duration: Duration(milliseconds: 650));
+                    if (result == true) {
+                      _refreshDiseases(); // Sayfaya dönünce veri yüklemeyi tetikle
+                    }
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -87,7 +101,7 @@ class _DiseasePageState extends State<DiseasePage> {
               child: Obx(
                     () {
                   if (controller.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator(color: Colors.black));
                   } else if (controller.diseases.isEmpty) {
                     return Center(child: Text('Hastalık bulunamadı'));
                   } else {

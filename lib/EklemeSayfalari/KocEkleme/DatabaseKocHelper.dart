@@ -12,9 +12,9 @@ class DatabaseKocHelper {
   String colWeight = 'weight';
   String colTagNo = 'tagNo';
   String colGovTagNo = 'govTagNo';
-  String colKocSpecies = 'kocSpecies';
+  String colSpecies = 'species';
   String colName = 'name';
-  String colKocType = 'kocType';
+  String colType = 'type';
   String colDob = 'dob';
   String colTime = 'time';
 
@@ -37,7 +37,7 @@ class DatabaseKocHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $kocTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colKocSpecies TEXT, $colName TEXT, $colKocType TEXT, $colDob TEXT, $colTime TEXT)',
+      'CREATE TABLE IF NOT EXISTS $kocTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colType TEXT, $colDob TEXT, $colTime TEXT)',
     );
   }
 

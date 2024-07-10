@@ -17,19 +17,27 @@ class VaccineController extends GetxController {
     vaccines.assignAll(vaccineMaps.map((vaccineMap) => Vaccine.fromMap(vaccineMap)).toList());
     isLoading.value = false;
   }
+
+  void removeVaccine(Vaccine vaccine) async {
+    await DatabaseVaccineHelper.instance.deleteVaccine(vaccine.id);
+    vaccines.remove(vaccine);
+  }
 }
 
 class Vaccine {
+  final int id;
   final String vaccineName;
   final String vaccineDescription;
 
   Vaccine({
+    required this.id,
     required this.vaccineName,
     required this.vaccineDescription,
   });
 
   factory Vaccine.fromMap(Map<String, dynamic> map) {
     return Vaccine(
+      id: map['id'],
       vaccineName: map['vaccineName'],
       vaccineDescription: map['vaccineDescription'],
     );

@@ -9,14 +9,37 @@ class BleScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: OrientationBuilder(
-          builder: (context, orientation) {
-            return dikey(context);
+    return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Get.back();
           },
         ),
+        title: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 60.0),
+            child: Container(
+              height: 40,
+              width: 130,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('resimler/logo_v2.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          return dikey(context);
+        },
       ),
     );
   }
@@ -35,7 +58,7 @@ class BleScanPage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 24,
                       fontFamily: 'Roboto Regular',
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.w700),
                   children: <TextSpan>[
                     TextSpan(
@@ -59,7 +82,7 @@ class BleScanPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 50, top: 20),
               child: Obx(() => Switch(
-                inactiveThumbColor: Colors.white,
+                inactiveThumbColor: Colors.black,
                 inactiveTrackColor: Colors.grey,
                 activeTrackColor: const Color(0xFF12E200),
                 value: bleController.isBluetoothEnabled.value && bleController.isScanning.value,
@@ -112,7 +135,7 @@ class BleScanPage extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 24,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -160,7 +183,7 @@ class BleScanPage extends StatelessWidget {
                         result.device.platformName!,
                         style: TextStyle(
                           fontSize: 24,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       onTap: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/BLESayfasi/BleScanPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/OlcumEkleme/OlcumPage.dart';
 import 'package:merlabciftlikyonetim/HayvanAsiSayfasi/AnimalVaccinePage.dart';
 import 'package:merlabciftlikyonetim/HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
@@ -71,7 +72,7 @@ class DrawerMenu extends StatelessWidget {
                   leading: const Icon(Icons.contact_support, color: Colors.black,),
                   title: const Text('Test'),
                   onTap: () {
-                    Get.to(() => RationWizardMainPage()) ;              },
+                    Get.to(() => BleScanPage()) ;              },
                 ),
               ],
             ),

@@ -12,9 +12,9 @@ class DatabaseBogaHelper {
   String colWeight = 'weight';
   String colTagNo = 'tagNo';
   String colGovTagNo = 'govTagNo';
-  String colBogaSpecies = 'bogaSpecies';
+  String colSpecies = 'species';
   String colName = 'name';
-  String colBogaType = 'bogaType';
+  String colType = 'type';
   String colDob = 'dob';
   String colTime = 'time';
 
@@ -37,7 +37,7 @@ class DatabaseBogaHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $bogaTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colBogaSpecies TEXT, $colName TEXT, $colBogaType TEXT, $colDob TEXT, $colTime TEXT)',
+      'CREATE TABLE IF NOT EXISTS $bogaTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colType TEXT, $colDob TEXT, $colTime TEXT)',
     );
   }
 

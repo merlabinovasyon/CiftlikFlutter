@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart'; // Import the intl package
 import 'FinanceController.dart';
 
 class BuildSlidableTransactionCard extends StatelessWidget {
@@ -11,6 +12,8 @@ class BuildSlidableTransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat.currency(locale: 'tr_TR', symbol: '', decimalDigits: 2);
+
     return Slidable(
       key: ValueKey(transaction),
       endActionPane: ActionPane(
@@ -62,7 +65,7 @@ class BuildSlidableTransactionCard extends StatelessWidget {
                   ),
                   SizedBox(width: 8.0),
                   Text(
-                    'TRY ${transaction.amount.toStringAsFixed(2)}',
+                    'TRY ${formatter.format(transaction.amount)}',
                     style: TextStyle(
                       color: transaction.type == TransactionType.Gelir ? Colors.green : Colors.red,
                       fontWeight: FontWeight.bold,

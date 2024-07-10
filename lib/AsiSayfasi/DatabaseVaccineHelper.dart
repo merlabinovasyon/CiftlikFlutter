@@ -46,4 +46,10 @@ class DatabaseVaccineHelper {
     final List<Map<String, dynamic>> result = await db!.query(vaccineTable);
     return result;
   }
+
+  Future<int> deleteVaccine(int id) async {
+    Database? db = await this.db;
+    final int result = await db!.delete(vaccineTable, where: '$colId = ?', whereArgs: [id]);
+    return result;
+  }
 }

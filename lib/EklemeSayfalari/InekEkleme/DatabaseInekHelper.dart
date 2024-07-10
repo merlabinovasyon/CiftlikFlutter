@@ -12,9 +12,9 @@ class DatabaseInekHelper {
   String colWeight = 'weight';
   String colTagNo = 'tagNo';
   String colGovTagNo = 'govTagNo';
-  String colInekSpecies = 'inekSpecies';
+  String colSpecies = 'species';
   String colName = 'name';
-  String colInekType = 'inekType';
+  String colType = 'type';
   String colDob = 'dob';
   String colTime = 'time';
 
@@ -37,7 +37,7 @@ class DatabaseInekHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $inekTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colInekSpecies TEXT, $colName TEXT, $colInekType TEXT, $colDob TEXT, $colTime TEXT)',
+      'CREATE TABLE IF NOT EXISTS $inekTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colType TEXT, $colDob TEXT, $colTime TEXT)',
     );
   }
 

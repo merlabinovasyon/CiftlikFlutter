@@ -66,8 +66,11 @@ class _VaccinePageState extends State<VaccinePage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Get.to(() => AddVaccinePage(), duration: Duration(milliseconds: 650));
+                  onPressed: () async {
+                    final result = await Get.to(() => AddVaccinePage(), duration: Duration(milliseconds: 650));
+                    if (result == true) {
+                      controller.fetchVaccines();
+                    }
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -86,7 +89,7 @@ class _VaccinePageState extends State<VaccinePage> {
               child: Obx(
                     () {
                   if (controller.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator(color: Colors.black,));
                   } else if (controller.vaccines.isEmpty) {
                     return Center(child: Text('Aşı bulunamadı'));
                   } else {

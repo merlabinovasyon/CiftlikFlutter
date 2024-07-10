@@ -89,16 +89,16 @@ class AddBirthKuzuController extends GetxController {
 
       Map<String, dynamic> lambData = {
         'weight': countController.text,
-        'animal': selectedAnimal.value,
-        'koc': selectedKoc.value,
+        'mother': selectedAnimal.value,
+        'father': selectedKoc.value,
         'dob': dobController.text,
         'time': timeController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'breed': selectedLamb.value,
+        'species': selectedLamb.value,
         'name': nameController.text,
         'gender': selectedGender1.value,
-        'lambType': countController.text,
+        'type': countController.text,
       };
 
       await DatabaseKuzuHelper.instance.insertLamb(lambData);

@@ -44,9 +44,9 @@ class AddInekController extends GetxController {
         'weight': countController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'inekSpecies': selectedInek.value,
+        'species': selectedInek.value,
         'name': nameController.text,
-        'inekType': countController.text,
+        'type': countController.text,
         'dob': dobController.text,
         'time': timeController.text,
       };

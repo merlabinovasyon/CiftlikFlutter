@@ -48,4 +48,9 @@ class DatabaseAnimalHelper {
     final List<Map<String, dynamic>> result = await db!.query(tableName);
     return result;
   }
+
+  Future<int> deleteAnimal(int id, String tableName) async {
+    Database? db = await this.db;
+    return await db!.delete(tableName, where: 'id = ?', whereArgs: [id]);
+  }
 }

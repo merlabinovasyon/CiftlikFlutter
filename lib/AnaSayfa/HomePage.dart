@@ -10,6 +10,7 @@ import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
 import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
 import 'package:merlabciftlikyonetim/RasyonHesaplama/RationWizardMainPage.dart';
+import 'package:merlabciftlikyonetim/SutOlcumGosterimiSayfasi/SutOlcumPage.dart';
 import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
 import '../Drawer/DrawerMenu.dart';
 import '../gebelik_kontrol_page.dart';
@@ -120,7 +121,7 @@ class HomePage extends StatelessWidget {
                       BuildIconButton(assetPath: 'resimler/hayvanlarim.png', label: 'Tüm Hayvanlar', page: AnimalPage()),
                       BuildIconButton(assetPath: 'resimler/koc_1.png', label: 'Tohumlanmaya Hazır', page: TohumlanmayaHazirPage()),
                       BuildIconButton(assetPath: 'resimler/koc_katim_1.png', label: 'Koç Katım', page: KocKatimPage()),
-                      BuildIconButton(assetPath: 'resimler/süt_olcum.png', label: 'Pedometre', page: PedometerPage()),
+                      BuildIconButton(assetPath: 'resimler/süt_olcum.png', label: 'Süt Ölçümleri', page: SutOlcumPage()),
                       BuildIconButton(assetPath: 'resimler/kuzu_1.png', label: 'Gebelik Kontrol', page: GebelikKontrolPage()),
                     ],
                   ),

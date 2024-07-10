@@ -10,16 +10,16 @@ class DatabaseKuzuHelper {
   String lambTable = 'lambTable';
   String colId = 'id';
   String colWeight = 'weight';
-  String colAnimal = 'animal';
-  String colKoc = 'koc';
+  String colMother = 'mother';
+  String colFather = 'father';
   String colDob = 'dob';
   String colTime = 'time';
   String colTagNo = 'tagNo';
   String colGovTagNo = 'govTagNo';
-  String colBreed = 'breed';
+  String colSpecies = 'species';
   String colName = 'name';
   String colGender = 'gender';
-  String colLambType = 'lambType';
+  String colType = 'type';
 
   Future<Database?> get db async {
     if (_db == null) {
@@ -40,7 +40,7 @@ class DatabaseKuzuHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $lambTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colAnimal TEXT, $colKoc TEXT, $colDob TEXT, $colTime TEXT, $colTagNo TEXT, $colGovTagNo TEXT, $colBreed TEXT, $colName TEXT, $colGender TEXT, $colLambType TEXT)',
+      'CREATE TABLE IF NOT EXISTS $lambTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colMother TEXT, $colFather TEXT, $colDob TEXT, $colTime TEXT, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colGender TEXT, $colType TEXT)',
     );
   }
 

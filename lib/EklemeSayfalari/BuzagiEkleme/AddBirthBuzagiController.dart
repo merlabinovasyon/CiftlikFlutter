@@ -90,16 +90,16 @@ class AddBirthBuzagiController extends GetxController {
 
       Map<String, dynamic> buzagiData = {
         'weight': countController.text,
-        'cow': selectedCow.value,
-        'boga': selectedBoga.value,
+        'mother': selectedCow.value,
+        'father': selectedBoga.value,
         'dob': dobController.text,
         'time': timeController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'buzagiSpecies': selectedBuzagi.value,
+        'species': selectedBuzagi.value,
         'name': nameController.text,
         'gender': selectedGender1.value,
-        'buzagiType': countController.text,
+        'type': countController.text,
       };
 
       await DatabaseBuzagiHelper.instance.insertBuzagi(buzagiData);

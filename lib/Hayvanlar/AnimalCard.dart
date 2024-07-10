@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../HayvanDetaySayfasi/AnimalDetailPage.dart';
 import 'AnimalController.dart';
@@ -11,59 +12,98 @@ class AnimalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => AnimalDetailPage(), duration: Duration(milliseconds: 650));
-      },
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        elevation: 4.0,
-        shadowColor: Colors.cyan,
-        margin: const EdgeInsets.only(bottom: 10.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.white,
-                child: Image.asset(
-                  'resimler/icons/sheep_and_lamb_icon_black.png',
-                  width: 55,
-                  height: 55,
-                ),
+    final AnimalController controller = Get.find();
+
+    return Slidable(
+      key: ValueKey(animal.id),
+      endActionPane: ActionPane(
+        motion: ScrollMotion(),
+        extentRatio: 0.17,
+        children: [
+          SlidableAction(
+            onPressed: (context) {
+              controller.removeAnimal(animal.id, tableName);
+              Get.snackbar('Başarılı', 'Hayvan silindi');
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Sil',
+            borderRadius: BorderRadius.circular(12.0),
+            padding: EdgeInsets.zero,
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: () async {
+              var result = await Get.to(() => AnimalDetailPage(tableName: tableName, animalId: animal.id), duration: Duration(milliseconds: 650));
+              if (result != null) {
+                controller.updateAnimal(animal.id, tableName, result);
+              }
+            },
+            child: Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
               ),
-              const SizedBox(width: 16.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: tableName == 'weaned'
-                      ? [
-                    Text(
-                      'Hayvan: ${animal.type}',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              elevation: 4.0,
+              shadowColor: Colors.cyan,
+              margin: const EdgeInsets.only(bottom: 10.0, right: 5),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.white,
+                      child: Image.asset(
+                        'resimler/icons/sheep_and_lamb_icon_black.png',
+                        width: 55,
+                        height: 55,
+                      ),
                     ),
-                    const SizedBox(height: 4.0),
-                    Text(animal.date ?? ''),
-                  ]
-                      : [
-                    Text(
-                      'Küpe No: ${animal.tagNo}',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: tableName.contains('weaned')
+                            ? [
+                          Text(
+                            'Hayvan: ${animal.type}',
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(animal.date ?? ''),
+                        ]
+                            : [
+                          Text(
+                            'Küpe No: ${animal.tagNo}',
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(animal.name ?? ''),
+                          const SizedBox(height: 4.0),
+                          Text(animal.dob ?? ''),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 4.0),
-                    Text(animal.name ?? ''),
-                    const SizedBox(height: 4.0),
-                    Text(animal.dob ?? ''),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          Positioned(
+            top: 10,
+            right: 20,
+            child: Icon(
+              Icons.swipe_left,
+              size: 18,
+              color: Colors.red,
+            ),
+          ),
+        ],
       ),
     );
   }

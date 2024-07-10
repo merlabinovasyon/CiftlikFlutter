@@ -1,32 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'DatabaseAddAnimalGroupHelper.dart';
 
 class AnimalGroupController extends GetxController {
-  var groups = <String>[].obs; // Mevcut grupların listesi
+  var groups = <AnimalGroup>[].obs;
   var selectedGroup = Rxn<String>();
-  var formKey = GlobalKey<FormState>(); // Form anahtarı
+  var formKey = GlobalKey<FormState>();
 
-  // Kullanılabilir gruplar listesi
   List<String> availableGroups = [
     'Grup 1',
     'Grup 2',
     'Grup 3',
-    // Daha fazla grup eklenebilir...
   ];
 
-  void saveGroup() {
-    if (formKey.currentState!.validate()) {
-      String groupToSave = selectedGroup.value?.isNotEmpty == true ? selectedGroup.value! : 'Bilinmiyor';
-      groups.add(groupToSave);
+  Future<void> fetchGroupsByTagNo(String tagNo) async {
+    var groupData = await DatabaseAddAnimalGroupHelper.instance.getGroupsByTagNo(tagNo);
+    if (groupData.isNotEmpty) {
+      groups.assignAll(groupData.map((data) => AnimalGroup.fromMap(data)).toList());
+    } else {
+      groups.clear();
     }
   }
 
-  void removeGroup(String group) {
-    groups.remove(group);
-    Get.snackbar('Başarılı', 'Grup silindi');
+  Future<void> saveGroup(String tagNo) async {
+    if (formKey.currentState!.validate()) {
+      final groupDetails = {
+        'tagNo': tagNo,
+        'groupName': selectedGroup.value,
+      };
+
+      int id = await DatabaseAddAnimalGroupHelper.instance.addGroup(groupDetails);
+
+      groups.add(
+        AnimalGroup(
+          id: id,
+          tagNo: tagNo,
+          groupName: selectedGroup.value!,
+        ),
+      );
+
+      await fetchGroupsByTagNo(tagNo);
+    }
+  }
+
+  void addGroup(AnimalGroup group) {
+    groups.add(group);
+  }
+
+  Future<void> removeGroup(int id) async {
+    await DatabaseAddAnimalGroupHelper.instance.deleteGroup(id);
+    var removedGroup = groups.firstWhereOrNull((group) => group.id == id);
+    if (removedGroup != null) {
+      await fetchGroupsByTagNo(removedGroup.tagNo);
+      Get.snackbar('Başarılı', 'Grup silindi');
+    }
   }
 
   void resetForm() {
     selectedGroup.value = null;
+  }
+}
+
+class AnimalGroup {
+  final int id;
+  final String tagNo;
+  final String groupName;
+
+  AnimalGroup({
+    required this.id,
+    required this.tagNo,
+    required this.groupName,
+  });
+
+  factory AnimalGroup.fromMap(Map<String, dynamic> map) {
+    return AnimalGroup(
+      id: map['id'],
+      tagNo: map['tagNo'],
+      groupName: map['groupName'],
+    );
   }
 }

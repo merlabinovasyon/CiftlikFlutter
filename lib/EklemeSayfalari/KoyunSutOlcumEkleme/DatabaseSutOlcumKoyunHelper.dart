@@ -42,4 +42,16 @@ class DatabaseSutOlcumKoyunHelper {
     final int result = await db!.insert(sutOlcumKoyunTable, sutOlcumKoyun);
     return result;
   }
+
+  Future<List<Map<String, dynamic>>> getSutOlcumKoyun() async {
+    Database? db = await this.db;
+    final List<Map<String, dynamic>> result = await db!.query(sutOlcumKoyunTable);
+    return result;
+  }
+
+  Future<int> deleteSutOlcumKoyun(int id) async {
+    Database? db = await this.db;
+    return await db!.delete(sutOlcumKoyunTable, where: 'id = ?', whereArgs: [id]);
+  }
 }
+

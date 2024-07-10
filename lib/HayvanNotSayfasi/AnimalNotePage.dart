@@ -5,7 +5,9 @@ import 'AnimalNoteController.dart';
 import 'AnimalNoteCard.dart';
 
 class AnimalNotePage extends StatefulWidget {
-  AnimalNotePage({Key? key}) : super(key: key);
+  final String tagNo;
+
+  AnimalNotePage({Key? key, required this.tagNo}) : super(key: key);
 
   @override
   _AnimalNotePageState createState() => _AnimalNotePageState();
@@ -13,6 +15,12 @@ class AnimalNotePage extends StatefulWidget {
 
 class _AnimalNotePageState extends State<AnimalNotePage> {
   final AnimalNoteController controller = Get.put(AnimalNoteController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchNotesByTagNo(widget.tagNo);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +51,7 @@ class _AnimalNotePageState extends State<AnimalNotePage> {
           IconButton(
             icon: Icon(Icons.add, size: 30,),
             onPressed: () {
-              Get.dialog(AddAnimalNotePage());
+              Get.dialog(AddAnimalNotePage(tagNo: widget.tagNo));
             },
           ),
         ],

@@ -44,9 +44,9 @@ class AddBogaController extends GetxController {
         'weight': countController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'bogaSpecies': selectedBoga.value,
+        'species': selectedBoga.value,
         'name': nameController.text,
-        'bogaType': countController.text,
+        'type': countController.text,
         'dob': dobController.text,
         'time': timeController.text,
       };

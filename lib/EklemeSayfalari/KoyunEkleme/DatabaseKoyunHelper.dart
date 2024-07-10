@@ -12,9 +12,9 @@ class DatabaseKoyunHelper {
   String colWeight = 'weight';
   String colTagNo = 'tagNo';
   String colGovTagNo = 'govTagNo';
-  String colBreedSpecies = 'breedSpecies';
+  String colSpecies = 'species';
   String colName = 'name';
-  String colKoyunType = 'koyunType';
+  String colType = 'type';
   String colDob = 'dob';
   String colTime = 'time';
 
@@ -37,7 +37,7 @@ class DatabaseKoyunHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $koyunTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colBreedSpecies TEXT, $colName TEXT, $colKoyunType TEXT, $colDob TEXT, $colTime TEXT)',
+      'CREATE TABLE IF NOT EXISTS $koyunTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colType TEXT, $colDob TEXT, $colTime TEXT)',
     );
   }
 

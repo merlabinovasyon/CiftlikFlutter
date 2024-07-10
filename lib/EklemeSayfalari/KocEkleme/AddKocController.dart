@@ -44,9 +44,9 @@ class AddKocController extends GetxController {
         'weight': countController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'kocSpecies': selectedKoc.value,
+        'species': selectedKoc.value,
         'name': nameController.text,
-        'kocType': countController.text,
+        'type': countController.text,
         'dob': dobController.text,
         'time': timeController.text,
       };

@@ -7,8 +7,10 @@ import 'package:merlabciftlikyonetim/HayvanKonumSayfasi/AnimalLocationPage.dart'
 import 'package:merlabciftlikyonetim/HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
 import 'package:merlabciftlikyonetim/HayvanNotSayfasi/AnimalNotePage.dart';
 import 'ActionCard.dart';
+import 'AnimalDetailController.dart';
 
 class ActionsGrid extends StatelessWidget {
+  final AnimalDetailController controller = Get.put(AnimalDetailController());
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -38,7 +40,7 @@ class ActionsGrid extends StatelessWidget {
           title: 'Gebelik Kontrolü',
           assetPath: 'resimler/icons/cow_with_magnifying_glass_icon.png',
           onTap: () {
-            Get.to(() => PregnancyCheckPage(),duration: Duration(milliseconds: 650));
+            Get.to(() => PregnancyCheckPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
@@ -66,14 +68,14 @@ class ActionsGrid extends StatelessWidget {
           title: 'Muayene',
           assetPath: 'resimler/icons/stethoscope_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalExaminationPage(),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalExaminationPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Aşılama',
           assetPath: 'resimler/icons/vaccine_syringe_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalVaccinePage(),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalVaccinePage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
@@ -87,21 +89,21 @@ class ActionsGrid extends StatelessWidget {
           title: 'Lokasyon',
           assetPath: 'resimler/icons/barn_with_location_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalLocationPage(),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalLocationPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Grup',
           assetPath: 'resimler/icons/sheep_and_cow_side_by_side_icon.png',
           onTap: () {
-            Get.to(() => AnimalGroupPage(),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalGroupPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Notlar',
           assetPath: 'resimler/icons/notes_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalNotePage(),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalNotePage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
           },
         ),
       ],

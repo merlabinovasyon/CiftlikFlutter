@@ -10,16 +10,16 @@ class DatabaseBuzagiHelper {
   String buzagiTable = 'buzagiTable';
   String colId = 'id';
   String colWeight = 'weight';
-  String colCow = 'cow';
-  String colBoga = 'boga';
+  String colMother = 'mother';
+  String colFather = 'father';
   String colDob = 'dob';
   String colTime = 'time';
   String colTagNo = 'tagNo';
   String colGovTagNo = 'govTagNo';
-  String colBuzagiSpecies = 'buzagiSpecies';
+  String colSpecies = 'species';
   String colName = 'name';
   String colGender = 'gender';
-  String colBuzagiType = 'buzagiType';
+  String colType = 'type';
 
   Future<Database?> get db async {
     if (_db == null) {
@@ -40,7 +40,7 @@ class DatabaseBuzagiHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $buzagiTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colCow TEXT, $colBoga TEXT, $colDob TEXT, $colTime TEXT, $colTagNo TEXT, $colGovTagNo TEXT, $colBuzagiSpecies TEXT, $colName TEXT, $colGender TEXT, $colBuzagiType TEXT)',
+      'CREATE TABLE IF NOT EXISTS $buzagiTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colMother TEXT, $colFather TEXT, $colDob TEXT, $colTime TEXT, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colGender TEXT, $colType TEXT)',
     );
   }
 
