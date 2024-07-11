@@ -5,7 +5,7 @@ import 'package:merlabciftlikyonetim/services/AuthService.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseController.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
 import 'AnaSayfa/HomeController.dart';
-import 'Bluetooth/BleController.dart';
+import 'BLESayfasi/BleController.dart';
 import 'Login/AuthController.dart';
 import 'Login/LoginController.dart';
 import 'Calendar/CalendarController.dart';
