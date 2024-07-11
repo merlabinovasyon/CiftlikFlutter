@@ -74,6 +74,13 @@ class DrawerMenu extends StatelessWidget {
                   onTap: () {
                     Get.to(() => BleScanPage()) ;              },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.bluetooth, color: Colors.black,),
+                  title: const Text('Bluetooth'),
+                  onTap: () {
+                    drawerController.navigateTo('/blescan');
+                  },
+                ),
               ],
             ),
           ),

@@ -85,7 +85,7 @@ class FeedStockPage extends StatelessWidget {
                       shadowColor: Colors.cyan, // Gölge rengi cyan olarak ayarlandı
                       child: ListTile(
                         leading: Image.asset(
-                          'resimler/icons/clover_icon_black.png', // Kendi ikonunuzun yolu
+                          'icons/clover_icon_black.png', // Kendi ikonunuzun yolu
                           width: 55, // İkon boyutunda olacak şekilde genişlik
                           height: 55, // İkon boyutunda olacak şekilde yükseklik
                         ),

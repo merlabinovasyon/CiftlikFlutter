@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
 import 'package:merlabciftlikyonetim/services/SyncService.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilController extends GetxController {
   var imagePath = ''.obs;
@@ -18,6 +20,24 @@ class ProfilController extends GetxController {
     super.onInit();
     getImagePathFromDatabase();
   }
+
+  Future<void> fetchDataFromApi() async {
+    final url = 'http://10.0.2.2:5188/api/User';  // Doğru API yolu
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+      } else {
+        print('Failed to load data. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
 
   Future<void> getImageFromGallery() async {
     final picker = ImagePicker();

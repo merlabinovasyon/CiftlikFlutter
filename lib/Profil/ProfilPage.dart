@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/Profil/profil_controller.dart';
@@ -87,6 +88,14 @@ class ProfilPage extends StatelessWidget {
                     await profilController.syncAnimalSubtypes(context);
                   },
                   child: const Text("Mysql to Sqlite AnimalSubType"),
+                ),
+                const SizedBox(height: 10,),
+                // Yeni Buton Ekleme
+                ElevatedButton(
+                  onPressed: () async {
+                    await profilController.fetchDataFromApi();
+                  },
+                  child: const Text("Fetch Data from API"),
                 ),
               ],
             ),

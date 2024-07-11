@@ -10,7 +10,6 @@ import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
 import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
 import 'package:merlabciftlikyonetim/RasyonHesaplama/RationWizardMainPage.dart';
-import 'package:merlabciftlikyonetim/SutOlcumGosterimiSayfasi/SutOlcumPage.dart';
 import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
 import '../Drawer/DrawerMenu.dart';
 import '../gebelik_kontrol_page.dart';
@@ -23,17 +22,8 @@ import 'HomeController.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
-  final TextEditingController searchController = TextEditingController();
 
   HomePage({super.key});
-
-  void navigateToAnimalPage(String query) async {
-    final result = await Get.to(() => AnimalPage(searchQuery: query), duration: Duration(milliseconds: 650));
-    if (result == true) {
-      searchController.clear(); // Geri dönüldüğünde arama alanını temizle
-      controller.isSearching.value = false; // Arama durumunu sıfırla
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,71 +98,30 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() {
-                  return TextField(
-                    controller: searchController,
-                    cursorColor: Colors.black54,
-                    decoration: InputDecoration(
-                      prefixIcon: controller.isSearching.value
-                          ? null
-                          : const Icon(Icons.search),
-                      hintText: 'Küpe No, Hayvan Adı',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      suffixIcon: controller.isSearching.value
-                          ? IconButton(
-                        icon: const Icon(Icons.search),
-                        onPressed: () {
-                          navigateToAnimalPage(searchController.text);
-                        },
-                      )
-                          : IconButton(
-                        icon: const Icon(Icons.qr_code_scanner),
-                        onPressed: () {
-                          Get.snackbar('Uyarı', 'Kulak küpesini okutun');
-                        },
-                      ),
+                TextField(
+                  cursorColor: Colors.black54,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: 'Küpe No, Hayvan Adı, Kemer No',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    onChanged: (value) {
-                      controller.isSearching.value = value.isNotEmpty;
-                    },
-                  );
-                }),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 16.0),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      BuildIconButton(
-                        assetPath: 'resimler/hayvanlarim.png',
-                        label: 'Tüm Hayvanlar',
-                        onTap: () => Get.to(AnimalPage(searchQuery: ''), duration: Duration(milliseconds: 650)),
-                      ),
-                      BuildIconButton(
-                        assetPath: 'resimler/koc_1.png',
-                        label: 'Tohumlanmaya Hazır',
-                        onTap: () => Get.to(TohumlanmayaHazirPage(), duration: Duration(milliseconds: 650)),
-                      ),
-                      BuildIconButton(
-                        assetPath: 'resimler/koc_katim_1.png',
-                        label: 'Koç Katım',
-                        onTap: () => Get.to(KocKatimPage(), duration: Duration(milliseconds: 650)),
-                      ),
-                      BuildIconButton(
-                        assetPath: 'resimler/süt_olcum.png',
-                        label: 'Süt Ölçümleri',
-                        onTap: () => Get.to(SutOlcumPage(), duration: Duration(milliseconds: 650)),
-                      ),
-                      BuildIconButton(
-                        assetPath: 'resimler/kuzu_1.png',
-                        label: 'Gebelik Kontrol',
-                        onTap: () => Get.to(GebelikKontrolPage(), duration: Duration(milliseconds: 650)),
-                      ),
+                      BuildIconButton(assetPath: 'resimler/hayvanlarim.png', label: 'Tüm Hayvanlar', page: AnimalPage()),
+                      BuildIconButton(assetPath: 'resimler/koc_1.png', label: 'Tohumlanmaya Hazır', page: TohumlanmayaHazirPage()),
+                      BuildIconButton(assetPath: 'resimler/koc_katim_1.png', label: 'Koç Katım', page: KocKatimPage()),
+                      BuildIconButton(assetPath: 'resimler/süt_olcum.png', label: 'Pedometre', page: PedometerPage()),
+                      BuildIconButton(assetPath: 'resimler/kuzu_1.png', label: 'Gebelik Kontrol', page: GebelikKontrolPage()),
                     ],
                   ),
                 ),
@@ -183,23 +132,29 @@ class HomePage extends StatelessWidget {
                   title1: 'Gelir/Gider',
                   iconAsset1: 'resimler/icons/calculator_icon_black.png',
                   onTap1: () {
-                    Get.to(() => FinancePage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Gelir/Gider
+                    Get.to(() => FinancePage(),duration: Duration(milliseconds: 650));
+
                   },
                   title2: 'Sync',
                   iconAsset2: 'resimler/icons/bank_icon_black.png',
-                  onTap2: () {},
+                  onTap2: () {
+                    // Handle tap for Sync
+                  },
                 ),
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Sürü Takip',
                   iconAsset1: 'resimler/icons/flock_with_analysis_icon_black.png',
                   onTap1: () {
-                    Get.to(() => GraphicPage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Sürüye Bakış
+                    Get.to(() => GraphicPage(),duration: Duration(milliseconds: 650));
                   },
                   title2: 'Aşılama',
                   iconAsset2: 'resimler/icons/vaccine_syringe_icon_black.png',
                   onTap2: () {
-                    Get.to(() => VaccinePage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Analiz
+                    Get.to(() => VaccinePage(),duration: Duration(milliseconds: 650));
                   },
                 ),
                 const SizedBox(height: 10.0),
@@ -207,12 +162,17 @@ class HomePage extends StatelessWidget {
                   title1: 'Konum Yönetimi',
                   iconAsset1: 'resimler/icons/barn_with_location_icon_black.png',
                   onTap1: () {
-                    Get.to(() => KonumYonetimiPage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Hayvan Detayı
+                    Get.to(() => KonumYonetimiPage(),duration: Duration(milliseconds: 650),
+                    );
+
                   },
                   title2: 'Yem Yönetimi',
                   iconAsset2: 'resimler/icons/corn_icon_black.png',
                   onTap2: () {
-                    Get.to(() => FeedStockPage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Yem Yönetimi
+                    Get.to(() => FeedStockPage(),duration: Duration(milliseconds: 650),
+                    );
                   },
                 ),
                 const SizedBox(height: 10.0),
@@ -220,23 +180,29 @@ class HomePage extends StatelessWidget {
                   title1: 'Aşı Takvimi',
                   iconAsset1: 'resimler/icons/calendar_with_vaccine_icon_black.png',
                   onTap1: () {
-                    Get.to(() => AsiPage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Aşı Takvimi
+                    Get.to(() => AsiPage(),duration: Duration(milliseconds: 650));
+
                   },
                   title2: 'Hastalık Takibi',
                   iconAsset2: 'resimler/icons/sheep_with_illness_icon_black.png',
                   onTap2: () {
-                    Get.to(() => DiseasePage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Hastalık Takibi
+                    Get.to(() => DiseasePage(),duration: Duration(milliseconds: 650));
                   },
                 ),
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Raporlar',
                   iconAsset1: 'resimler/icons/report_icon.png',
-                  onTap1: () {},
+                  onTap1: () {
+                    // Handle tap for Raporlar
+                  },
                   title2: 'Rasyon',
                   iconAsset2: 'resimler/icons/magic_wand_with_sparkles_icon.png',
                   onTap2: () {
-                    Get.to(() => RationWizardMainPage(), duration: Duration(milliseconds: 650));
+                    // Handle tap for Kayıtlar
+                    Get.to(() => RationWizardMainPage(),duration: Duration(milliseconds: 650));
                   },
                 ),
                 SizedBox(height: 30.0),

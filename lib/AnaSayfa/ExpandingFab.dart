@@ -39,7 +39,7 @@ class ExpandingFab extends StatelessWidget {
             position: fabAnimation,
             child: _buildFabWithText(
               text: 'Yeni Doğan Ekle',
-              assetPath: 'resimler/icons/lamb_and_calf_with_plus_above_icon_black.png',
+              assetPath: 'icons/lamb_and_calf_with_plus_above_icon_black.png',
               onPressed: () {
                 Get.to(() => const SelectBirthTypePage(),
                     duration: Duration(milliseconds: 650));
@@ -52,7 +52,7 @@ class ExpandingFab extends StatelessWidget {
             position: fabAnimation,
             child: _buildFabWithText(
               text: 'Hayvan Ekle',
-              assetPath: 'resimler/icons/sheep_and_cow_with_plus_above_icon_black.png',
+              assetPath: 'icons/sheep_and_cow_with_plus_above_icon_black.png',
               onPressed: () {
                 Get.to(() => const SelectTypePage(),
                     duration: Duration(milliseconds: 650));
@@ -65,7 +65,7 @@ class ExpandingFab extends StatelessWidget {
             position: fabAnimation,
             child: _buildFabWithText(
               text: 'Ölçüm Yap',
-              assetPath: 'resimler/icons/sheep_with_scale_icon_black.png',
+              assetPath: 'icons/sheep_with_scale_icon_black.png',
               onPressed: () {
                 Get.to(() => OlcumPage(),
                     duration: Duration(milliseconds: 650));
