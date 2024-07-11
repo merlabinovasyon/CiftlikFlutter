@@ -25,50 +25,48 @@ class BuildAhirList extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {
-                  showDialog(
-                    context: Get.context!,
-                    builder: (context) {
-                      return AlertDialog(
-                        backgroundColor: Colors.white,
-                        title: Text('Ahır Ekle'),
-                        content: TextField(
-                          cursorColor: Colors.black54,
-                          controller: ahirController,
-                          decoration: InputDecoration(
-                            hintText: 'Ahır adı giriniz',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
-                            ),
+                  Get.dialog(
+                    AlertDialog(
+                      backgroundColor: Colors.white,
+                      title: Text('Ahır Ekle'),
+                      content: TextField(
+                        cursorColor: Colors.black54,
+                        controller: ahirController,
+                        decoration: InputDecoration(
+                          hintText: 'Ahır adı giriniz',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                           ),
                         ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              if (ahirController.text.isNotEmpty && !controller.ahirList.contains(ahirController.text)) {
-                                controller.addAhir(ahirController.text);
-                                controller.selectAhir(ahirController.text); // Yeni eklenen ahır seçili kalır
-                                ahirController.clear();
-                                Get.back();
-                              } else if (controller.ahirList.contains(ahirController.text)) {
-                                Get.snackbar('Hata', 'Aynı adda ahır mevcut', backgroundColor: Colors.white, colorText: Colors.black);
-                              }
-                            },
-                            child: Text('Ekle', style: TextStyle(color: Colors.black)),
-                          ),
-                          TextButton(
-                            onPressed: () {
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () async {
+                            if (ahirController.text.isNotEmpty &&
+                                !controller.ahirList.any((ahir) => ahir['name'] == ahirController.text)) {
+                              int newAhirId = await controller.addAhir(ahirController.text);
+                              controller.selectAhir(newAhirId); // Yeni eklenen ahır seçili kalır
                               ahirController.clear();
                               Get.back();
-                            },
-                            child: Text('İptal', style: TextStyle(color: Colors.black)),
-                          ),
-                        ],
-                      );
-                    },
+                            } else if (controller.ahirList.any((ahir) => ahir['name'] == ahirController.text)) {
+                              Get.snackbar('Hata', 'Aynı adda ahır mevcut', backgroundColor: Colors.white, colorText: Colors.black);
+                            }
+                          },
+                          child: Text('Ekle', style: TextStyle(color: Colors.black)),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            ahirController.clear();
+                            Get.back();
+                          },
+                          child: Text('İptal', style: TextStyle(color: Colors.black)),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -95,63 +93,60 @@ class BuildAhirList extends StatelessWidget {
                         leading: IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
-                            ahirController.text = controller.ahirList[index];
-                            showDialog(
-                              context: Get.context!,
-                              builder: (context) {
-                                return AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  title: Text('Ahır Adını Güncelle'),
-                                  content: Form(
-                                    key: _formKey,
-                                    child: TextFormField(
-                                      cursorColor: Colors.black54,
-                                      controller: ahirController,
-                                      decoration: InputDecoration(
-                                        hintText: 'Yeni ahır adı giriniz',
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8.0),
-                                          borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
-                                        ),
+                            ahirController.text = controller.ahirList[index]['name'];
+                            Get.dialog(
+                              AlertDialog(
+                                backgroundColor: Colors.white,
+                                title: Text('Ahır Adını Güncelle'),
+                                content: Form(
+                                  key: _formKey,
+                                  child: TextFormField(
+                                    cursorColor: Colors.black54,
+                                    controller: ahirController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Yeni ahır adı giriniz',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
                                       ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Lütfen ahır adı giriniz';
-                                        } else if (controller.ahirList.contains(value)) {
-                                          return 'Aynı adda ahır mevcut';
-                                        }
-                                        return null;
-                                      },
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                                      ),
                                     ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Lütfen ahır adı giriniz';
+                                      } else if (controller.ahirList.any((ahir) => ahir['name'] == value)) {
+                                        return 'Aynı adda ahır mevcut';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          controller.updateAhir(index, ahirController.text);
-                                          ahirController.clear();
-                                          Get.back();
-                                        }
-                                      },
-                                      child: Text('Güncelle', style: TextStyle(color: Colors.black)),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        controller.updateAhir(index, ahirController.text);
                                         ahirController.clear();
                                         Get.back();
-                                      },
-                                      child: Text('İptal', style: TextStyle(color: Colors.black)),
-                                    ),
-                                  ],
-                                );
-                              },
+                                      }
+                                    },
+                                    child: Text('Güncelle', style: TextStyle(color: Colors.black)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      ahirController.clear();
+                                      Get.back();
+                                    },
+                                    child: Text('İptal', style: TextStyle(color: Colors.black)),
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         ),
-                        title: Text(controller.ahirList[index]),
+                        title: Text(controller.ahirList[index]['name']),
                         trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () {
@@ -159,7 +154,7 @@ class BuildAhirList extends StatelessWidget {
                           },
                         ),
                         onTap: () {
-                          controller.selectAhir(controller.ahirList[index]);
+                          controller.selectAhir(controller.ahirList[index]['id']);
                         },
                       ),
                     );

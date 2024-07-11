@@ -41,14 +41,21 @@ class AuthService {
     }
   }
 
-  Future<void> registerUser(String email, String password,String username) async {
+  Future<void> registerUser(String email, String password, String username, String phoneNumber) async {
     await initDb();
     await _database!.insert(
       'User',
-      {'email': email, 'password': password, 'username': username,'userTypeId':0,},
+      {
+        'email': email,
+        'password': password,
+        'username': username,
+        'phone': phoneNumber,  // Telefon numarası eklendi
+        'userTypeId': 0,
+      },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
 
   Future<List<Map<String, dynamic>>> getAllUsers() async {
     await initDb();

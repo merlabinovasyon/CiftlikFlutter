@@ -61,35 +61,100 @@ class AddBirthBuzagiPage extends StatelessWidget {
               const SizedBox(height: 5),
               const WeightField(),
               const SizedBox(height: 25),
-              BuildSelectionField(label: 'Doğuran Hayvan *', value: controller.selectedAnimal, options: controller.animals, onSelected: (value) {
-                controller.selectedAnimal.value = value;
-              }),
+              BuildSelectionField(
+                label: 'Doğuran Hayvan *',
+                value: controller.selectedCow,
+                options: controller.cows,
+                onSelected: (value) {
+                  controller.selectedCow.value = value;
+                },
+              ),
               const SizedBox(height: 16),
-              BuildSelectionField(label: 'Boğanız *', value: controller.selectedKoc, options: controller.boga, onSelected: (value) {
-                controller.selectedKoc.value = value;
-              }),
+              BuildSelectionField(
+                label: 'Boğanız *',
+                value: controller.selectedBoga,
+                options: controller.boga,
+                onSelected: (value) {
+                  controller.selectedBoga.value = value;
+                },
+              ),
               const SizedBox(height: 16),
-              BuildDateField(label: 'Doğum Yaptığı Tarih *', controller: controller.dobController),
+              BuildDateField(
+                label: 'Doğum Yaptığı Tarih *',
+                controller: controller.dobController,
+              ),
               const SizedBox(height: 16),
-              BuildTimeField(label: 'Doğum Zamanı', controller: controller.timeController, onTap: utils.showTimePicker),
+              BuildTimeField(
+                label: 'Doğum Zamanı',
+                controller: controller.timeController,
+                onTap: utils.showTimePicker,
+              ),
               const SizedBox(height: 24),
-              const Text('1. Buzağı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                '1. Buzağı',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
-              const BuildTextField(label: 'Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+              Row(
+                children: [
+                  Expanded(
+                    child: BuildTextField(
+                      label: 'Küpe No *',
+                      hint: 'GEÇİCİ_NO_16032',
+                      controller: controller.tagNoController,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0,bottom: 2,left: 10),
+                    child: SizedBox(
+                      width: 100, // İstediğiniz genişlik
+                      height: 50, // İstediğiniz yükseklik
+                      child: FormButton(
+                        title: 'Tara',
+                        onPressed: () {
+                          // Kontrol etme işlemi burada yapılacak
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 16),
-              const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+              BuildTextField(
+                label: 'Devlet Küpe No *',
+                hint: 'GEÇİCİ_NO_16032',
+                controller: controller.govTagNoController,
+              ),
               const SizedBox(height: 16),
-              BuildSelectionField(label: 'Irk *', value: controller.selectedBuzagi, options: controller.buzagi, onSelected: (value) {
-                controller.selectedBuzagi.value = value;
-              }),
+              BuildSelectionField(
+                label: 'Irk *',
+                value: controller.selectedBuzagi,
+                options: controller.buzagi,
+                onSelected: (value) {
+                  controller.selectedBuzagi.value = value;
+                },
+              ),
               const SizedBox(height: 16),
-              const BuildTextField(label: 'Hayvan Adı', hint: ''),
+              BuildTextField(
+                label: 'Hayvan Adı',
+                hint: '',
+                controller: controller.nameController,
+              ),
               const SizedBox(height: 16),
-              BuildSelectionField(label: 'Cinsiyet *', value: controller.selectedGender1, options: controller.genders, onSelected: (value) {
-                controller.selectedGender1.value = value;
-              }),
+              BuildSelectionField(
+                label: 'Cinsiyet *',
+                value: controller.selectedGender1,
+                options: controller.genders,
+                onSelected: (value) {
+                  controller.selectedGender1.value = value;
+                },
+              ),
               const SizedBox(height: 16),
-              BuildCounterField(label: 'Buzağı Tipi', controller: controller.countController, title: 'buzağı',),
+              BuildCounterField(
+                label: 'Buzağı Tipi',
+                controller: controller.countController,
+                title: 'buzağı',
+              ),
               const SizedBox(height: 24),
               TwinOrTripletSection(
                 label: 'İkiz',
@@ -107,17 +172,31 @@ class AddBirthBuzagiPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                   const SizedBox(height: 16),
-                  BuildSelectionField(label: 'Irk *', value: controller.selected1Buzagi, options: controller.buzagi1, onSelected: (value) {
-                    controller.selected1Buzagi.value = value;
-                  }),
+                  BuildSelectionField(
+                    label: 'Irk *',
+                    value: controller.selected1Buzagi,
+                    options: controller.buzagi1,
+                    onSelected: (value) {
+                      controller.selected1Buzagi.value = value;
+                    },
+                  ),
                   const SizedBox(height: 16),
                   const BuildTextField(label: 'Hayvan Adı', hint: ''),
                   const SizedBox(height: 16),
-                  BuildSelectionField(label: 'Cinsiyet *', value: controller.selectedGender2, options: controller.genders, onSelected: (value) {
-                    controller.selectedGender2.value = value;
-                  }),
+                  BuildSelectionField(
+                    label: 'Cinsiyet *',
+                    value: controller.selectedGender2,
+                    options: controller.genders,
+                    onSelected: (value) {
+                      controller.selectedGender2.value = value;
+                    },
+                  ),
                   const SizedBox(height: 16),
-                  BuildCounterField(label: 'Buzağı Tipi', controller: controller.count1Controller, title: 'buzağı',),
+                  BuildCounterField(
+                    label: 'Buzağı Tipi',
+                    controller: controller.count1Controller,
+                    title: 'buzağı',
+                  ),
                   const SizedBox(height: 24),
                 ],
                 additionalSection: TwinOrTripletSection(
@@ -135,36 +214,40 @@ class AddBirthBuzagiPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                     const SizedBox(height: 16),
-                    BuildSelectionField(label: 'Irk *', value: controller.selected2Buzagi, options: controller.buzagi1, onSelected: (value) {
-                      controller.selected2Buzagi.value = value;
-                    }),
+                    BuildSelectionField(
+                      label: 'Irk *',
+                      value: controller.selected2Buzagi,
+                      options: controller.buzagi1,
+                      onSelected: (value) {
+                        controller.selected2Buzagi.value = value;
+                      },
+                    ),
                     const SizedBox(height: 16),
                     const BuildTextField(label: 'Hayvan Adı', hint: ''),
                     const SizedBox(height: 16),
-                    BuildSelectionField(label: 'Cinsiyet *', value: controller.selectedGender3, options: controller.genders, onSelected: (value) {
-                      controller.selectedGender3.value = value;
-                    }),
+                    BuildSelectionField(
+                      label: 'Cinsiyet *',
+                      value: controller.selectedGender3,
+                      options: controller.genders,
+                      onSelected: (value) {
+                        controller.selectedGender3.value = value;
+                      },
+                    ),
                     const SizedBox(height: 16),
-                    BuildCounterField(label: 'Buzağı Tipi', controller: controller.count2Controller, title: 'buzağı',),
+                    BuildCounterField(
+                      label: 'Buzağı Tipi',
+                      controller: controller.count2Controller,
+                      title: 'buzağı',
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
                 child: FormButton(
                   title: 'Kaydet',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      Get.snackbar(
-                        'Başarılı',
-                        'Kayıt başarılı',
-                      );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Get.offAllNamed('/bottomNavigation');
-                      });
-                    }
-                  },
+                  onPressed: controller.saveBuzagiData,
                 ),
               ),
             ],

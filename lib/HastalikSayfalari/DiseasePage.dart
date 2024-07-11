@@ -15,6 +15,18 @@ class _DiseasePageState extends State<DiseasePage> {
   final DiseaseController controller = Get.put(DiseaseController());
 
   @override
+  void initState() {
+    super.initState();
+    controller.fetchDiseases();
+  }
+
+  Future<void> _refreshDiseases() async {
+    controller.isLoading.value = true;
+    await controller.fetchDiseases();
+    controller.isLoading.value = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -60,15 +72,20 @@ class _DiseasePageState extends State<DiseasePage> {
                   borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                 ),
               ),
+              onChanged: (value) {
+                controller.searchQuery.value = value;
+              },
             ),
             const SizedBox(height: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    // Hastalık ekleme işlemi burada yapılabilir
-                    Get.to(() => AddDiseasePage(),duration: Duration(milliseconds: 650));
+                  onPressed: () async {
+                    final result = await Get.to(() => AddDiseasePage(), duration: Duration(milliseconds: 650));
+                    if (result == true) {
+                      _refreshDiseases(); // Sayfaya dönünce veri yüklemeyi tetikle
+                    }
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -85,13 +102,21 @@ class _DiseasePageState extends State<DiseasePage> {
             const SizedBox(height: 8.0),
             Expanded(
               child: Obx(
-                    () => ListView.builder(
-                  itemCount: controller.diseases.length,
-                  itemBuilder: (context, index) {
-                    final disease = controller.diseases[index];
-                    return DiseaseCard(disease: disease);
-                  },
-                ),
+                    () {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator(color: Colors.black));
+                  } else if (controller.filteredDiseases.isEmpty) {
+                    return Center(child: Text('Hastalık bulunamadı'));
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.filteredDiseases.length,
+                      itemBuilder: (context, index) {
+                        final disease = controller.filteredDiseases[index];
+                        return DiseaseCard(disease: disease);
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],

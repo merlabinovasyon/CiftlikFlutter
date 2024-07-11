@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'AnimalGroupController.dart';
 
 class AnimalGroupCard extends StatelessWidget {
-  final String group;
+  final AnimalGroup group;
   final AnimalGroupController controller = Get.find();
 
   AnimalGroupCard({Key? key, required this.group}) : super(key: key);
@@ -15,17 +15,18 @@ class AnimalGroupCard extends StatelessWidget {
       key: ValueKey(group),
       endActionPane: ActionPane(
         motion: ScrollMotion(),
-        extentRatio: 0.17, // Kaydırma oranını biraz daha geniş tut
+        extentRatio: 0.17,
         children: [
           SlidableAction(
             onPressed: (context) {
-              controller.removeGroup(group);  // Grubu silme işlevi
+              controller.removeGroup(group.id);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             icon: Icons.delete,
             label: 'Sil',
             borderRadius: BorderRadius.circular(15.0),
+            padding: EdgeInsets.zero,
           ),
         ],
       ),
@@ -38,11 +39,11 @@ class AnimalGroupCard extends StatelessWidget {
             ),
             elevation: 2.0,
             shadowColor: Colors.cyan,
-            margin: const EdgeInsets.only(bottom: 10.0, right: 10, left: 10),
+            margin: const EdgeInsets.only(bottom: 10.0, right: 5, left: 5),
             child: ListTile(
-              leading: Icon(Icons.group),  // Grup ikonu
+              leading: Icon(Icons.group),
               title: Text(
-                'Grup Adı: ${group.isNotEmpty ? group : 'Bilinmiyor'}',
+                'Grup Adı: ${group.groupName.isNotEmpty ? group.groupName : 'Bilinmiyor'}',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),

@@ -1,41 +1,56 @@
 import 'package:get/get.dart';
+import 'DatabaseDiseaseHelper.dart';
 
 class DiseaseController extends GetxController {
   var diseases = <Disease>[].obs;
+  var isLoading = true.obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Örnek veri; gerçek verilerle değiştirin
-    diseases.assignAll([
-      Disease(
-        diseaseName: 'Hastalık 1',
-        diseaseDescription: 'Hastalık 1 açıklaması',
-        image: 'resimler/login_screen_2.png',
-      ),
-      Disease(
-        diseaseName: 'Hastalık 2',
-        diseaseDescription: 'Hastalık 2 açıklaması',
-        image: 'resimler/login_screen_2.png',
-      ),
-      Disease(
-        diseaseName: 'Hastalık 3',
-        diseaseDescription: 'Hastalık 3 açıklaması',
-        image: 'resimler/login_screen_2.png',
-      ),
-      // Daha fazla hastalık ekleyin
-    ]);
+    fetchDiseases();
+  }
+
+  Future<void> fetchDiseases() async {
+    isLoading.value = true;
+    List<Map<String, dynamic>> diseaseMaps = await DatabaseDiseaseHelper.instance.getDiseases();
+    diseases.assignAll(diseaseMaps.map((diseaseMap) => Disease.fromMap(diseaseMap)).toList());
+    isLoading.value = false;
+  }
+
+  void removeDisease(Disease disease) async {
+    await DatabaseDiseaseHelper.instance.deleteDisease(disease.id);
+    diseases.remove(disease);
+  }
+
+  List<Disease> get filteredDiseases {
+    if (searchQuery.value.isEmpty) {
+      return diseases;
+    } else {
+      return diseases
+          .where((disease) => disease.diseaseName.toLowerCase().contains(searchQuery.value.toLowerCase()))
+          .toList();
+    }
   }
 }
 
 class Disease {
+  final int id;
   final String diseaseName;
   final String diseaseDescription;
-  final String image;
 
   Disease({
+    required this.id,
     required this.diseaseName,
     required this.diseaseDescription,
-    required this.image,
   });
+
+  factory Disease.fromMap(Map<String, dynamic> map) {
+    return Disease(
+      id: map['id'],
+      diseaseName: map['diseaseName'],
+      diseaseDescription: map['diseaseDescription'],
+    );
+  }
 }

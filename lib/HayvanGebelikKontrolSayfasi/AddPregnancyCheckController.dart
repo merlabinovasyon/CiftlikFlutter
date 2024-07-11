@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'PregnancyCheckController.dart';
+import 'DatabaseAddPregnancyCheckHelper.dart';
 
 class AddPregnancyCheckController extends GetxController {
   var formKey = GlobalKey<FormState>();
@@ -14,14 +15,28 @@ class AddPregnancyCheckController extends GetxController {
     date.value = '';
   }
 
-  void addKontrol() {
+  void addKontrol(String tagNo) async {
     final kontrolController = Get.find<PregnancyCheckController>();
-    kontrolController.kontrols.add(
+    final kontrolDetails = {
+      'tagNo': tagNo,
+      'date': date.value,
+      'kontrolSonucu': kontrolSonucu.value,
+      'notes': notes.value,
+    };
+
+    int id = await DatabaseAddPregnancyCheckHelper.instance.addKontrol(kontrolDetails);
+
+    kontrolController.addKontrol(
       Kontrol(
+        id: id,
+        tagNo: tagNo,
         date: date.value,
         kontrolSonucu: kontrolSonucu.value,
         notes: notes.value,
       ),
     );
+
+    // Eklemeden sonra listeyi güncelle
+    kontrolController.fetchKontrolsByTagNo(tagNo);
   }
 }

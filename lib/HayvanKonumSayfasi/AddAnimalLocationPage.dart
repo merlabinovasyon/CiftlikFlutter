@@ -8,8 +8,9 @@ import 'AddAnimalLocationController.dart';
 
 class AddAnimalLocationPage extends StatelessWidget {
   final AddAnimalLocationController controller = Get.put(AddAnimalLocationController());
+  final String tagNo;
 
-  AddAnimalLocationPage({Key? key}) : super(key: key);
+  AddAnimalLocationPage({Key? key, required this.tagNo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,23 @@ class AddAnimalLocationPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
+                TextField(
+                  controller: TextEditingController(text: tagNo),
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    labelText: 'Küpe No',
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
                 BuildAnimalDateField(
                   label: 'Tarih',
                   controller: dateController,
@@ -64,12 +82,12 @@ class AddAnimalLocationPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0,left: 8),
+                  padding: const EdgeInsets.only(right: 8.0, left: 8),
                   child: FormButton(
                     title: 'Kaydet',
                     onPressed: () {
                       if (controller.formKey.currentState!.validate()) {
-                        controller.addLocation();
+                        controller.addLocation(tagNo);
                         controller.resetForm();
                         Get.back();
                         Get.snackbar('Başarılı', 'Lokasyon Kaydedildi');

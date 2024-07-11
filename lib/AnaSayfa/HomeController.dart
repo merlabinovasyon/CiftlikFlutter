@@ -4,6 +4,7 @@ import '../services/DatabaseService.dart';
 
 class HomeController extends GetxController {
   final DatabaseService _databaseService = Get.find();
+  var isSearching = false.obs; // Arama durumunu takip eder
 
   Future<void> addAnimalType(Map<String, dynamic> animalData, BuildContext context) async {
     await _databaseService.addAnimalType(animalData, context);
@@ -17,5 +18,9 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     _databaseService.initializeDatabase();
+  }
+
+  void clearSearch() {
+    isSearching.value = false;
   }
 }

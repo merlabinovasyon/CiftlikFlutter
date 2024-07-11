@@ -1,41 +1,56 @@
 import 'package:get/get.dart';
+import 'DatabaseVaccineHelper.dart';
 
 class VaccineController extends GetxController {
   var vaccines = <Vaccine>[].obs;
+  var isLoading = true.obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Örnek veri; gerçek verilerle değiştirin
-    vaccines.assignAll([
-      Vaccine(
-        vaccineName: 'Aşı 1',
-        vaccineDescription: 'Aşı 1 açıklaması',
-        image: 'resimler/login_screen_2.png',
-      ),
-      Vaccine(
-        vaccineName: 'Aşı 2',
-        vaccineDescription: 'Aşı 2 açıklaması',
-        image: 'resimler/login_screen_2.png',
-      ),
-      Vaccine(
-        vaccineName: 'Aşı 3',
-        vaccineDescription: 'Aşı 3 açıklaması',
-        image: 'resimler/login_screen_2.png',
-      ),
-      // Daha fazla aşı ekleyin
-    ]);
+    fetchVaccines();
+  }
+
+  void fetchVaccines() async {
+    isLoading.value = true;
+    List<Map<String, dynamic>> vaccineMaps = await DatabaseVaccineHelper.instance.getVaccines();
+    vaccines.assignAll(vaccineMaps.map((vaccineMap) => Vaccine.fromMap(vaccineMap)).toList());
+    isLoading.value = false;
+  }
+
+  void removeVaccine(Vaccine vaccine) async {
+    await DatabaseVaccineHelper.instance.deleteVaccine(vaccine.id);
+    vaccines.remove(vaccine);
+  }
+
+  List<Vaccine> get filteredVaccines {
+    if (searchQuery.value.isEmpty) {
+      return vaccines;
+    } else {
+      return vaccines
+          .where((vaccine) => vaccine.vaccineName.toLowerCase().contains(searchQuery.value.toLowerCase()))
+          .toList();
+    }
   }
 }
 
 class Vaccine {
+  final int id;
   final String vaccineName;
   final String vaccineDescription;
-  final String image;
 
   Vaccine({
+    required this.id,
     required this.vaccineName,
     required this.vaccineDescription,
-    required this.image,
   });
+
+  factory Vaccine.fromMap(Map<String, dynamic> map) {
+    return Vaccine(
+      id: map['id'],
+      vaccineName: map['vaccineName'],
+      vaccineDescription: map['vaccineDescription'],
+    );
+  }
 }

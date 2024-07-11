@@ -5,7 +5,7 @@ import 'AnimalVaccineController.dart';
 
 class AnimalVaccineCard extends StatelessWidget {
   final Vaccine vaccine;
-  final AnimalVaccineController controller = Get.find();
+  final AnimalVaccineController controller = Get.put(AnimalVaccineController());
 
   AnimalVaccineCard({Key? key, required this.vaccine}) : super(key: key);
 
@@ -19,8 +19,7 @@ class AnimalVaccineCard extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {
-              controller.removeVaccine(vaccine);
-              Get.snackbar('Başarılı', 'Aşı silindi');
+              controller.removeVaccine(vaccine.id);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,

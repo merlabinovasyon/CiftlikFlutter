@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'AnimalController.dart';
 
 class FilterableTabBar extends StatefulWidget {
   final TabController tabController;
@@ -11,11 +13,55 @@ class FilterableTabBar extends StatefulWidget {
 
 class _FilterableTabBarState extends State<FilterableTabBar> {
   bool isFilterVisible = false;
+  final AnimalController controller = Get.find();
 
   void toggleFilterVisibility() {
     setState(() {
       isFilterVisible = !isFilterVisible;
     });
+  }
+
+  void _onTabChanged() {
+    String tableName = '';
+    switch (widget.tabController.index) {
+      case 0:
+        tableName = 'lambTable';
+        break;
+      case 1:
+        tableName = 'buzagiTable';
+        break;
+      case 2:
+        tableName = 'koyunTable';
+        break;
+      case 3:
+        tableName = 'kocTable';
+        break;
+      case 4:
+        tableName = 'inekTable';
+        break;
+      case 5:
+        tableName = 'bogaTable';
+        break;
+      case 6:
+        tableName = 'weanedKuzuTable';
+        break;
+      case 7:
+        tableName = 'weanedBuzagiTable';
+        break;
+    }
+    controller.fetchAnimals(tableName);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.tabController.addListener(_onTabChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.tabController.removeListener(_onTabChanged);
+    super.dispose();
   }
 
   @override

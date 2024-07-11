@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../HayvanDetaySayfasi/AnimalDetailPage.dart';
 import 'AnimalController.dart';
 import 'FilterableTabBar.dart';
+import 'AnimalCard.dart';
 
 class AnimalPage extends StatefulWidget {
-  AnimalPage({super.key});
+  final String searchQuery;
+
+  AnimalPage({super.key, required this.searchQuery});
 
   @override
   _AnimalPageState createState() => _AnimalPageState();
@@ -14,17 +16,56 @@ class AnimalPage extends StatefulWidget {
 class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
   late final TabController _tabController;
   final AnimalController controller = Get.put(AnimalController());
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 8, vsync: this);
+    searchController.text = widget.searchQuery;
+    controller.fetchAnimals(getTableName()); // Default fetch on first tab
+    _filterAnimals(widget.searchQuery);
+
+    // Tab değiştiğinde hayvanları yeniden yükle
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        controller.fetchAnimals(getTableName());
+        _filterAnimals(searchController.text);
+      }
+    });
+  }
+
+  void _filterAnimals(String query) {
+    controller.searchQuery.value = query;
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  String getTableName() {
+    switch (_tabController.index) {
+      case 0:
+        return 'lambTable';
+      case 1:
+        return 'buzagiTable';
+      case 2:
+        return 'koyunTable';
+      case 3:
+        return 'kocTable';
+      case 4:
+        return 'inekTable';
+      case 5:
+        return 'bogaTable';
+      case 6:
+        return 'weanedKuzuTable';
+      case 7:
+        return 'weanedBuzagiTable';
+      default:
+        return 'lambTable';
+    }
   }
 
   @override
@@ -37,7 +78,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Get.back();
+            Get.back(result: true); // Geri dönerken sonucu ilet
           },
         ),
         title: Center(
@@ -63,6 +104,10 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
             FilterableTabBar(tabController: _tabController),
             const SizedBox(height: 8.0),
             TextField(
+              controller: searchController,
+              onChanged: (value) {
+                _filterAnimals(value);
+              },
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
@@ -72,79 +117,31 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                  borderSide: BorderSide(color: Colors.black),
                 ),
               ),
             ),
             const SizedBox(height: 8.0),
             Expanded(
               child: Obx(
-                    () => ListView.builder(
-                  itemCount: controller.animals.length,
-                  itemBuilder: (context, index) {
-                    final animal = controller.animals[index];
-                    return AnimalCard(animal: animal);
-                  },
-                ),
+                    () {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator(color: Colors.black));
+                  } else if (controller.filteredAnimals.isEmpty) {
+                    return Center(child: Text('Hayvan bulunamadı'));
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.filteredAnimals.length,
+                      itemBuilder: (context, index) {
+                        final animal = controller.filteredAnimals[index];
+                        return AnimalCard(animal: animal, tableName: getTableName());
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AnimalCard extends StatelessWidget {
-  final Animal animal;
-
-  const AnimalCard({Key? key, required this.animal}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => AnimalDetailPage(), duration: Duration(milliseconds: 650));
-      },
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        elevation: 4.0,
-        shadowColor: Colors.cyan,
-        margin: const EdgeInsets.only(bottom: 10.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.white,
-                child: Image.asset(
-                  animal.image,
-                  width: 55,
-                  height: 55,
-                ),
-              ),
-              const SizedBox(width: 16.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Küpe No: ${animal.kupeNo}',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Text(animal.hayvanAdi),
-                    const SizedBox(height: 4.0),
-                    Text(animal.dogumTarihi),
-                  ],
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

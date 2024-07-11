@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../FormFields/FormButton.dart';
 import 'FinanceController.dart';
-import 'TransactionTypeSelectionField.dart'; // Import the new TransactionTypeSelectionField
+import 'TransactionTypeSelectionField.dart';
 
 class AddTransactionPage extends StatelessWidget {
   final FinanceController controller = Get.find();
@@ -11,7 +11,7 @@ class AddTransactionPage extends StatelessWidget {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
   final _noteController = TextEditingController();
-  final _selectedDate = DateTime.now().obs; // Observable date
+  final _selectedDate = DateTime.now().obs;
   final _transactionType = Rxn<TransactionType>();
 
   @override
@@ -55,13 +55,13 @@ class AddTransactionPage extends StatelessWidget {
                 controller: _nameController,
                 decoration: InputDecoration(
                   labelText: 'Ad*',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
                 validator: (value) {
@@ -77,13 +77,13 @@ class AddTransactionPage extends StatelessWidget {
                 controller: _amountController,
                 decoration: InputDecoration(
                   labelText: 'Toplam Tutar*',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
                 keyboardType: TextInputType.number,
@@ -91,6 +91,16 @@ class AddTransactionPage extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'Lütfen toplam tutar giriniz';
                   }
+
+                  final validPattern = RegExp(r'^\d+([,.]\d{1,2})?$');
+                  if (!validPattern.hasMatch(value)) {
+                    return 'Geçersiz format. Örn: 1234.56 veya 1234,56';
+                  }
+
+                  if (value.contains(',') && value.contains('.')) {
+                    return 'Virgül ve nokta aynı anda kullanılamaz';
+                  }
+
                   return null;
                 },
               ),
@@ -100,13 +110,13 @@ class AddTransactionPage extends StatelessWidget {
                 controller: _noteController,
                 decoration: InputDecoration(
                   labelText: 'Notlar',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
               ),
@@ -144,14 +154,14 @@ class AddTransactionPage extends StatelessWidget {
                       controller: TextEditingController(text: DateFormat('d MMMM y', 'tr').format(_selectedDate.value)),
                       decoration: InputDecoration(
                         labelText: 'Tarih*',
-                        labelStyle: TextStyle(color: Colors.black), // Label rengi
+                        labelStyle: TextStyle(color: Colors.black),
                         suffixIcon: Icon(Icons.calendar_today),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                       ),
                     ),
@@ -174,11 +184,12 @@ class AddTransactionPage extends StatelessWidget {
                   title: 'Kaydet',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      final amountText = _amountController.text.replaceAll(',', '.');
                       final transaction = Transaction(
                         date: DateFormat('d MMMM y', 'tr').format(_selectedDate.value),
                         name: _nameController.text,
                         note: _noteController.text,
-                        amount: double.parse(_amountController.text) *
+                        amount: double.parse(amountText) *
                             (_transactionType.value == TransactionType.Gelir ? 1 : -1),
                         type: _transactionType.value!,
                       );

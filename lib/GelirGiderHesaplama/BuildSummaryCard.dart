@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'FinanceController.dart';
 
 class BuildSummaryCard extends StatelessWidget {
@@ -18,6 +19,8 @@ class BuildSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat.currency(locale: 'tr_TR', symbol: '', decimalDigits: 2);
+
     return GestureDetector(
       onTap: () {
         controller.selectedType.value = isIncome ? TransactionType.Gelir : TransactionType.Gider;
@@ -51,7 +54,7 @@ class BuildSummaryCard extends StatelessWidget {
                         ),
                       ),
                       child: CircleAvatar(
-                        radius: 17, // yarıçapı ayarlandı, ikon büyüklüğünde
+                        radius: 17,
                         backgroundColor: Colors.white,
                         child: Image.asset(
                           assetPath,
@@ -62,16 +65,33 @@ class BuildSummaryCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 8.0),
-                    Text(title,style: TextStyle(fontSize: 17)),
+                    Text(title, style: TextStyle(fontSize: 17)),
                   ],
                 ),
                 SizedBox(height: 4.0),
-                Text(
-                  'TRY ${amount.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    color: isIncome ? Colors.green : Colors.red,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  height: 50.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'TRY',
+                        style: TextStyle(
+                          color: isIncome ? Colors.green : Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        formatter.format(amount),
+                        style: TextStyle(
+                          color: isIncome ? Colors.green : Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

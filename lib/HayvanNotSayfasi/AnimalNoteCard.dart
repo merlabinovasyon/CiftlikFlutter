@@ -19,8 +19,7 @@ class AnimalNoteCard extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {
-              controller.removeNote(note);
-              Get.snackbar('Başarılı', 'Not silindi');
+              controller.removeNote(note.id);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,

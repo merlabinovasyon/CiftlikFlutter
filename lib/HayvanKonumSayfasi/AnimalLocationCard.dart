@@ -5,7 +5,7 @@ import 'AnimalLocationController.dart';
 
 class AnimalLocationCard extends StatelessWidget {
   final Location location;
-  final AnimalLocationController controller = Get.find();
+  final AnimalLocationController controller = Get.put(AnimalLocationController());
 
   AnimalLocationCard({Key? key, required this.location}) : super(key: key);
 
@@ -19,8 +19,7 @@ class AnimalLocationCard extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {
-              controller.removeLocation(location);
-              Get.snackbar('Başarılı', 'Lokasyon silindi');
+              controller.removeLocation(location.id);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -47,7 +46,7 @@ class AnimalLocationCard extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(location.locationName ?? 'Bilinmiyor'), // Null kontrolü
+                  Text(location.locationName ?? 'Bilinmiyor'),
                 ],
               ),
             ),

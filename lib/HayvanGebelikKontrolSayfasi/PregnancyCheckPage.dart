@@ -5,7 +5,9 @@ import 'PregnancyCheckController.dart';
 import 'PregnancyCheckCard.dart';
 
 class PregnancyCheckPage extends StatefulWidget {
-  PregnancyCheckPage({Key? key}) : super(key: key);
+  final String tagNo;
+
+  PregnancyCheckPage({Key? key, required this.tagNo}) : super(key: key);
 
   @override
   _PregnancyCheckPageState createState() => _PregnancyCheckPageState();
@@ -13,6 +15,12 @@ class PregnancyCheckPage extends StatefulWidget {
 
 class _PregnancyCheckPageState extends State<PregnancyCheckPage> {
   final PregnancyCheckController controller = Get.put(PregnancyCheckController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchKontrolsByTagNo(widget.tagNo);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +51,7 @@ class _PregnancyCheckPageState extends State<PregnancyCheckPage> {
           IconButton(
             icon: Icon(Icons.add, size: 30,),
             onPressed: () {
-              Get.dialog(AddPregnancyCheckPage());
+              Get.dialog(AddPregnancyCheckPage(tagNo: widget.tagNo));
             },
           ),
         ],

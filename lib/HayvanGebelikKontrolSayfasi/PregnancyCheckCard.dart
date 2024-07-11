@@ -5,7 +5,7 @@ import 'PregnancyCheckController.dart';
 
 class PregnancyCheckCard extends StatelessWidget {
   final Kontrol kontrol;
-  final PregnancyCheckController controller = Get.find();
+  final PregnancyCheckController controller = Get.put(PregnancyCheckController());
 
   PregnancyCheckCard({Key? key, required this.kontrol}) : super(key: key);
 
@@ -19,8 +19,7 @@ class PregnancyCheckCard extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {
-              controller.removeKontrol(kontrol);
-              Get.snackbar('Başarılı', 'Kontrol silindi');
+              controller.removeKontrol(kontrol.id);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -43,12 +42,12 @@ class PregnancyCheckCard extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 10.0, right: 10),
             child: ListTile(
               leading: Icon(kontrol.kontrolSonucu == 'Gebe' ? Icons.check : Icons.clear, color: kontrol.kontrolSonucu == 'Gebe' ? Colors.green : Colors.red),
-              title: Text(kontrol.date.isNotEmpty ? kontrol.date : 'Bilinmiyor'),
+              title: Text(kontrol.date),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(kontrol.kontrolSonucu ?? 'Bilinmiyor'),
-                  Text(kontrol.notes.isNotEmpty ? kontrol.notes : 'Bilinmiyor'),
+                  Text(kontrol.notes),
                 ],
               ),
             ),

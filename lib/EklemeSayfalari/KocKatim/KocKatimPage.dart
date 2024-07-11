@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/BuildSelectionField.dart';
 import '../../FormFields/FormButton.dart';
+import '../../FormFields/BuildDateField.dart';
+import '../../FormFields/BuildTimeField.dart';
 import 'KocKatimController.dart';
 
 class KocKatimPage extends StatelessWidget {
@@ -55,10 +57,10 @@ class KocKatimPage extends StatelessWidget {
               const SizedBox(height: 16),
               BuildSelectionField(
                 label: 'Koyununuz *',
-                value: controller.selectedAnimal,
-                options: controller.animals,
+                value: controller.selectedKoyun,
+                options: controller.koyun,
                 onSelected: (value) {
-                  controller.selectedAnimal.value = value;
+                  controller.selectedKoyun.value = value;
                 },
               ),
               const SizedBox(height: 16),
@@ -70,22 +72,23 @@ class KocKatimPage extends StatelessWidget {
                   controller.selectedKoc.value = value;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
+              BuildDateField(
+                label: 'Tarih',
+                controller: controller.dateController,
+              ),
+              const SizedBox(height: 16),
+              BuildTimeField(
+                label: 'Saat',
+                controller: controller.timeController,
+                onTap: utils.showTimePicker,
+              ),
+              const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
+                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      Get.snackbar(
-                        'Başarılı',
-                        'Eşleme başarılı',
-                      );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Get.offAllNamed('/bottomNavigation');
-                      });
-                    }
-                  },
+                  onPressed: controller.saveKocKatimData,
                 ),
               ),
             ],

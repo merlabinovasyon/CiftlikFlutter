@@ -7,8 +7,9 @@ import 'BuildAnimalSelectionField.dart';
 
 class AddAnimalVaccinePage extends StatelessWidget {
   final AddAnimalVaccineController controller = Get.put(AddAnimalVaccineController());
+  final String tagNo;
 
-  AddAnimalVaccinePage({Key? key}) : super(key: key);
+  AddAnimalVaccinePage({Key? key, required this.tagNo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,78 +25,97 @@ class AddAnimalVaccinePage extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: controller.formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Aşılama Ekle', style: TextStyle(fontSize: 18)),
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        controller.resetForm();
-                        Get.back();
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  cursorColor: Colors.black54,
-                  decoration: InputDecoration(
-                    labelText: 'Notlar',
-                    labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.black),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Aşılama Ekle', style: TextStyle(fontSize: 18)),
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          controller.resetForm();
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: TextEditingController(text: tagNo),
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      labelText: 'Küpe No',
+                      labelStyle: TextStyle(color: Colors.black),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
                     ),
                   ),
-                  onChanged: (value) {
-                    controller.notes.value = value;
-                  },
-                ),
-                const SizedBox(height: 16),
-                BuildAnimalDateField(
-                  label: 'Tarih',
-                  controller: dateController,
-                  onDateSelected: (selectedDate) {
-                    controller.date.value = selectedDate;
-                  },
-                ),
-                const SizedBox(height: 16),
-                BuildAnimalSelectionField(
-                  label: 'Aşı Tipi *',
-                  value: controller.vaccineType,
-                  options: ['Aşı Tipi 1', 'Aşı Tipi 2'],
-                  onSelected: (value) {
-                    controller.vaccineType.value = value;
-                  },
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0,left: 8),
-                  child: FormButton(
-                    title: 'Kaydet',
-                    onPressed: () {
-                      if (controller.formKey.currentState!.validate()) {
-                        controller.addVaccine();
-                        controller.resetForm();
-                        Get.back();
-                        Get.snackbar('Başarılı', 'Yapılan Aşı Kaydedildi');
-                      }
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    cursorColor: Colors.black54,
+                    decoration: InputDecoration(
+                      labelText: 'Notlar',
+                      labelStyle: TextStyle(color: Colors.black),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      controller.notes.value = value;
                     },
                   ),
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  BuildAnimalDateField(
+                    label: 'Tarih',
+                    controller: dateController,
+                    onDateSelected: (selectedDate) {
+                      controller.date.value = selectedDate;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  BuildAnimalSelectionField(
+                    label: 'Aşı Tipi *',
+                    value: controller.vaccineType,
+                    options: ['Aşı Tipi 1', 'Aşı Tipi 2'],
+                    onSelected: (value) {
+                      controller.vaccineType.value = value;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0, left: 8),
+                    child: FormButton(
+                      title: 'Kaydet',
+                      onPressed: () {
+                        if (controller.formKey.currentState!.validate()) {
+                          controller.addVaccine(tagNo);
+                          controller.resetForm();
+                          Get.back();
+                          Get.snackbar('Başarılı', 'Yapılan Aşı Kaydedildi');
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

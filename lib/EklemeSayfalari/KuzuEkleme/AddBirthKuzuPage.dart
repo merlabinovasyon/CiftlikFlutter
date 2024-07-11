@@ -9,7 +9,7 @@ import '../../FormFields/BuildTextField.dart';
 import '../../FormFields/BuildTimeField.dart';
 import '../../FormFields/TwinOrTripletSection.dart';
 import 'AddBirthKuzuController.dart';
-import '../../FormFields/FormButton.dart'; // FormButton import ediliyor
+import '../../FormFields/FormButton.dart';
 
 class AddBirthKuzuPage extends StatelessWidget {
   final AddBirthKuzuController controller = Get.put(AddBirthKuzuController());
@@ -95,9 +95,37 @@ class AddBirthKuzuPage extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
-              BuildTextField(label: 'Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+              Row(
+                children: [
+                  Expanded(
+                    child: BuildTextField(
+                      label: 'Küpe No *',
+                      hint: 'GEÇİCİ_NO_16032',
+                      controller: controller.tagNoController,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0,bottom: 2,left: 10),
+                    child: SizedBox(
+                      width: 100, // İstediğiniz genişlik
+                      height: 50, // İstediğiniz yükseklik
+                      child: FormButton(
+                        title: 'Tara',
+                        onPressed: () {
+                          // Kontrol etme işlemi burada yapılacak
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
               SizedBox(height: 16),
-              BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+              BuildTextField(
+                label: 'Devlet Küpe No *',
+                hint: 'GEÇİCİ_NO_16032',
+                controller: controller.govTagNoController,
+              ),
               SizedBox(height: 16),
               BuildSelectionField(
                 label: 'Irk *',
@@ -108,7 +136,11 @@ class AddBirthKuzuPage extends StatelessWidget {
                 },
               ),
               SizedBox(height: 16),
-              BuildTextField(label: 'Hayvan Adı', hint: ''),
+              BuildTextField(
+                label: 'Hayvan Adı',
+                hint: '',
+                controller: controller.nameController,
+              ),
               SizedBox(height: 16),
               BuildSelectionField(
                 label: 'Cinsiyet *',
@@ -213,20 +245,10 @@ class AddBirthKuzuPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
+                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      Get.snackbar(
-                        'Başarılı',
-                        'Kayıt başarılı',
-                      );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Get.offAllNamed('/bottomNavigation');
-                      });
-                    }
-                  },
+                  onPressed: controller.saveLambData,
                 ),
               ),
             ],

@@ -5,7 +5,9 @@ import 'AnimalExaminationController.dart';
 import 'AnimalExaminationCard.dart';
 
 class AnimalExaminationPage extends StatefulWidget {
-  AnimalExaminationPage({Key? key}) : super(key: key);
+  final String tagNo;
+
+  AnimalExaminationPage({Key? key, required this.tagNo}) : super(key: key);
 
   @override
   _AnimalExaminationPageState createState() => _AnimalExaminationPageState();
@@ -13,6 +15,12 @@ class AnimalExaminationPage extends StatefulWidget {
 
 class _AnimalExaminationPageState extends State<AnimalExaminationPage> {
   final AnimalExaminationController controller = Get.put(AnimalExaminationController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchExaminationsByTagNo(widget.tagNo);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +51,7 @@ class _AnimalExaminationPageState extends State<AnimalExaminationPage> {
           IconButton(
             icon: Icon(Icons.add, size: 30,),
             onPressed: () {
-              Get.dialog(AddAnimalExaminationPage());
+              Get.dialog(AddAnimalExaminationPage(tagNo: widget.tagNo));
             },
           ),
         ],

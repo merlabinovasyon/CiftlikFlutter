@@ -57,18 +57,23 @@ class _VaccinePageState extends State<VaccinePage> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                  borderSide: BorderSide(color: Colors.black),
                 ),
               ),
+              onChanged: (value) {
+                controller.searchQuery.value = value;
+              },
             ),
             const SizedBox(height: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    // Aşı ekleme işlemi burada yapılabilir
-                    Get.to(() => AddVaccinePage(),duration: Duration(milliseconds: 650));
+                  onPressed: () async {
+                    final result = await Get.to(() => AddVaccinePage(), duration: Duration(milliseconds: 650));
+                    if (result == true) {
+                      controller.fetchVaccines();
+                    }
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -85,13 +90,21 @@ class _VaccinePageState extends State<VaccinePage> {
             const SizedBox(height: 8.0),
             Expanded(
               child: Obx(
-                    () => ListView.builder(
-                  itemCount: controller.vaccines.length,
-                  itemBuilder: (context, index) {
-                    final vaccine = controller.vaccines[index];
-                    return VaccineCard(vaccine: vaccine);
-                  },
-                ),
+                    () {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator(color: Colors.black,));
+                  } else if (controller.filteredVaccines.isEmpty) {
+                    return Center(child: Text('Aşı bulunamadı'));
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.filteredVaccines.length,
+                      itemBuilder: (context, index) {
+                        final vaccine = controller.filteredVaccines[index];
+                        return VaccineCard(vaccine: vaccine);
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],

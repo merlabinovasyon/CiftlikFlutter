@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'DatabaseBuzagiHelper.dart';
+
 class AddBirthBuzagiController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final dobController = TextEditingController();
@@ -8,9 +10,12 @@ class AddBirthBuzagiController extends GetxController {
   final countController = TextEditingController();
   final count1Controller = TextEditingController();
   final count2Controller = TextEditingController();
+  final tagNoController = TextEditingController();
+  final govTagNoController = TextEditingController();
+  final nameController = TextEditingController();
 
-  var selectedAnimal = Rxn<String>();
-  var selectedKoc = Rxn<String>();
+  var selectedCow = Rxn<String>();
+  var selectedBoga = Rxn<String>();
   var selectedBuzagi = Rxn<String>();
   var selected1Buzagi = Rxn<String>();
   var selected2Buzagi = Rxn<String>();
@@ -20,21 +25,23 @@ class AddBirthBuzagiController extends GetxController {
   var isTwin = false.obs;
   var isTriplet = false.obs;
 
-  final animals = ['Hayvan 1', 'Hayvan 2', 'Hayvan 3'];
-  final boga = ['Boğa 1', 'Boğa 2', 'Boğa 3'];
-  final buzagi = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
-  final buzagi1 = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
-  final genders = ['Erkek', 'Dişi'];
+  final List<String> cows = ['Hayvan 1', 'Hayvan 2', 'Hayvan 3'];
+  final List<String> boga = ['Boğa 1', 'Boğa 2', 'Boğa 3'];
+  final List<String> buzagi = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
+  final List<String> buzagi1 = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
+  final List<String> genders = ['Erkek', 'Dişi'];
 
   @override
-  void onClose() {
-    resetForm();
+  void dispose() {
     dobController.dispose();
     timeController.dispose();
     countController.dispose();
     count1Controller.dispose();
     count2Controller.dispose();
-    super.onClose();
+    tagNoController.dispose();
+    govTagNoController.dispose();
+    nameController.dispose();
+    super.dispose();
   }
 
   void resetTwinValues() {
@@ -50,9 +57,15 @@ class AddBirthBuzagiController extends GetxController {
     count2Controller.clear();
   }
 
+  @override
+  void onClose() {
+    resetForm();
+    super.onClose();
+  }
+
   void resetForm() {
-    selectedAnimal.value = null;
-    selectedKoc.value = null;
+    selectedCow.value = null;
+    selectedBoga.value = null;
     selectedBuzagi.value = null;
     selected1Buzagi.value = null;
     selected2Buzagi.value = null;
@@ -66,5 +79,34 @@ class AddBirthBuzagiController extends GetxController {
     countController.clear();
     count1Controller.clear();
     count2Controller.clear();
+    tagNoController.clear();
+    govTagNoController.clear();
+    nameController.clear();
+  }
+
+  Future<void> saveBuzagiData() async {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      Map<String, dynamic> buzagiData = {
+        'weight': countController.text,
+        'mother': selectedCow.value,
+        'father': selectedBoga.value,
+        'dob': dobController.text,
+        'time': timeController.text,
+        'tagNo': tagNoController.text,
+        'govTagNo': govTagNoController.text,
+        'species': selectedBuzagi.value,
+        'name': nameController.text,
+        'gender': selectedGender1.value,
+        'type': countController.text,
+      };
+
+      await DatabaseBuzagiHelper.instance.insertBuzagi(buzagiData);
+      Get.snackbar('Başarılı', 'Kayıt başarılı');
+      Future.delayed(const Duration(seconds: 1), () {
+        Get.offAllNamed('/bottomNavigation');
+      });
+    }
   }
 }

@@ -19,7 +19,7 @@ class AddDiseasePage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             controller.resetForm();
-            Get.back();
+            Get.back(result: false);
           },
         ),
         title: Center(
@@ -51,22 +51,20 @@ class AddDiseasePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: controller.diseaseNameController,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Hastalık Adı *',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey, width: 1.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
-                onChanged: (value) {
-                  controller.diseaseName.value = value;
-                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Hastalık Adı boş bırakılamaz';
@@ -76,22 +74,20 @@ class AddDiseasePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: controller.diseaseDescriptionController,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Hastalık Açıklaması *',
-                  labelStyle: TextStyle(color: Colors.black), // Label rengi
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey, width: 1.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
-                onChanged: (value) {
-                  controller.diseaseDescription.value = value;
-                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Hastalık Açıklaması boş bırakılamaz';
@@ -104,17 +100,7 @@ class AddDiseasePage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      Get.snackbar(
-                        'Başarılı',
-                        'Kayıt Başarılı',
-                      );
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Get.offNamedUntil('/diseasePage', (route) => route.isFirst);
-                      });
-                    }
-                  },
+                  onPressed: controller.saveDiseaseData,
                 ),
               ),
             ],
