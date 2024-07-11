@@ -7,6 +7,7 @@ import '../../FormFields/FormButton.dart';
 import '../../FormFields/WeightField.dart';
 import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildTimeField.dart';
+import '../../AnimalService/BuildSelectionAnimalField.dart';
 
 class InekSutOlcumPage extends StatelessWidget {
   final InekSutOlcumController controller = Get.put(InekSutOlcumController());
@@ -56,9 +57,9 @@ class InekSutOlcumPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
-              WeightField(),
+              const WeightField(),
               const SizedBox(height: 25),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'İneğiniz *',
                 value: controller.selectedType,
                 options: controller.types,

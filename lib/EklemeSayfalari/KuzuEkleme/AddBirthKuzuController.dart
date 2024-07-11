@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'DatabaseKuzuHelper.dart';
 
 class AddBirthKuzuController extends GetxController {
@@ -24,11 +25,17 @@ class AddBirthKuzuController extends GetxController {
   var isTwin = false.obs;
   var isTriplet = false.obs;
 
-  final List<String> animals = ['Hayvan 1', 'Hayvan 2', 'Hayvan 3'];
-  final List<String> koc = ['Koç 1', 'Koç 2', 'Koç 3'];
+  var animals = <Map<String, dynamic>>[].obs;
+  var koc = <Map<String, dynamic>>[].obs;
   final List<String> lamb = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
-  final List<String> lamb1 = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
   final List<String> genders = ['Erkek', 'Dişi'];
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchKoyunList();
+    fetchKocList();
+  }
 
   @override
   void dispose() {
@@ -41,6 +48,14 @@ class AddBirthKuzuController extends GetxController {
     govTagNoController.dispose();
     nameController.dispose();
     super.dispose();
+  }
+
+  void fetchKoyunList() async {
+    animals.assignAll(await AnimalService.instance.getKoyunList());
+  }
+
+  void fetchKocList() async {
+    koc.assignAll(await AnimalService.instance.getKocList());
   }
 
   void resetTwinValues() {

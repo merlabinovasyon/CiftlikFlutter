@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
 import 'DatabaseBuzagiHelper.dart';
 
 class AddBirthBuzagiController extends GetxController {
@@ -25,11 +25,18 @@ class AddBirthBuzagiController extends GetxController {
   var isTwin = false.obs;
   var isTriplet = false.obs;
 
-  final List<String> cows = ['Hayvan 1', 'Hayvan 2', 'Hayvan 3'];
-  final List<String> boga = ['Boğa 1', 'Boğa 2', 'Boğa 3'];
+  var cows = <Map<String, dynamic>>[].obs;
+  var boga = <Map<String, dynamic>>[].obs;
   final List<String> buzagi = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
   final List<String> buzagi1 = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
   final List<String> genders = ['Erkek', 'Dişi'];
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchCowList();
+    fetchBogaList();
+  }
 
   @override
   void dispose() {
@@ -42,6 +49,14 @@ class AddBirthBuzagiController extends GetxController {
     govTagNoController.dispose();
     nameController.dispose();
     super.dispose();
+  }
+
+  void fetchCowList() async {
+    cows.assignAll(await AnimalService.instance.getInekList());
+  }
+
+  void fetchBogaList() async {
+    boga.assignAll(await AnimalService.instance.getBogaList());
   }
 
   void resetTwinValues() {

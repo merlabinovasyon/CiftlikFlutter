@@ -77,7 +77,6 @@ class Animal {
   final String? tagNo;
   final String? name;
   final String? dob;
-  final String? type;
   final String? date;
 
   Animal({
@@ -85,7 +84,6 @@ class Animal {
     this.tagNo,
     this.name,
     this.dob,
-    this.type,
     this.date,
   });
 
@@ -93,7 +91,7 @@ class Animal {
     if (tableName == 'weanedKuzuTable' || tableName == 'weanedBuzagiTable') {
       return Animal(
         id: map['id'],
-        type: map['type'],
+        tagNo: map['tagNo'],
         date: map['date'],
       );
     } else {

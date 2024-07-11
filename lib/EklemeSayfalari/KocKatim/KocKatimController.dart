@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'DatabaseKocKatimHelper.dart';
+import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/DatabaseKocKatimHelper.dart';
 
 class KocKatimController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -9,15 +10,14 @@ class KocKatimController extends GetxController {
 
   var selectedKoyun = Rxn<String>();
   var selectedKoc = Rxn<String>();
-  var koyun = <String>[].obs;
-  var koc = <String>[].obs;
+  var koyun = <Map<String, dynamic>>[].obs;
+  var koc = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Example data; replace with actual data retrieval
-    koyun.assignAll(['Koyun 1', 'Koyun 2', 'Koyun 3']);
-    koc.assignAll(['Koç 1', 'Koç 2', 'Koç 3']);
+    fetchKoyunList();
+    fetchKocList();
   }
 
   @override
@@ -25,6 +25,14 @@ class KocKatimController extends GetxController {
     dateController.dispose();
     timeController.dispose();
     super.dispose();
+  }
+
+  void fetchKoyunList() async {
+    koyun.assignAll(await AnimalService.instance.getKoyunList());
+  }
+
+  void fetchKocList() async {
+    koc.assignAll(await AnimalService.instance.getKocList());
   }
 
   void resetForm() {

@@ -6,6 +6,7 @@ import '../../FormFields/FormButton.dart';
 import '../../FormFields/WeightField.dart';
 import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildTimeField.dart';
+import '../../AnimalService/BuildSelectionAnimalField.dart';
 import 'WeanedBuzagiOlcumController.dart';
 
 class WeanedBuzagiOlcumPage extends StatelessWidget {
@@ -56,14 +57,14 @@ class WeanedBuzagiOlcumPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
-              WeightField(),
+              const WeightField(),
               const SizedBox(height: 25),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'Buzağınız *',
-                value: controller.selectedType,
-                options: controller.types,
+                value: controller.selectedTagNo,
+                options: controller.tagno,
                 onSelected: (value) {
-                  controller.selectedType.value = value;
+                  controller.selectedTagNo.value = value;
                 },
               ),
               const SizedBox(height: 16),

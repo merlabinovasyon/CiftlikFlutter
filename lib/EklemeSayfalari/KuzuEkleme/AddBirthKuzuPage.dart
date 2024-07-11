@@ -5,8 +5,9 @@ import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/BuildCounterField.dart';
 import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildSelectionField.dart';
-import '../../FormFields/BuildTextField.dart';
 import '../../FormFields/BuildTimeField.dart';
+import '../../AnimalService/BuildSelectionAnimalField.dart';
+import '../../FormFields/BuildTextField.dart';
 import '../../FormFields/TwinOrTripletSection.dart';
 import 'AddBirthKuzuController.dart';
 import '../../FormFields/FormButton.dart';
@@ -61,8 +62,8 @@ class AddBirthKuzuPage extends StatelessWidget {
               SizedBox(height: 5),
               WeightField(),
               SizedBox(height: 25),
-              BuildSelectionField(
-                label: 'Doğuran Hayvan *',
+              BuildSelectionAnimalField(
+                label: 'Koyununuz *',
                 value: controller.selectedAnimal,
                 options: controller.animals,
                 onSelected: (value) {
@@ -70,7 +71,7 @@ class AddBirthKuzuPage extends StatelessWidget {
                 },
               ),
               SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'Koçunuz *',
                 value: controller.selectedKoc,
                 options: controller.koc,
@@ -119,7 +120,6 @@ class AddBirthKuzuPage extends StatelessWidget {
                   ),
                 ],
               ),
-
               SizedBox(height: 16),
               BuildTextField(
                 label: 'Devlet Küpe No *',
@@ -176,7 +176,7 @@ class AddBirthKuzuPage extends StatelessWidget {
                   BuildSelectionField(
                     label: 'Irk *',
                     value: controller.selected1Lamb,
-                    options: controller.lamb1,
+                    options: controller.lamb,
                     onSelected: (value) {
                       controller.selected1Lamb.value = value;
                     },
@@ -218,7 +218,7 @@ class AddBirthKuzuPage extends StatelessWidget {
                     BuildSelectionField(
                       label: 'Irk *',
                       value: controller.selected2Lamb,
-                      options: controller.lamb1,
+                      options: controller.lamb,
                       onSelected: (value) {
                         controller.selected2Lamb.value = value;
                       },

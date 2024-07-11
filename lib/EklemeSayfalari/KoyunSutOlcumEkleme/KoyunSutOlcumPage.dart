@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
-import '../../FormFields/BuildSelectionField.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/WeightField.dart';
 import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildTimeField.dart';
+import '../../AnimalService/BuildSelectionAnimalField.dart';
 import 'KoyunSutOlcumController.dart';
 
 class KoyunSutOlcumPage extends StatelessWidget {
@@ -58,7 +58,7 @@ class KoyunSutOlcumPage extends StatelessWidget {
               const SizedBox(height: 16),
               WeightField(),
               const SizedBox(height: 25),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'Koyununuz *',
                 value: controller.selectedType,
                 options: controller.types,
