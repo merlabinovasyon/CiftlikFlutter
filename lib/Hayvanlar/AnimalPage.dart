@@ -5,7 +5,9 @@ import 'FilterableTabBar.dart';
 import 'AnimalCard.dart';
 
 class AnimalPage extends StatefulWidget {
-  AnimalPage({super.key});
+  final String searchQuery;
+
+  AnimalPage({super.key, required this.searchQuery});
 
   @override
   _AnimalPageState createState() => _AnimalPageState();
@@ -14,44 +16,27 @@ class AnimalPage extends StatefulWidget {
 class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
   late final TabController _tabController;
   final AnimalController controller = Get.put(AnimalController());
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 8, vsync: this);
-    controller.fetchAnimals('lambTable'); // Default fetch on first tab
+    searchController.text = widget.searchQuery;
+    controller.fetchAnimals(getTableName()); // Default fetch on first tab
+    _filterAnimals(widget.searchQuery);
 
     // Tab değiştiğinde hayvanları yeniden yükle
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
-        switch (_tabController.index) {
-          case 0:
-            controller.fetchAnimals('lambTable');
-            break;
-          case 1:
-            controller.fetchAnimals('buzagiTable');
-            break;
-          case 2:
-            controller.fetchAnimals('koyunTable');
-            break;
-          case 3:
-            controller.fetchAnimals('kocTable');
-            break;
-          case 4:
-            controller.fetchAnimals('inekTable');
-            break;
-          case 5:
-            controller.fetchAnimals('bogaTable');
-            break;
-          case 6:
-            controller.fetchAnimals('weanedKuzuTable');
-            break;
-          case 7:
-            controller.fetchAnimals('weanedBuzagiTable');
-            break;
-        }
+        controller.fetchAnimals(getTableName());
+        _filterAnimals(searchController.text);
       }
     });
+  }
+
+  void _filterAnimals(String query) {
+    controller.searchQuery.value = query;
   }
 
   @override
@@ -93,7 +78,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Get.back();
+            Get.back(result: true); // Geri dönerken sonucu ilet
           },
         ),
         title: Center(
@@ -119,6 +104,10 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
             FilterableTabBar(tabController: _tabController),
             const SizedBox(height: 8.0),
             TextField(
+              controller: searchController,
+              onChanged: (value) {
+                _filterAnimals(value);
+              },
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
@@ -128,7 +117,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                  borderSide: BorderSide(color: Colors.black),
                 ),
               ),
             ),
@@ -138,17 +127,14 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
                     () {
                   if (controller.isLoading.value) {
                     return Center(child: CircularProgressIndicator(color: Colors.black));
-                  } else if (controller.animals.isEmpty) {
+                  } else if (controller.filteredAnimals.isEmpty) {
                     return Center(child: Text('Hayvan bulunamadı'));
                   } else {
                     return ListView.builder(
-                      itemCount: controller.animals.length,
+                      itemCount: controller.filteredAnimals.length,
                       itemBuilder: (context, index) {
-                        final animal = controller.animals[index];
-                        final tableName = _tabController.index == 6 || _tabController.index == 7
-                            ? (_tabController.index == 6 ? 'weanedKuzuTable' : 'weanedBuzagiTable')
-                            : getTableName();
-                        return AnimalCard(animal: animal, tableName: tableName);
+                        final animal = controller.filteredAnimals[index];
+                        return AnimalCard(animal: animal, tableName: getTableName());
                       },
                     );
                   }

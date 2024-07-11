@@ -105,13 +105,14 @@ class FinancePage extends StatelessWidget {
                       borderSide: BorderSide(color: Colors.black),
                     ),
                   ),
+                  onChanged: (value) {
+                    controller.searchQuery.value = value;
+                  },
                 ),
               ),
               Expanded(
                 child: Obx(() {
-                  final filteredTransactions = controller.transactions.where((transaction) {
-                    return transaction.type == controller.selectedType.value;
-                  }).toList();
+                  final filteredTransactions = controller.filteredTransactions;
 
                   if (filteredTransactions.isEmpty) {
                     return Center(

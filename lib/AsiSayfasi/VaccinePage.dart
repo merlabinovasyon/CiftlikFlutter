@@ -60,6 +60,9 @@ class _VaccinePageState extends State<VaccinePage> {
                   borderSide: BorderSide(color: Colors.black),
                 ),
               ),
+              onChanged: (value) {
+                controller.searchQuery.value = value;
+              },
             ),
             const SizedBox(height: 8.0),
             Row(
@@ -90,13 +93,13 @@ class _VaccinePageState extends State<VaccinePage> {
                     () {
                   if (controller.isLoading.value) {
                     return Center(child: CircularProgressIndicator(color: Colors.black,));
-                  } else if (controller.vaccines.isEmpty) {
+                  } else if (controller.filteredVaccines.isEmpty) {
                     return Center(child: Text('Aşı bulunamadı'));
                   } else {
                     return ListView.builder(
-                      itemCount: controller.vaccines.length,
+                      itemCount: controller.filteredVaccines.length,
                       itemBuilder: (context, index) {
-                        final vaccine = controller.vaccines[index];
+                        final vaccine = controller.filteredVaccines[index];
                         return VaccineCard(vaccine: vaccine);
                       },
                     );

@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/Hayvanlar/DatabaseAnimalHelper.dart';
+import 'DatabaseAnimalHelper.dart';
 
 class AnimalController extends GetxController {
   var animals = <Animal>[].obs;
   var isLoading = false.obs;
+  var searchQuery = ''.obs; // Arama sorgusu için RxString
 
   // Önceden yüklenmiş verileri tutmak için bir harita oluşturun
   Map<String, List<Animal>> cachedAnimals = {};
@@ -34,6 +35,17 @@ class AnimalController extends GetxController {
     }
   }
 
+  List<Animal> get filteredAnimals {
+    if (searchQuery.value.isEmpty) {
+      return animals;
+    } else {
+      return animals.where((animal) {
+        return (animal.tagNo?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false) ||
+            (animal.name?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false);
+      }).toList();
+    }
+  }
+
   Future<void> removeAnimal(int id, String tableName) async {
     await DatabaseAnimalHelper.instance.deleteAnimal(id, tableName);
     // Önce listedeki hayvanı çıkar
@@ -58,7 +70,6 @@ class AnimalController extends GetxController {
       }
     }
   }
-
 }
 
 class Animal {

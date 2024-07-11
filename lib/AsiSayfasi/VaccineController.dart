@@ -4,6 +4,7 @@ import 'DatabaseVaccineHelper.dart';
 class VaccineController extends GetxController {
   var vaccines = <Vaccine>[].obs;
   var isLoading = true.obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() {
@@ -21,6 +22,16 @@ class VaccineController extends GetxController {
   void removeVaccine(Vaccine vaccine) async {
     await DatabaseVaccineHelper.instance.deleteVaccine(vaccine.id);
     vaccines.remove(vaccine);
+  }
+
+  List<Vaccine> get filteredVaccines {
+    if (searchQuery.value.isEmpty) {
+      return vaccines;
+    } else {
+      return vaccines
+          .where((vaccine) => vaccine.vaccineName.toLowerCase().contains(searchQuery.value.toLowerCase()))
+          .toList();
+    }
   }
 }
 

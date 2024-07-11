@@ -27,8 +27,8 @@ class AddBirthBuzagiController extends GetxController {
 
   final List<String> cows = ['Hayvan 1', 'Hayvan 2', 'Hayvan 3'];
   final List<String> boga = ['Boğa 1', 'Boğa 2', 'Boğa 3'];
-  final List<String> buzagi = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
-  final List<String> buzagi1 = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
+  final List<String> buzagi = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
+  final List<String> buzagi1 = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
   final List<String> genders = ['Erkek', 'Dişi'];
 
   @override

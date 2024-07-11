@@ -72,6 +72,9 @@ class _DiseasePageState extends State<DiseasePage> {
                   borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                 ),
               ),
+              onChanged: (value) {
+                controller.searchQuery.value = value;
+              },
             ),
             const SizedBox(height: 8.0),
             Row(
@@ -102,13 +105,13 @@ class _DiseasePageState extends State<DiseasePage> {
                     () {
                   if (controller.isLoading.value) {
                     return Center(child: CircularProgressIndicator(color: Colors.black));
-                  } else if (controller.diseases.isEmpty) {
+                  } else if (controller.filteredDiseases.isEmpty) {
                     return Center(child: Text('Hastalık bulunamadı'));
                   } else {
                     return ListView.builder(
-                      itemCount: controller.diseases.length,
+                      itemCount: controller.filteredDiseases.length,
                       itemBuilder: (context, index) {
-                        final disease = controller.diseases[index];
+                        final disease = controller.filteredDiseases[index];
                         return DiseaseCard(disease: disease);
                       },
                     );

@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 import '../EklemeSayfalari/InekSutOlcumEkleme/DatabaseSutOlcumInekHelper.dart';
 import '../EklemeSayfalari/KoyunSutOlcumEkleme/DatabaseSutOlcumKoyunHelper.dart';
 
-
 class SutOlcumController extends GetxController {
   var sutOlcumList = <Map<String, dynamic>>[].obs;
   var isLoading = false.obs;
+  var searchQuery = ''.obs;
 
   // Önceden yüklenmiş verileri tutmak için bir harita oluşturun
   Map<String, List<Map<String, dynamic>>> cachedSutOlcum = {};
@@ -37,6 +37,17 @@ class SutOlcumController extends GetxController {
       } finally {
         isLoading(false);
       }
+    }
+  }
+
+  List<Map<String, dynamic>> get filteredSutOlcumList {
+    if (searchQuery.value.isEmpty) {
+      return sutOlcumList;
+    } else {
+      return sutOlcumList.where((sutOlcum) {
+        return (sutOlcum['type']?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false) ||
+            (sutOlcum['date']?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false);
+      }).toList();
     }
   }
 

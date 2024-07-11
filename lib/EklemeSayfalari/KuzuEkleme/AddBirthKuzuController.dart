@@ -26,8 +26,8 @@ class AddBirthKuzuController extends GetxController {
 
   final List<String> animals = ['Hayvan 1', 'Hayvan 2', 'Hayvan 3'];
   final List<String> koc = ['Koç 1', 'Koç 2', 'Koç 3'];
-  final List<String> lamb = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
-  final List<String> lamb1 = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
+  final List<String> lamb = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
+  final List<String> lamb1 = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
   final List<String> genders = ['Erkek', 'Dişi'];
 
   @override

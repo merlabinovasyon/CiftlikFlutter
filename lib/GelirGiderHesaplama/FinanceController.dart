@@ -49,6 +49,7 @@ class FinanceController extends GetxController {
   var transactions = <Transaction>[].obs;
   var selectedType = TransactionType.Gelir.obs;
   var isLoading = true.obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() {
@@ -92,5 +93,18 @@ class FinanceController extends GetxController {
     await DatabaseFinanceHelper.instance.deleteTransaction(transaction.id!);
     transactions.remove(transaction);
     calculateTotals();
+  }
+
+  List<Transaction> get filteredTransactions {
+    if (searchQuery.value.isEmpty) {
+      return transactions.where((transaction) => transaction.type == selectedType.value).toList();
+    } else {
+      return transactions.where((transaction) {
+        return transaction.type == selectedType.value &&
+            (transaction.date.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
+                transaction.name.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
+                transaction.note.toLowerCase().contains(searchQuery.value.toLowerCase()));
+      }).toList();
+    }
   }
 }

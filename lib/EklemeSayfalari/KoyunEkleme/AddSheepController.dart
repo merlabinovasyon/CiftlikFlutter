@@ -13,7 +13,7 @@ class AddSheepController extends GetxController {
 
   var selectedSheep = Rxn<String>();
 
-  final List<String> sheep = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
+  final List<String> sheep = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
 
   @override
   void dispose() {

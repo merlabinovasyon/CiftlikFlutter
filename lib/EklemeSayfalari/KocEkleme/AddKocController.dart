@@ -13,7 +13,7 @@ class AddKocController extends GetxController {
 
   var selectedKoc = Rxn<String>();
 
-  final List<String> koc = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
+  final List<String> koc = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
 
   @override
   void dispose() {

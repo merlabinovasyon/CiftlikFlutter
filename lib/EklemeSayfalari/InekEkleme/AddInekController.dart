@@ -13,7 +13,7 @@ class AddInekController extends GetxController {
 
   var selectedInek = Rxn<String>();
 
-  final List<String> inek = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
+  final List<String> inek = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
 
   @override
   void dispose() {

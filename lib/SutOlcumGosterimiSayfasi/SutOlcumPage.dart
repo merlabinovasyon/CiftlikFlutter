@@ -92,15 +92,18 @@ class _SutOlcumPageState extends State<SutOlcumPage> with TickerProviderStateMix
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                hintText: 'Süt ölçüm bilgisi ara',
+                hintText: 'Hayvan,Tarih',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                  borderSide: BorderSide(color: Colors.black),
                 ),
               ),
+              onChanged: (value) {
+                controller.searchQuery.value = value;
+              },
             ),
             const SizedBox(height: 8.0),
             Expanded(
@@ -108,13 +111,13 @@ class _SutOlcumPageState extends State<SutOlcumPage> with TickerProviderStateMix
                     () {
                   if (controller.isLoading.value) {
                     return Center(child: CircularProgressIndicator(color: Colors.black));
-                  } else if (controller.sutOlcumList.isEmpty) {
+                  } else if (controller.filteredSutOlcumList.isEmpty) {
                     return Center(child: Text('Süt ölçüm bilgisi bulunamadı'));
                   } else {
                     return ListView.builder(
-                      itemCount: controller.sutOlcumList.length,
+                      itemCount: controller.filteredSutOlcumList.length,
                       itemBuilder: (context, index) {
-                        final sutOlcum = controller.sutOlcumList[index];
+                        final sutOlcum = controller.filteredSutOlcumList[index];
                         return SutOlcumCard(sutOlcum: sutOlcum, tableName: getTableName());
                       },
                     );

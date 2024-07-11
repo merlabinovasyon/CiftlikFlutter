@@ -13,7 +13,7 @@ class AddBogaController extends GetxController {
 
   var selectedBoga = Rxn<String>();
 
-  final List<String> boga = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu'];
+  final List<String> boga = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
 
   @override
   void dispose() {

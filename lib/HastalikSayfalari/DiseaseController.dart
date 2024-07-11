@@ -4,6 +4,7 @@ import 'DatabaseDiseaseHelper.dart';
 class DiseaseController extends GetxController {
   var diseases = <Disease>[].obs;
   var isLoading = true.obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() {
@@ -21,6 +22,16 @@ class DiseaseController extends GetxController {
   void removeDisease(Disease disease) async {
     await DatabaseDiseaseHelper.instance.deleteDisease(disease.id);
     diseases.remove(disease);
+  }
+
+  List<Disease> get filteredDiseases {
+    if (searchQuery.value.isEmpty) {
+      return diseases;
+    } else {
+      return diseases
+          .where((disease) => disease.diseaseName.toLowerCase().contains(searchQuery.value.toLowerCase()))
+          .toList();
+    }
   }
 }
 
