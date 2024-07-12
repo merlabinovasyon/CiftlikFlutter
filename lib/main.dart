@@ -24,7 +24,6 @@ import 'iletisim/iletisimPage.dart';
 import 'TestPage.dart';
 import 'models/BottomNavigation.dart';
 import 'initial_bindings.dart'; // Yeni oluşturduğumuz InitialBinding dosyasını import edin
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; // Bu satırı ekleyin
 import 'package:flutter/services.dart'; // SystemChrome kullanımı için import edin

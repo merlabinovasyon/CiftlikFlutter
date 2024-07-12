@@ -5,6 +5,7 @@ import 'package:merlabciftlikyonetim/services/AuthService.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseController.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
 import 'AnaSayfa/HomeController.dart';
+import 'BLESayfasi/BleController.dart';
 import 'Login/AuthController.dart';
 import 'Login/LoginController.dart';
 import 'Calendar/CalendarController.dart';
@@ -24,6 +25,12 @@ class CalendarBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<CalendarController>(() => CalendarController());
+  }
+}
+class BleBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<BleController>(() => BleController());
   }
 }
 
