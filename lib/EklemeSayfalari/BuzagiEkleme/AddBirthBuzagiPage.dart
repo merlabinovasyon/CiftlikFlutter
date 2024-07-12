@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/FormFields/WeightField.dart';
+import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
+import '../../FormFields/WeightField.dart';
 import '../../FormFields/BuildCounterField.dart';
 import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildSelectionField.dart';
@@ -8,7 +9,7 @@ import '../../FormFields/BuildTextField.dart';
 import '../../FormFields/BuildTimeField.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/TwinOrTripletSection.dart';
-import '../../FormUtils/FormUtils.dart';
+import '../../AnimalService/BuildSelectionAnimalField.dart';
 import 'AddBirthBuzagiController.dart';
 
 class AddBirthBuzagiPage extends StatelessWidget {
@@ -61,8 +62,8 @@ class AddBirthBuzagiPage extends StatelessWidget {
               const SizedBox(height: 5),
               const WeightField(),
               const SizedBox(height: 25),
-              BuildSelectionField(
-                label: 'Doğuran Hayvan *',
+              BuildSelectionAnimalField(
+                label: 'İneğiniz *',
                 value: controller.selectedCow,
                 options: controller.cows,
                 onSelected: (value) {
@@ -70,7 +71,7 @@ class AddBirthBuzagiPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'Boğanız *',
                 value: controller.selectedBoga,
                 options: controller.boga,
@@ -105,7 +106,7 @@ class AddBirthBuzagiPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0,bottom: 2,left: 10),
+                    padding: const EdgeInsets.only(right: 8.0, bottom: 2, left: 10),
                     child: SizedBox(
                       width: 100, // İstediğiniz genişlik
                       height: 50, // İstediğiniz yükseklik
@@ -244,7 +245,7 @@ class AddBirthBuzagiPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
+                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
                   onPressed: controller.saveBuzagiData,

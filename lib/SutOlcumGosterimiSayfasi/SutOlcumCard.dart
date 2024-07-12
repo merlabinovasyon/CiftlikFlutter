@@ -51,7 +51,7 @@ class SutOlcumCard extends StatelessWidget {
                     radius: 30,
                     backgroundColor: Colors.white,
                     child: Image.asset(
-                      'resimler/icons/milk_bucket_icon_black.png',
+                      'icons/milk_bucket_icon_black.png',
                       width: 55,
                       height: 55,
                     ),
@@ -62,7 +62,7 @@ class SutOlcumCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Hayvan: ${sutOlcum['type']}',
+                          'Küpe No: ${sutOlcum['type']}',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const SizedBox(height: 4.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
 import 'DatabaseSutOlcumInekHelper.dart';
 
 class InekSutOlcumController extends GetxController {
@@ -9,17 +10,12 @@ class InekSutOlcumController extends GetxController {
   final TextEditingController weightController = TextEditingController();
 
   var selectedType = Rxn<String>();
-  var types = <String>[].obs;
+  var types = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Seçenekleri buraya ekliyoruz
-    types.assignAll([
-      'İnek 1',
-      'İnek 2',
-      'İnek 3',
-    ]);
+    fetchInekList();
   }
 
   @override
@@ -28,6 +24,10 @@ class InekSutOlcumController extends GetxController {
     timeController.dispose();
     weightController.dispose();
     super.dispose();
+  }
+
+  void fetchInekList() async {
+    types.assignAll(await AnimalService.instance.getInekList());
   }
 
   void resetForm() {

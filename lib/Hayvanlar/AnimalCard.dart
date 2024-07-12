@@ -59,7 +59,7 @@ class AnimalCard extends StatelessWidget {
                       radius: 30,
                       backgroundColor: Colors.white,
                       child: Image.asset(
-                        'resimler/icons/sheep_and_lamb_icon_black.png',
+                        'icons/sheep_and_lamb_icon_black.png',
                         width: 55,
                         height: 55,
                       ),
@@ -71,7 +71,7 @@ class AnimalCard extends StatelessWidget {
                         children: tableName.contains('weaned')
                             ? [
                           Text(
-                            'Hayvan: ${animal.type}',
+                            'Küpe No: ${animal.tagNo}',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 4.0),

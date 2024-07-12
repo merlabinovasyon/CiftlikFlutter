@@ -10,7 +10,7 @@ class DatabaseWeanedKuzuHelper {
   String weanedKuzuTable = 'weanedKuzuTable';
   String colId = 'id';
   String colWeight = 'weight';
-  String colType = 'type';
+  String colTagNo = 'tagNo';
   String colDate = 'date';
   String colTime = 'time';
 
@@ -33,7 +33,7 @@ class DatabaseWeanedKuzuHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $weanedKuzuTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colType TEXT, $colDate TEXT, $colTime TEXT)',
+      'CREATE TABLE IF NOT EXISTS $weanedKuzuTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colDate TEXT, $colTime TEXT)',
     );
   }
 

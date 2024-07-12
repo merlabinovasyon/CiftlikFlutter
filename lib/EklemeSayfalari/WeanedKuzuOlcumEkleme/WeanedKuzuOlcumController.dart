@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
 import 'DatabaseWeanedKuzuHelper.dart';
 
 class WeanedKuzuOlcumController extends GetxController {
@@ -8,18 +9,13 @@ class WeanedKuzuOlcumController extends GetxController {
   final TextEditingController timeController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
 
-  var selectedType = Rxn<String>();
-  var types = <String>[].obs;
+  var selectedTagNo = Rxn<String>();
+  var tagno = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Seçenekleri buraya ekliyoruz
-    types.assignAll([
-      'Kuzu 1',
-      'Kuzu 2',
-      'Kuzu 3',
-    ]);
+    fetchKuzuList();
   }
 
   @override
@@ -30,8 +26,12 @@ class WeanedKuzuOlcumController extends GetxController {
     super.dispose();
   }
 
+  void fetchKuzuList() async {
+    tagno.assignAll(await AnimalService.instance.getKuzuList());
+  }
+
   void resetForm() {
-    selectedType.value = null;
+    selectedTagNo.value = null;
     dateController.clear();
     timeController.clear();
     weightController.clear();
@@ -43,7 +43,7 @@ class WeanedKuzuOlcumController extends GetxController {
 
       Map<String, dynamic> weanedKuzuData = {
         'weight': weightController.text,
-        'type': selectedType.value,
+        'tagNo': selectedTagNo.value,
         'date': dateController.text,
         'time': timeController.text,
       };

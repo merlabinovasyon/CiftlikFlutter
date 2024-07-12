@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
 import 'DatabaseWeanedBuzagiHelper.dart';
 
 class WeanedBuzagiOlcumController extends GetxController {
@@ -8,18 +9,13 @@ class WeanedBuzagiOlcumController extends GetxController {
   final TextEditingController timeController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
 
-  var selectedType = Rxn<String>();
-  var types = <String>[].obs;
+  var selectedTagNo = Rxn<String>();
+  var tagno = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Seçenekleri buraya ekliyoruz
-    types.assignAll([
-      'Buzağı 1',
-      'Buzağı 2',
-      'Buzağı 3',
-    ]);
+    fetchBuzagiList();
   }
 
   @override
@@ -30,8 +26,12 @@ class WeanedBuzagiOlcumController extends GetxController {
     super.dispose();
   }
 
+  void fetchBuzagiList() async {
+    tagno.assignAll(await AnimalService.instance.getBuzagiList());
+  }
+
   void resetForm() {
-    selectedType.value = null;
+    selectedTagNo.value = null;
     dateController.clear();
     timeController.clear();
     weightController.clear();
@@ -43,7 +43,7 @@ class WeanedBuzagiOlcumController extends GetxController {
 
       Map<String, dynamic> weanedBuzagiData = {
         'weight': weightController.text,
-        'type': selectedType.value,
+        'tagNo': selectedTagNo.value,
         'date': dateController.text,
         'time': timeController.text,
       };

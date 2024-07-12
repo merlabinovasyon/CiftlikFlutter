@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
-import '../../FormFields/BuildSelectionField.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildTimeField.dart';
+import '../../AnimalService/BuildSelectionAnimalField.dart';
 import 'KocKatimController.dart';
 
 class KocKatimPage extends StatelessWidget {
@@ -55,7 +55,7 @@ class KocKatimPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'Koyununuz *',
                 value: controller.selectedKoyun,
                 options: controller.koyun,
@@ -64,7 +64,7 @@ class KocKatimPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'Koçunuz *',
                 value: controller.selectedKoc,
                 options: controller.koc,

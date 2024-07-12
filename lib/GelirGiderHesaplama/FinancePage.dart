@@ -50,6 +50,17 @@ class FinancePage extends StatelessWidget {
             Obx(() {
               return Column(
                 children: [
+                  BuildSummaryCard(
+                    title: 'Gelir',
+                    amount: controller.gelir.value,
+                    isIncome: true,
+                    assetPath: 'icons/graph_with_income_arrow_icon_white_bg.png',
+                  ),
+                  BuildSummaryCard(
+                    title: 'Gider',
+                    amount: controller.gider.value,
+                    isIncome: false,
+                    assetPath: 'icons/graph_with_downward_arrow_straight_icon.png',
                   Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(

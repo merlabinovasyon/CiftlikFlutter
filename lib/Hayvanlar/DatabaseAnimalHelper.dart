@@ -38,9 +38,9 @@ class DatabaseAnimalHelper {
     await db.execute(
         'CREATE TABLE IF NOT EXISTS bogaTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagNo TEXT, name TEXT, dob TEXT)');
     await db.execute(
-        'CREATE TABLE IF NOT EXISTS weanedKuzuTable(id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, date TEXT)');
+        'CREATE TABLE IF NOT EXISTS weanedKuzuTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagNo TEXT, date TEXT)');
     await db.execute(
-        'CREATE TABLE IF NOT EXISTS weanedBuzagiTable(id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, date TEXT)');
+        'CREATE TABLE IF NOT EXISTS weanedBuzagiTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagNo TEXT, date TEXT)');
   }
 
   Future<List<Map<String, dynamic>>> getAnimals(String tableName) async {

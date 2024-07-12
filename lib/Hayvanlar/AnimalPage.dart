@@ -111,7 +111,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                hintText: 'Küpe No, Hayvan Adı, Kemer No',
+                hintText: 'Küpe No, Hayvan Adı',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),

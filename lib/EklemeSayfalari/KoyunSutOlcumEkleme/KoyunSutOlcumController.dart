@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'DatabaseSutOlcumKoyunHelper.dart';
 
 class KoyunSutOlcumController extends GetxController {
@@ -9,17 +10,12 @@ class KoyunSutOlcumController extends GetxController {
   final TextEditingController weightController = TextEditingController();
 
   var selectedType = Rxn<String>();
-  var types = <String>[].obs;
+  var types = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Seçenekleri buraya ekliyoruz
-    types.assignAll([
-      'Koyun 1',
-      'Koyun 2',
-      'Koyun 3',
-    ]);
+    fetchKoyunList();
   }
 
   @override
@@ -28,6 +24,10 @@ class KoyunSutOlcumController extends GetxController {
     timeController.dispose();
     weightController.dispose();
     super.dispose();
+  }
+
+  void fetchKoyunList() async {
+    types.assignAll(await AnimalService.instance.getKoyunList());
   }
 
   void resetForm() {

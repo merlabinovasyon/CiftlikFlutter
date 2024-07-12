@@ -181,23 +181,23 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 25.0),
                 BuildActionCardRow(
                   title1: 'Gelir/Gider',
-                  iconAsset1: 'resimler/icons/calculator_icon_black.png',
+                  iconAsset1: 'icons/calculator_icon_black.png',
                   onTap1: () {
                     Get.to(() => FinancePage(), duration: Duration(milliseconds: 650));
                   },
                   title2: 'Sync',
-                  iconAsset2: 'resimler/icons/bank_icon_black.png',
+                  iconAsset2: 'icons/bank_icon_black.png',
                   onTap2: () {},
                 ),
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Sürü Takip',
-                  iconAsset1: 'resimler/icons/flock_with_analysis_icon_black.png',
+                  iconAsset1: 'icons/flock_with_analysis_icon_black.png',
                   onTap1: () {
                     Get.to(() => GraphicPage(), duration: Duration(milliseconds: 650));
                   },
                   title2: 'Aşılama',
-                  iconAsset2: 'resimler/icons/vaccine_syringe_icon_black.png',
+                  iconAsset2: 'icons/vaccine_syringe_icon_black.png',
                   onTap2: () {
                     Get.to(() => VaccinePage(), duration: Duration(milliseconds: 650));
                   },
@@ -205,12 +205,12 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Konum Yönetimi',
-                  iconAsset1: 'resimler/icons/barn_with_location_icon_black.png',
+                  iconAsset1: 'icons/barn_with_location_icon_black.png',
                   onTap1: () {
                     Get.to(() => KonumYonetimiPage(), duration: Duration(milliseconds: 650));
                   },
                   title2: 'Yem Yönetimi',
-                  iconAsset2: 'resimler/icons/corn_icon_black.png',
+                  iconAsset2: 'icons/corn_icon_black.png',
                   onTap2: () {
                     Get.to(() => FeedStockPage(), duration: Duration(milliseconds: 650));
                   },
@@ -218,12 +218,12 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Aşı Takvimi',
-                  iconAsset1: 'resimler/icons/calendar_with_vaccine_icon_black.png',
+                  iconAsset1: 'icons/calendar_with_vaccine_icon_black.png',
                   onTap1: () {
                     Get.to(() => AsiPage(), duration: Duration(milliseconds: 650));
                   },
                   title2: 'Hastalık Takibi',
-                  iconAsset2: 'resimler/icons/sheep_with_illness_icon_black.png',
+                  iconAsset2: 'icons/sheep_with_illness_icon_black.png',
                   onTap2: () {
                     Get.to(() => DiseasePage(), duration: Duration(milliseconds: 650));
                   },
@@ -231,10 +231,10 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
                   title1: 'Raporlar',
-                  iconAsset1: 'resimler/icons/report_icon.png',
+                  iconAsset1: 'icons/report_icon.png',
                   onTap1: () {},
                   title2: 'Rasyon',
-                  iconAsset2: 'resimler/icons/magic_wand_with_sparkles_icon.png',
+                  iconAsset2: 'icons/magic_wand_with_sparkles_icon.png',
                   onTap2: () {
                     Get.to(() => RationWizardMainPage(), duration: Duration(milliseconds: 650));
                   },
