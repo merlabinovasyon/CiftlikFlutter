@@ -7,16 +7,20 @@ class DatabaseBogaHelper {
 
   DatabaseBogaHelper._instance();
 
-  String bogaTable = 'bogaTable';
+  String animalTable = 'Animal';
   String colId = 'id';
   String colWeight = 'weight';
+  String colMother = 'mother';
+  String colFather = 'father';
+  String colDob = 'dob';
+  String colTime = 'time';
   String colTagNo = 'tagNo';
   String colGovTagNo = 'govTagNo';
   String colSpecies = 'species';
   String colName = 'name';
+  String colGender = 'gender';
   String colType = 'type';
-  String colDob = 'dob';
-  String colTime = 'time';
+  String colAnimalSubTypeId = 'animalsubtypeid';
 
   Future<Database?> get db async {
     if (_db == null) {
@@ -37,13 +41,13 @@ class DatabaseBogaHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $bogaTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colType TEXT, $colDob TEXT, $colTime TEXT)',
+      'CREATE TABLE IF NOT EXISTS $animalTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colMother INTEGER, $colFather INTEGER, $colDob TEXT, $colTime TEXT, $colTagNo TEXT, $colGovTagNo TEXT, $colAnimalSubTypeId INTEGER, $colSpecies TEXT, $colName TEXT, $colGender TEXT, $colType TEXT, FOREIGN KEY($colMother) REFERENCES $animalTable($colId), FOREIGN KEY($colFather) REFERENCES $animalTable($colId), FOREIGN KEY($colAnimalSubTypeId) REFERENCES AnimalSubType(id))',
     );
   }
 
   Future<int> insertBoga(Map<String, dynamic> boga) async {
     Database? db = await this.db;
-    final int result = await db!.insert(bogaTable, boga);
+    final int result = await db!.insert(animalTable, boga);
     return result;
   }
 }

@@ -14,7 +14,6 @@ class AnimalDetailEditController extends GetxController {
   var pedometerController = TextEditingController();
   var speciesController = Rxn<String>();
   var stallController = TextEditingController();
-  var groupController = TextEditingController();
   var notesController = TextEditingController();
   var motherController = Rxn<String>();
   var fatherController = Rxn<String>();
@@ -42,7 +41,6 @@ class AnimalDetailEditController extends GetxController {
       pedometerController.text = details['pedometer'] ?? '';
       speciesController.value = details['species'] ?? '';
       stallController.text = details['stall'] ?? '';
-      groupController.text = details['group'] ?? '';
       notesController.text = details['notes'] ?? '';
       motherController.value = details['mother'] ?? '';
       fatherController.value = details['father'] ?? '';
@@ -72,7 +70,6 @@ class AnimalDetailEditController extends GetxController {
         'pedometer': pedometerController.text,
         'species': speciesController.value,
         'stall': stallController.text,
-        'group': groupController.text,
         'notes': notesController.text,
         'mother': motherController.value,
         'father': fatherController.value,

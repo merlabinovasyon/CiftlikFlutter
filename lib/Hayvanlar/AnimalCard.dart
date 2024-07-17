@@ -21,8 +21,8 @@ class AnimalCard extends StatelessWidget {
         extentRatio: 0.17,
         children: [
           SlidableAction(
-            onPressed: (context) {
-              controller.removeAnimal(animal.id, tableName);
+            onPressed: (context) async {
+              await controller.removeAnimal(animal.id, tableName);
               Get.snackbar('Başarılı', 'Hayvan silindi');
             },
             backgroundColor: Colors.red,
@@ -38,9 +38,19 @@ class AnimalCard extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () async {
-              var result = await Get.to(() => AnimalDetailPage(tableName: tableName, animalId: animal.id), duration: Duration(milliseconds: 650));
-              if (result != null) {
-                controller.updateAnimal(animal.id, tableName, result);
+              if (animal.tagNo != null) {
+                String? detailTableName = await controller.getAnimalTable(animal.tagNo!);
+                if (detailTableName != null) {
+                  print('Detail Table Name: $detailTableName');
+                  var result = await Get.to(() => AnimalDetailPage(tableName: detailTableName, animalId: animal.id), duration: Duration(milliseconds: 650));
+                  if (result != null) {
+                    controller.updateAnimal(animal.id, detailTableName, result);
+                  }
+                } else {
+                  Get.snackbar('Hata', 'Hayvan bulunamadı');
+                }
+              } else {
+                Get.snackbar('Hata', 'Tag No bulunamadı');
               }
             },
             child: Card(

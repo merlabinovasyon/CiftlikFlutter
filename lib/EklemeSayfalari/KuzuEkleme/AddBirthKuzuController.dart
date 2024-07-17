@@ -17,8 +17,11 @@ class AddBirthKuzuController extends GetxController {
   var selectedAnimal = Rxn<String>();
   var selectedKoc = Rxn<String>();
   var selectedLamb = Rxn<String>();
+  var selectedLambId = Rxn<int>();  // Yeni alan
   var selected1Lamb = Rxn<String>();
+  var selected1LambId = Rxn<int>();  // Yeni alan
   var selected2Lamb = Rxn<String>();
+  var selected2LambId = Rxn<int>();  // Yeni alan
   var selectedGender1 = Rxn<String>();
   var selectedGender2 = Rxn<String>();
   var selectedGender3 = Rxn<String>();
@@ -27,7 +30,7 @@ class AddBirthKuzuController extends GetxController {
 
   var animals = <Map<String, dynamic>>[].obs;
   var koc = <Map<String, dynamic>>[].obs;
-  final List<String> lamb = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
+  var species = <Map<String, dynamic>>[].obs;
   final List<String> genders = ['Erkek', 'Dişi'];
 
   @override
@@ -35,6 +38,7 @@ class AddBirthKuzuController extends GetxController {
     super.onInit();
     fetchKoyunList();
     fetchKocList();
+    fetchKuzuSpeciesList();
   }
 
   @override
@@ -58,8 +62,13 @@ class AddBirthKuzuController extends GetxController {
     koc.assignAll(await AnimalService.instance.getKocList());
   }
 
+  void fetchKuzuSpeciesList() async {
+    species.assignAll(await AnimalService.instance.getKuzuSpeciesList());
+  }
+
   void resetTwinValues() {
     selected1Lamb.value = null;
+    selected1LambId.value = null;
     selectedGender2.value = null;
     count1Controller.clear();
     resetTripletValues();
@@ -67,6 +76,7 @@ class AddBirthKuzuController extends GetxController {
 
   void resetTripletValues() {
     selected2Lamb.value = null;
+    selected2LambId.value = null;
     selectedGender3.value = null;
     count2Controller.clear();
   }
@@ -81,8 +91,11 @@ class AddBirthKuzuController extends GetxController {
     selectedAnimal.value = null;
     selectedKoc.value = null;
     selectedLamb.value = null;
+    selectedLambId.value = null;
     selected1Lamb.value = null;
+    selected1LambId.value = null;
     selected2Lamb.value = null;
+    selected2LambId.value = null;
     selectedGender1.value = null;
     selectedGender2.value = null;
     selectedGender3.value = null;
@@ -103,16 +116,17 @@ class AddBirthKuzuController extends GetxController {
       formKey.currentState!.save();
 
       Map<String, dynamic> lambData = {
-        'weight': countController.text,
-        'mother': selectedAnimal.value,
-        'father': selectedKoc.value,
+        'weight': double.tryParse(countController.text) ?? 0.0,
+        'mother': selectedAnimal.value ?? '',
+        'father': selectedKoc.value ?? '',
         'dob': dobController.text,
         'time': timeController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'species': selectedLamb.value,
+        'species': selectedLamb.value ?? '',
+        'animalsubtypeid': selectedLambId.value,
         'name': nameController.text,
-        'gender': selectedGender1.value,
+        'gender': selectedGender1.value ?? '',
         'type': countController.text,
       };
 

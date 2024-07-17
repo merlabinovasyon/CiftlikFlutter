@@ -10,6 +10,7 @@ import '../../FormFields/BuildTimeField.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/TwinOrTripletSection.dart';
 import '../../AnimalService/BuildSelectionAnimalField.dart';
+import '../../AnimalService/BuildSelectionSpeciesField.dart';
 import 'AddBirthBuzagiController.dart';
 
 class AddBirthBuzagiPage extends StatelessWidget {
@@ -127,12 +128,14 @@ class AddBirthBuzagiPage extends StatelessWidget {
                 controller: controller.govTagNoController,
               ),
               const SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionSpeciesField(
                 label: 'Irk *',
                 value: controller.selectedBuzagi,
-                options: controller.buzagi,
+                options: controller.species,
                 onSelected: (value) {
+                  var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                   controller.selectedBuzagi.value = value;
+                  controller.selectedBuzagiId.value = selectedSpecies['id'];
                 },
               ),
               const SizedBox(height: 16),
@@ -173,12 +176,14 @@ class AddBirthBuzagiPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                   const SizedBox(height: 16),
-                  BuildSelectionField(
+                  BuildSelectionSpeciesField(
                     label: 'Irk *',
                     value: controller.selected1Buzagi,
-                    options: controller.buzagi1,
+                    options: controller.species,
                     onSelected: (value) {
+                      var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                       controller.selected1Buzagi.value = value;
+                      controller.selected1BuzagiId.value = selectedSpecies['id'];
                     },
                   ),
                   const SizedBox(height: 16),
@@ -215,12 +220,14 @@ class AddBirthBuzagiPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                     const SizedBox(height: 16),
-                    BuildSelectionField(
+                    BuildSelectionSpeciesField(
                       label: 'Irk *',
                       value: controller.selected2Buzagi,
-                      options: controller.buzagi1,
+                      options: controller.species,
                       onSelected: (value) {
+                        var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                         controller.selected2Buzagi.value = value;
+                        controller.selected2BuzagiId.value = selectedSpecies['id'];
                       },
                     ),
                     const SizedBox(height: 16),

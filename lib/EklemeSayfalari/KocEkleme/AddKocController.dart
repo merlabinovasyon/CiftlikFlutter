@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'DatabaseKocHelper.dart';
 
 class AddKocController extends GetxController {
@@ -12,8 +13,16 @@ class AddKocController extends GetxController {
   final nameController = TextEditingController();
 
   var selectedKoc = Rxn<String>();
+  var selectedKocId = Rxn<int>();
 
-  final List<String> koc = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
+  var species = <Map<String, dynamic>>[].obs;
+  final List<String> genders = ['Erkek', 'Dişi'];
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchKocSpeciesList();
+  }
 
   @override
   void dispose() {
@@ -26,8 +35,13 @@ class AddKocController extends GetxController {
     super.dispose();
   }
 
+  void fetchKocSpeciesList() async {
+    species.assignAll(await AnimalService.instance.getKocSpeciesList());
+  }
+
   void resetForm() {
     selectedKoc.value = null;
+    selectedKocId.value = null;
     dobController.clear();
     timeController.clear();
     countController.clear();
@@ -45,6 +59,7 @@ class AddKocController extends GetxController {
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
         'species': selectedKoc.value,
+        'animalsubtypeid': selectedKocId.value,
         'name': nameController.text,
         'type': countController.text,
         'dob': dobController.text,

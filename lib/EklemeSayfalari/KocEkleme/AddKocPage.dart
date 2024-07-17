@@ -6,6 +6,7 @@ import 'package:merlabciftlikyonetim/FormFields/BuildTimeField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildTextField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildCounterField.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
+import '../../AnimalService/BuildSelectionSpeciesField.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/WeightField.dart';
 import 'AddKocController.dart';
@@ -91,12 +92,14 @@ class AddKocPage extends StatelessWidget {
                 controller: controller.govTagNoController,
               ),
               const SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionSpeciesField(
                 label: 'Irk *',
                 value: controller.selectedKoc,
-                options: controller.koc,
+                options: controller.species,
                 onSelected: (value) {
+                  var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                   controller.selectedKoc.value = value;
+                  controller.selectedKocId.value = selectedSpecies['id'];
                 },
               ),
               const SizedBox(height: 16),
@@ -122,7 +125,7 @@ class AddKocPage extends StatelessWidget {
                 controller: controller.timeController,
                 onTap: utils.showTimePicker,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
                 child: FormButton(

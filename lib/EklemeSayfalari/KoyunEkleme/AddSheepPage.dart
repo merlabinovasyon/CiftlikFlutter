@@ -6,6 +6,7 @@ import 'package:merlabciftlikyonetim/FormFields/BuildTimeField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildTextField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildCounterField.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
+import '../../AnimalService/BuildSelectionSpeciesField.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/WeightField.dart';
 import 'AddSheepController.dart';
@@ -70,7 +71,7 @@ class AddSheepPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0,bottom: 2,left: 10),
+                    padding: const EdgeInsets.only(right: 8.0, bottom: 2, left: 10),
                     child: SizedBox(
                       width: 100, // İstediğiniz genişlik
                       height: 50, // İstediğiniz yükseklik
@@ -91,12 +92,14 @@ class AddSheepPage extends StatelessWidget {
                 controller: controller.govTagNoController,
               ),
               const SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionSpeciesField(
                 label: 'Irk *',
                 value: controller.selectedSheep,
-                options: controller.sheep,
+                options: controller.species,
                 onSelected: (value) {
+                  var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                   controller.selectedSheep.value = value;
+                  controller.selectedSheepId.value = selectedSpecies['id'];
                 },
               ),
               const SizedBox(height: 16),
@@ -122,9 +125,9 @@ class AddSheepPage extends StatelessWidget {
                 controller: controller.timeController,
                 onTap: utils.showTimePicker,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
+                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
                   onPressed: controller.saveSheepData,

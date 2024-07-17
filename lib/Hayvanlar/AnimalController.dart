@@ -1,31 +1,53 @@
 import 'package:get/get.dart';
+import '../AnimalService/AnimalService.dart';
 import 'DatabaseAnimalHelper.dart';
 
 class AnimalController extends GetxController {
   var animals = <Animal>[].obs;
   var isLoading = false.obs;
-  var searchQuery = ''.obs; // Arama sorgusu için RxString
+  var searchQuery = ''.obs;
 
-  // Önceden yüklenmiş verileri tutmak için bir harita oluşturun
   Map<String, List<Animal>> cachedAnimals = {};
 
-  // Önbellek boyutunu sınırlayın
   final int cacheSizeLimit = 100;
 
   Future<void> fetchAnimals(String tableName) async {
     if (cachedAnimals.containsKey(tableName)) {
-      // Eğer veriler önceden yüklenmişse, doğrudan önbellekten alın
       animals.assignAll(cachedAnimals[tableName]!);
     } else {
       isLoading(true);
       try {
-        List<Map<String, dynamic>> data = await DatabaseAnimalHelper.instance.getAnimals(tableName);
+        List<Map<String, dynamic>> data;
+        switch (tableName) {
+          case 'koyunTable':
+            data = await AnimalService.instance.getKoyunAnimalList();
+            break;
+          case 'kocTable':
+            data = await AnimalService.instance.getKocAnimalList();
+            break;
+          case 'inekTable':
+            data = await AnimalService.instance.getInekAnimalList();
+            break;
+          case 'bogaTable':
+            data = await AnimalService.instance.getBogaAnimalList();
+            break;
+          case 'lambTable':
+            data = await AnimalService.instance.getKuzuAnimalList();
+            break;
+          case 'buzagiTable':
+            data = await AnimalService.instance.getBuzagiAnimalList();
+            break;
+          case 'weanedKuzuTable':
+          case 'weanedBuzagiTable':
+            data = await DatabaseAnimalHelper.instance.getAnimals(tableName);
+            break;
+          default:
+            data = await DatabaseAnimalHelper.instance.getAnimals(tableName);
+        }
         List<Animal> fetchedAnimals = data.map((item) => Animal.fromMap(item, tableName)).toList();
         animals.assignAll(fetchedAnimals);
-        // Verileri önbelleğe kaydedin
         cachedAnimals[tableName] = fetchedAnimals;
 
-        // Önbellek boyutunu kontrol edin ve gerekirse temizleyin
         if (cachedAnimals.length > cacheSizeLimit) {
           cachedAnimals.remove(cachedAnimals.keys.first);
         }
@@ -33,24 +55,41 @@ class AnimalController extends GetxController {
         isLoading(false);
       }
     }
+    filterAnimals();
   }
 
-  List<Animal> get filteredAnimals {
+  void filterAnimals() {
     if (searchQuery.value.isEmpty) {
-      return animals;
+      animals.refresh();
     } else {
-      return animals.where((animal) {
-        return (animal.tagNo?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false) ||
-            (animal.name?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false);
-      }).toList();
+      animals.assignAll(
+        animals.where((animal) {
+          return (animal.tagNo?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false) ||
+              (animal.name?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false);
+        }).toList(),
+      );
     }
+  }
+
+  Future<String?> getAnimalTable(String tagNo) async {
+    if (await isAnimalInTable(tagNo, 'weanedKuzuTable')) {
+      return 'weanedKuzuTable';
+    } else if (await isAnimalInTable(tagNo, 'weanedBuzagiTable')) {
+      return 'weanedBuzagiTable';
+    } else if (await isAnimalInTable(tagNo, 'Animal')) {
+      return 'Animal';
+    }
+    return null;
+  }
+
+  Future<bool> isAnimalInTable(String tagNo, String tableName) async {
+    var data = await DatabaseAnimalHelper.instance.getAnimalByTagNo(tableName, tagNo);
+    return data != null;
   }
 
   Future<void> removeAnimal(int id, String tableName) async {
     await DatabaseAnimalHelper.instance.deleteAnimal(id, tableName);
-    // Önce listedeki hayvanı çıkar
     animals.removeWhere((animal) => animal.id == id);
-    // Önbellekteki hayvanı da çıkar
     cachedAnimals[tableName]?.removeWhere((animal) => animal.id == id);
   }
 
@@ -70,6 +109,11 @@ class AnimalController extends GetxController {
       }
     }
   }
+
+  List<Animal> get filteredAnimals => animals.where((animal) {
+    return (animal.tagNo?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false) ||
+        (animal.name?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false);
+  }).toList();
 }
 
 class Animal {

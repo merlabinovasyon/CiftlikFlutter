@@ -7,7 +7,7 @@ class DatabaseBuzagiHelper {
 
   DatabaseBuzagiHelper._instance();
 
-  String buzagiTable = 'buzagiTable';
+  String animalTable = 'Animal';
   String colId = 'id';
   String colWeight = 'weight';
   String colMother = 'mother';
@@ -20,6 +20,7 @@ class DatabaseBuzagiHelper {
   String colName = 'name';
   String colGender = 'gender';
   String colType = 'type';
+  String colAnimalSubTypeId = 'animalsubtypeid'; // Yeni alan
 
   Future<Database?> get db async {
     if (_db == null) {
@@ -40,13 +41,13 @@ class DatabaseBuzagiHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $buzagiTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colMother TEXT, $colFather TEXT, $colDob TEXT, $colTime TEXT, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colGender TEXT, $colType TEXT)',
+      'CREATE TABLE IF NOT EXISTS $animalTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colMother INTEGER, $colFather INTEGER, $colDob TEXT, $colTime TEXT, $colTagNo TEXT, $colGovTagNo TEXT, $colAnimalSubTypeId INTEGER, $colSpecies TEXT, $colName TEXT, $colGender TEXT, $colType TEXT, FOREIGN KEY($colMother) REFERENCES $animalTable($colId), FOREIGN KEY($colFather) REFERENCES $animalTable($colId), FOREIGN KEY($colAnimalSubTypeId) REFERENCES AnimalSubType(id))',
     );
   }
 
   Future<int> insertBuzagi(Map<String, dynamic> buzagi) async {
     Database? db = await this.db;
-    final int result = await db!.insert(buzagiTable, buzagi);
+    final int result = await db!.insert(animalTable, buzagi);
     return result;
   }
 }
