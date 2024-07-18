@@ -6,12 +6,14 @@ class AnimalController extends GetxController {
   var animals = <Animal>[].obs;
   var isLoading = false.obs;
   var searchQuery = ''.obs;
+  var currentTableName = ''.obs;
 
   Map<String, List<Animal>> cachedAnimals = {};
 
   final int cacheSizeLimit = 100;
 
   Future<void> fetchAnimals(String tableName) async {
+    currentTableName.value = tableName;
     if (cachedAnimals.containsKey(tableName)) {
       animals.assignAll(cachedAnimals[tableName]!);
     } else {
@@ -87,10 +89,23 @@ class AnimalController extends GetxController {
     return data != null;
   }
 
-  Future<void> removeAnimal(int id, String tableName) async {
-    await DatabaseAnimalHelper.instance.deleteAnimal(id, tableName);
-    animals.removeWhere((animal) => animal.id == id);
-    cachedAnimals[tableName]?.removeWhere((animal) => animal.id == id);
+  Future<void> removeAnimal(int id, String tagNo) async {
+    String? tableName = await getAnimalTable(tagNo);
+    if (tableName != null) {
+      print('Silinmeye çalışılan hayvan ID: $id, Tablonun adı: $tableName'); // Hayvan ID'sini ve tablo adını yazdırma
+      await DatabaseAnimalHelper.instance.deleteAnimal(id, tableName);
+      animals.removeWhere((animal) => animal.id == id);
+      if (cachedAnimals.containsKey(tableName)) {
+        cachedAnimals[tableName]?.removeWhere((animal) => animal.id == id);
+      }
+      // Önbelleği güncelle
+      if (cachedAnimals.containsKey(currentTableName.value)) {
+        cachedAnimals[currentTableName.value] = List<Animal>.from(animals);
+      }
+      animals.refresh(); // Listeyi hemen güncelle
+    } else {
+      print('Hayvan bulunamadı: ID $id, TagNo $tagNo');
+    }
   }
 
   void updateAnimal(int id, String tableName, Map<String, dynamic> updatedDetails) {
