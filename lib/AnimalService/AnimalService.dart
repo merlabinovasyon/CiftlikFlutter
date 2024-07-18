@@ -77,16 +77,6 @@ class AnimalService {
     );
   }
 
-  Future<List<Map<String, dynamic>>> getKuzuList() async {
-    Database? db = await this.db;
-    return await db!.query('lambTable');
-  }
-
-  Future<List<Map<String, dynamic>>> getBuzagiList() async {
-    Database? db = await this.db;
-    return await db!.query('buzagiTable');
-  }
-
   Future<List<Map<String, dynamic>>> getKoyunList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
@@ -124,7 +114,7 @@ class AnimalService {
       WHERE ast.animaltypeid = 4
     ''');
   }
-  Future<List<Map<String, dynamic>>> getKuzu1List() async {
+  Future<List<Map<String, dynamic>>> getKuzuList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
       SELECT a.id, a.name, a.tagNo 
@@ -133,7 +123,7 @@ class AnimalService {
       WHERE ast.animaltypeid = 5
     ''');
   }
-  Future<List<Map<String, dynamic>>> getBuzagi1List() async {
+  Future<List<Map<String, dynamic>>> getBuzagiList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
       SELECT a.id, a.name, a.tagNo 

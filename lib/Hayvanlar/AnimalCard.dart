@@ -24,11 +24,6 @@ class AnimalCard extends StatelessWidget {
             onPressed: (context) async {
               await controller.removeAnimal(animal.id, animal.tagNo!);
               Get.snackbar('Başarılı', 'Hayvan silindi');
-              String? detailTableName = await controller.getAnimalTable(animal.tagNo!);
-              if (detailTableName != null) {
-                controller.fetchAnimals(detailTableName); // Doğru tabloyu yeniden yükle
-                print('$detailTableName');
-              }
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,

@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../EklemeSayfalari/OlcumEkleme/OlcumPage.dart';
+import '../EklemeSayfalari/BuzagiEkleme/AddBirthBuzagiPage.dart';
 import 'BleController.dart';
 
 class BleScanPage extends StatelessWidget {
@@ -49,55 +49,38 @@ class BleScanPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 30),
-              child: Obx(() => Container(
-                width: 200,
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Bağlantı: ',
-                    style: TextStyle(
-                        fontSize: 20,
+              child: Obx(() => RichText(
+                text: TextSpan(
+                  text: 'Bağlantı: ',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: 'Roboto Regular',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: bleController.isScanning.value && bleController.isBluetoothEnabled.value
+                          ? 'Aranıyor...'
+                          : 'Kapalı',
+                      style: TextStyle(
                         fontFamily: 'Roboto Regular',
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: bleController.isScanning.value && bleController.isBluetoothEnabled.value
-                            ? 'Aranıyor...'
-                            : 'Kapalı',
-                        style: TextStyle(
-                          fontFamily: 'Roboto Regular',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: bleController.isScanning.value && bleController.isBluetoothEnabled.value
-                              ? const Color(0xFF12E200)
-                              : const Color(0xFFFF8F9F),
-                        ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: bleController.isScanning.value && bleController.isBluetoothEnabled.value
+                            ? const Color(0xFF12E200)
+                            : const Color(0xFFFF8F9F),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )),
             ),
+            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: Obx(() {
-                if (bleController.isScanning.value) {
-                  return SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return SizedBox.shrink(); // Boş alan
-                }
-              }),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20, top: 20), // Sağ padding ayarlandı
+              padding: const EdgeInsets.only(left: 50, top: 20),
               child: Obx(() => Switch(
                 inactiveThumbColor: Colors.black,
                 inactiveTrackColor: Colors.grey,
@@ -133,14 +116,17 @@ class BleScanPage extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 30),
-        Center(
+        Padding(
+          padding: const EdgeInsets.only(left: 50),
           child: Icon(
             Icons.bluetooth,
-            size: 100,
+            size: 50,
             color: Colors.blueAccent,
           ),
         ),
         const SizedBox(height: 30),
+
+
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.only(left: 20),
@@ -155,35 +141,85 @@ class BleScanPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Obx(() => SizedBox(
+            height: bleController.isBluetoothEnabled.value ? 0 : 60,
+            width: bleController.isBluetoothEnabled.value ? 0 : 300,
+            child: Visibility(
+              visible: !bleController.isBluetoothEnabled.value,
+              child: Text(
+                'Bluetooth kapalı.\nMobil aygıtınızda Bluetooth’u açın.',
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: Colors.blueAccent,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          )),
+        ),
         Expanded(
-          child: Obx(() => ListView.builder(
+          child: Obx(() => ListView(
             physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: bleController.scanResults.length,
-            itemBuilder: (BuildContext context, int index) {
-              var result = bleController.scanResults[index];
-              return ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
-                leading: Icon(
-                  Icons.circle_outlined,
-                  color: const Color(0xFFADB8C9),
-                  size: 30,
+            children: [
+              SizedBox(
+                height: bleController.sayac.value > 5 ? 300 : (bleController.sayac.value * 60),
+                child: ListView.builder(
+                  itemExtent: 60.0,
+                  itemCount: bleController.sayac.value,
+                  itemBuilder: (BuildContext context, int index) {
+                    var filteredList = bleController.scanResults.where((result) =>
+                    result.device.platformName != null && result.device.platformName.isNotEmpty).toList();
+                    var result = filteredList[index];
+                    return ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
+                      leading: Icon(
+                        Icons.circle_outlined,
+                        color: const Color(0xFFADB8C9),
+                        size: 30,
+                      ),
+                      title: Text(
+                        result.device.platformName!,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                      onTap: () {
+                        bleController.connect(result.device);
+                        // Get.to(() => AddBirthBuzagiPage());
+                      },
+                    );
+                  },
                 ),
-                title: Text(
-                  result.device.platformName?.isEmpty ?? true ? 'Unknown' : result.device.platformName!,
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, bottom: 60, top: 10),
+                child: Obx(() => Visibility(
+                  visible: bleController.isScanning.value,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: const CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4AC8FF)),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Text(
+                        'Bluetooth cihazlar aranıyor...',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: const Color(0xFF4AC8FF),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                onTap: () async {
-                  Get.snackbar('Bağlanıyor', 'Cihaza bağlanılıyor, lütfen bekleyin...');
-                  bool connected = await bleController.connect(result.device);
-                  if (connected) {
-                    Get.to(() => OlcumPage());
-                  }
-                },
-              );
-            },
+                )),
+              ),
+            ],
           )),
         ),
       ],

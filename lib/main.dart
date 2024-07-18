@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/AsiSayfasi/VaccinePage.dart';
+import 'package:merlabciftlikyonetim/BLESayfasi/BleScanPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/BogaEkleme/AddBogaPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/BuzagiEkleme/AddBirthBuzagiPage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/InekEkleme/AddInekPage.dart';
@@ -97,6 +98,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/diseasePage', page: () => DiseasePage()),
         GetPage(name: '/financePage', page: () => FinancePage()),
         GetPage(name: '/vaccinePage', page: () => VaccinePage()),
+        GetPage(name: '/blescan', page: () => BleScanPage()),
+
 
       ],
       home: LoginPage(),
