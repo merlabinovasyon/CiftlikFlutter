@@ -17,8 +17,11 @@ class AddBirthBuzagiController extends GetxController {
   var selectedCow = Rxn<String>();
   var selectedBoga = Rxn<String>();
   var selectedBuzagi = Rxn<String>();
+  var selectedBuzagiId = Rxn<int>(); // Yeni alan
   var selected1Buzagi = Rxn<String>();
+  var selected1BuzagiId = Rxn<int>(); // Yeni alan
   var selected2Buzagi = Rxn<String>();
+  var selected2BuzagiId = Rxn<int>(); // Yeni alan
   var selectedGender1 = Rxn<String>();
   var selectedGender2 = Rxn<String>();
   var selectedGender3 = Rxn<String>();
@@ -27,8 +30,7 @@ class AddBirthBuzagiController extends GetxController {
 
   var cows = <Map<String, dynamic>>[].obs;
   var boga = <Map<String, dynamic>>[].obs;
-  final List<String> buzagi = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
-  final List<String> buzagi1 = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
+  var species = <Map<String, dynamic>>[].obs;
   final List<String> genders = ['Erkek', 'Dişi'];
 
   @override
@@ -36,6 +38,7 @@ class AddBirthBuzagiController extends GetxController {
     super.onInit();
     fetchCowList();
     fetchBogaList();
+    fetchBuzagiSpeciesList();
   }
 
   @override
@@ -59,8 +62,13 @@ class AddBirthBuzagiController extends GetxController {
     boga.assignAll(await AnimalService.instance.getBogaList());
   }
 
+  void fetchBuzagiSpeciesList() async {
+    species.assignAll(await AnimalService.instance.getBuzagiSpeciesList());
+  }
+
   void resetTwinValues() {
     selected1Buzagi.value = null;
+    selected1BuzagiId.value = null;
     selectedGender2.value = null;
     count1Controller.clear();
     resetTripletValues();
@@ -68,6 +76,7 @@ class AddBirthBuzagiController extends GetxController {
 
   void resetTripletValues() {
     selected2Buzagi.value = null;
+    selected2BuzagiId.value = null;
     selectedGender3.value = null;
     count2Controller.clear();
   }
@@ -82,8 +91,11 @@ class AddBirthBuzagiController extends GetxController {
     selectedCow.value = null;
     selectedBoga.value = null;
     selectedBuzagi.value = null;
+    selectedBuzagiId.value = null;
     selected1Buzagi.value = null;
+    selected1BuzagiId.value = null;
     selected2Buzagi.value = null;
+    selected2BuzagiId.value = null;
     selectedGender1.value = null;
     selectedGender2.value = null;
     selectedGender3.value = null;
@@ -104,16 +116,17 @@ class AddBirthBuzagiController extends GetxController {
       formKey.currentState!.save();
 
       Map<String, dynamic> buzagiData = {
-        'weight': countController.text,
-        'mother': selectedCow.value,
-        'father': selectedBoga.value,
+        'weight': double.tryParse(countController.text) ?? 0.0,
+        'mother': selectedCow.value ?? '',
+        'father': selectedBoga.value ?? '',
         'dob': dobController.text,
         'time': timeController.text,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'species': selectedBuzagi.value,
+        'species': selectedBuzagi.value ?? '',
+        'animalsubtypeid': selectedBuzagiId.value,
         'name': nameController.text,
-        'gender': selectedGender1.value,
+        'gender': selectedGender1.value ?? '',
         'type': countController.text,
       };
 

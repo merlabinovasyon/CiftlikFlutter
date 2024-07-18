@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'DatabaseBogaHelper.dart';
+import 'package:merlabciftlikyonetim/EklemeSayfalari/BogaEkleme/DatabaseBogaHelper.dart';
+import '../../AnimalService/AnimalService.dart';
 
 class AddBogaController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -12,8 +13,15 @@ class AddBogaController extends GetxController {
   final nameController = TextEditingController();
 
   var selectedBoga = Rxn<String>();
+  var selectedBogaId = Rxn<int>();  // Yeni alan
 
-  final List<String> boga = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
+  var species = <Map<String, dynamic>>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchBogaSpeciesList();
+  }
 
   @override
   void dispose() {
@@ -26,8 +34,13 @@ class AddBogaController extends GetxController {
     super.dispose();
   }
 
+  void fetchBogaSpeciesList() async {
+    species.assignAll(await AnimalService.instance.getBogaSpeciesList());
+  }
+
   void resetForm() {
     selectedBoga.value = null;
+    selectedBogaId.value = null;
     dobController.clear();
     timeController.clear();
     countController.clear();
@@ -41,12 +54,12 @@ class AddBogaController extends GetxController {
       formKey.currentState!.save();
 
       Map<String, dynamic> bogaData = {
-        'weight': countController.text,
+        'weight': double.tryParse(countController.text) ?? 0.0,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
-        'species': selectedBoga.value,
+        'species': selectedBoga.value ?? '',
+        'animalsubtypeid': selectedBogaId.value,
         'name': nameController.text,
-        'type': countController.text,
         'dob': dobController.text,
         'time': timeController.text,
       };

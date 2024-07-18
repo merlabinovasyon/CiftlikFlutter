@@ -115,12 +115,6 @@ class AnimalDetailEditPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               BuildTextField(
-                label: 'Grup',
-                controller: controller.groupController,
-                hint: '',
-              ),
-              SizedBox(height: 16),
-              BuildTextField(
                 label: 'Notlar',
                 controller: controller.notesController,
                 hint: '',

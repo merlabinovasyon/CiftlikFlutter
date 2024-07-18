@@ -8,6 +8,7 @@ import 'package:merlabciftlikyonetim/FormFields/BuildCounterField.dart';
 import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/WeightField.dart';
+import '../../AnimalService/BuildSelectionSpeciesField.dart';
 import 'AddBogaController.dart';
 
 class AddBogaPage extends StatelessWidget {
@@ -58,7 +59,7 @@ class AddBogaPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 5),
-              WeightField(),
+              const WeightField(),
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -70,10 +71,10 @@ class AddBogaPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0,bottom: 2,left: 10),
+                    padding: const EdgeInsets.only(right: 8.0, bottom: 2, left: 10),
                     child: SizedBox(
-                      width: 100, // İstediğiniz genişlik
-                      height: 50, // İstediğiniz yükseklik
+                      width: 100,
+                      height: 50,
                       child: FormButton(
                         title: 'Tara',
                         onPressed: () {
@@ -91,12 +92,14 @@ class AddBogaPage extends StatelessWidget {
                 controller: controller.govTagNoController,
               ),
               const SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionSpeciesField(
                 label: 'Irk *',
                 value: controller.selectedBoga,
-                options: controller.boga,
+                options: controller.species,
                 onSelected: (value) {
+                  var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                   controller.selectedBoga.value = value;
+                  controller.selectedBogaId.value = selectedSpecies['id'];
                 },
               ),
               const SizedBox(height: 16),
@@ -122,9 +125,9 @@ class AddBogaPage extends StatelessWidget {
                 controller: controller.timeController,
                 onTap: utils.showTimePicker,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0,right: 8,left: 8),
+                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
                 child: FormButton(
                   title: 'Kaydet',
                   onPressed: controller.saveBogaData,

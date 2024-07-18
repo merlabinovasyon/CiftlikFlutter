@@ -23,13 +23,14 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 8, vsync: this);
     searchController.text = widget.searchQuery;
-    controller.fetchAnimals(getTableName()); // Default fetch on first tab
+
+    // Varsayılan tablo verilerini çeker (lambTable tablosu)
+    controller.fetchAnimals(getTableName(0));
     _filterAnimals(widget.searchQuery);
 
-    // Tab değiştiğinde hayvanları yeniden yükle
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
-        controller.fetchAnimals(getTableName());
+        controller.fetchAnimals(getTableName(_tabController.index));
         _filterAnimals(searchController.text);
       }
     });
@@ -37,6 +38,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
 
   void _filterAnimals(String query) {
     controller.searchQuery.value = query;
+    controller.filterAnimals();
   }
 
   @override
@@ -45,8 +47,8 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  String getTableName() {
-    switch (_tabController.index) {
+  String getTableName(int index) {
+    switch (index) {
       case 0:
         return 'lambTable';
       case 1:
@@ -64,7 +66,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
       case 7:
         return 'weanedBuzagiTable';
       default:
-        return 'lambTable';
+        return 'Animal';
     }
   }
 
@@ -78,7 +80,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Get.back(result: true); // Geri dönerken sonucu ilet
+            Get.back(result: true);
           },
         ),
         title: Center(
@@ -134,7 +136,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
                       itemCount: controller.filteredAnimals.length,
                       itemBuilder: (context, index) {
                         final animal = controller.filteredAnimals[index];
-                        return AnimalCard(animal: animal, tableName: getTableName());
+                        return AnimalCard(animal: animal, tableName: getTableName(_tabController.index));
                       },
                     );
                   }

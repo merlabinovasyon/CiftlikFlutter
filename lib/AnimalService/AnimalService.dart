@@ -43,31 +43,217 @@ class AnimalService {
     await db.execute(
       'CREATE TABLE IF NOT EXISTS buzagiTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagNo TEXT, name TEXT)',
     );
+    await db.execute(
+      'CREATE TABLE IF NOT EXISTS Animal(id INTEGER PRIMARY KEY AUTOINCREMENT, tagNo TEXT, name TEXT, animalsubtypeid INTEGER, FOREIGN KEY(animalsubtypeid) REFERENCES AnimalSubType(id))',
+    );
+    await db.execute(
+      'CREATE TABLE IF NOT EXISTS AnimalSubType(id INTEGER PRIMARY KEY AUTOINCREMENT, animaltypeid INTEGER, name TEXT, FOREIGN KEY(animaltypeid) REFERENCES AnimalType(id))',
+    );
+    await db.execute(
+      'CREATE TABLE IF NOT EXISTS AnimalType(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)',
+    );
+  }
+  Future<Map<String, dynamic>?> getAnimalDetails(String tableName, int animalId) async {
+    Database? db = await this.db;
+    final List<Map<String, dynamic>> result = await db!.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [animalId],
+    );
+
+    if (result.isNotEmpty) {
+      return result.first;
+    } else {
+      return null;
+    }
+  }
+  Future<int> updateAnimalDetails(String tableName, int animalId, Map<String, dynamic> updatedDetails) async {
+    Database? db = await this.db;
+    return await db!.update(
+      tableName,
+      updatedDetails,
+      where: 'id = ?',
+      whereArgs: [animalId],
+    );
   }
 
-  Future<List<Map<String, dynamic>>> getKoyunList() async {
-    Database? db = await this.db;
-    return await db!.query('koyunTable');
-  }
-
-  Future<List<Map<String, dynamic>>> getKocList() async {
-    Database? db = await this.db;
-    return await db!.query('kocTable');
-  }
-  Future<List<Map<String, dynamic>>> getInekList() async {
-    Database? db = await this.db;
-    return await db!.query('inekTable');
-  }
-  Future<List<Map<String, dynamic>>> getBogaList() async {
-    Database? db = await this.db;
-    return await db!.query('bogaTable');
-  }
   Future<List<Map<String, dynamic>>> getKuzuList() async {
     Database? db = await this.db;
     return await db!.query('lambTable');
   }
+
   Future<List<Map<String, dynamic>>> getBuzagiList() async {
     Database? db = await this.db;
     return await db!.query('buzagiTable');
+  }
+
+  Future<List<Map<String, dynamic>>> getKoyunList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 1
+    ''');
+  }
+
+  Future<List<Map<String, dynamic>>> getKocList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo  
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 2
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getInekList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 3
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getBogaList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 4
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getKuzu1List() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 5
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getBuzagi1List() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 6
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getKoyunSpeciesList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id, animaltypeid, animalsubtypename
+      FROM AnimalSubType
+      WHERE animaltypeid = 1
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getKocSpeciesList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id, animaltypeid, animalsubtypename
+      FROM AnimalSubType
+      WHERE animaltypeid = 2
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getInekSpeciesList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id, animaltypeid, animalsubtypename
+      FROM AnimalSubType
+      WHERE animaltypeid = 3
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getBogaSpeciesList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id, animaltypeid, animalsubtypename
+      FROM AnimalSubType
+      WHERE animaltypeid = 4
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getKuzuSpeciesList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id, animaltypeid, animalsubtypename
+      FROM AnimalSubType
+      WHERE animaltypeid = 5
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getBuzagiSpeciesList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id, animaltypeid, animalsubtypename
+      FROM AnimalSubType
+      WHERE animaltypeid = 6
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getKoyunAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo,a.dob
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 1
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getKocAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo,a.dob 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 2
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getInekAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo,a.dob
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 3
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getBogaAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo,a.dob 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 4
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getKuzuAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo,a.dob 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 5
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getBuzagiAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT a.id, a.name, a.tagNo,a.dob 
+      FROM Animal a
+      JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 6
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getWeanedBuzagiAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id,tagNo, date FROM weanedBuzagiTable
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getWeanedKuzuAnimalList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id,tagNo, date FROM weanedKuzuTable
+    ''');
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'DatabaseInekHelper.dart';
 
 class AddInekController extends GetxController {
@@ -12,8 +13,15 @@ class AddInekController extends GetxController {
   final nameController = TextEditingController();
 
   var selectedInek = Rxn<String>();
+  var selectedInekId = Rxn<int>();
 
-  final List<String> inek = ['Holstein (Siyah Alaca)', 'Jersey', 'Montofon (Brown Swiss)', 'Simmental', 'Doğu Anadolu Kırmızısı', 'Güney Anadolu Kırmızısı', 'Boz Irk', 'Yerli Kara', 'Angus', 'Hereford'];
+  var species = <Map<String, dynamic>>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchInekSpeciesList();
+  }
 
   @override
   void dispose() {
@@ -26,8 +34,13 @@ class AddInekController extends GetxController {
     super.dispose();
   }
 
+  void fetchInekSpeciesList() async {
+    species.assignAll(await AnimalService.instance.getInekSpeciesList());
+  }
+
   void resetForm() {
     selectedInek.value = null;
+    selectedInekId.value = null;
     dobController.clear();
     timeController.clear();
     countController.clear();
@@ -41,10 +54,11 @@ class AddInekController extends GetxController {
       formKey.currentState!.save();
 
       Map<String, dynamic> inekData = {
-        'weight': countController.text,
+        'weight': double.tryParse(countController.text) ?? 0.0,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
         'species': selectedInek.value,
+        'animalsubtypeid': selectedInekId.value,
         'name': nameController.text,
         'type': countController.text,
         'dob': dobController.text,

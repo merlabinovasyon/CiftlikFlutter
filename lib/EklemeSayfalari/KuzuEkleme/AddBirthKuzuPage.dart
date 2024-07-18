@@ -7,6 +7,7 @@ import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildSelectionField.dart';
 import '../../FormFields/BuildTimeField.dart';
 import '../../AnimalService/BuildSelectionAnimalField.dart';
+import '../../AnimalService/BuildSelectionSpeciesField.dart';
 import '../../FormFields/BuildTextField.dart';
 import '../../FormFields/TwinOrTripletSection.dart';
 import 'AddBirthKuzuController.dart';
@@ -106,7 +107,7 @@ class AddBirthKuzuPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0,bottom: 2,left: 10),
+                    padding: const EdgeInsets.only(right: 8.0, bottom: 2, left: 10),
                     child: SizedBox(
                       width: 100, // İstediğiniz genişlik
                       height: 50, // İstediğiniz yükseklik
@@ -127,12 +128,14 @@ class AddBirthKuzuPage extends StatelessWidget {
                 controller: controller.govTagNoController,
               ),
               SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionSpeciesField(
                 label: 'Irk *',
                 value: controller.selectedLamb,
-                options: controller.lamb,
+                options: controller.species,
                 onSelected: (value) {
+                  var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                   controller.selectedLamb.value = value;
+                  controller.selectedLambId.value = selectedSpecies['id'];
                 },
               ),
               SizedBox(height: 16),
@@ -173,12 +176,14 @@ class AddBirthKuzuPage extends StatelessWidget {
                   SizedBox(height: 16),
                   BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                   SizedBox(height: 16),
-                  BuildSelectionField(
+                  BuildSelectionSpeciesField(
                     label: 'Irk *',
                     value: controller.selected1Lamb,
-                    options: controller.lamb,
+                    options: controller.species,
                     onSelected: (value) {
+                      var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                       controller.selected1Lamb.value = value;
+                      controller.selected1LambId.value = selectedSpecies['id'];
                     },
                   ),
                   SizedBox(height: 16),
@@ -215,12 +220,14 @@ class AddBirthKuzuPage extends StatelessWidget {
                     SizedBox(height: 16),
                     BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                     SizedBox(height: 16),
-                    BuildSelectionField(
+                    BuildSelectionSpeciesField(
                       label: 'Irk *',
                       value: controller.selected2Lamb,
-                      options: controller.lamb,
+                      options: controller.species,
                       onSelected: (value) {
+                        var selectedSpecies = controller.species.firstWhere((element) => element['animalsubtypename'] == value);
                         controller.selected2Lamb.value = value;
+                        controller.selected2LambId.value = selectedSpecies['id'];
                       },
                     ),
                     SizedBox(height: 16),

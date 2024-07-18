@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'DatabaseKoyunHelper.dart';
 
 class AddSheepController extends GetxController {
@@ -12,8 +13,15 @@ class AddSheepController extends GetxController {
   final nameController = TextEditingController();
 
   var selectedSheep = Rxn<String>();
+  var selectedSheepId = Rxn<int>();
 
-  final List<String> sheep = ['Merinos', 'Türk Koyunu', 'Çine Çoban Koyunu', 'Sakız Koyunu', 'Karacabey Merinosu', 'Kıvırcık Koyunu', 'Romanov Koyunu', 'İvesi Koyunu', 'Akkaraman Koyunu', 'Güney Karaman Koyunu', 'Tuj Koyunu', 'Dağlıç Koyunu'];
+  var species = <Map<String, dynamic>>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchSheepSpeciesList();
+  }
 
   @override
   void dispose() {
@@ -26,8 +34,13 @@ class AddSheepController extends GetxController {
     super.dispose();
   }
 
+  void fetchSheepSpeciesList() async {
+    species.assignAll(await AnimalService.instance.getKoyunSpeciesList());
+  }
+
   void resetForm() {
     selectedSheep.value = null;
+    selectedSheepId.value = null;
     dobController.clear();
     timeController.clear();
     countController.clear();
@@ -41,10 +54,11 @@ class AddSheepController extends GetxController {
       formKey.currentState!.save();
 
       Map<String, dynamic> sheepData = {
-        'weight': countController.text,
+        'weight': double.tryParse(countController.text) ?? 0.0,
         'tagNo': tagNoController.text,
         'govTagNo': govTagNoController.text,
         'species': selectedSheep.value,
+        'animalsubtypeid': selectedSheepId.value,
         'name': nameController.text,
         'type': countController.text,
         'dob': dobController.text,
