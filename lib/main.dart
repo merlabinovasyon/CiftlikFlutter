@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/AsiSayfasi/VaccinePage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/BogaEkleme/AddBogaPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/BuzagiEkleme/AddBirthBuzagiPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/InekEkleme/AddInekPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/InekSutOlcumEkleme/InekSutOlcumPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KocEkleme/AddKocPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KoyunEkleme/AddSheepPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KoyunSutOlcumEkleme/KoyunSutOlcumPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KuzuEkleme/AddBirthKuzuPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/WeanedBuzagiOlcumEkleme/WeanedBuzagiOlcumPage.dart';
-import 'package:merlabciftlikyonetim/GelirGiderHesaplama/FinancePage.dart';
-import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/services.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+// Sayfa ve diğer importlar
 import 'AnaSayfa/HomePage.dart';
+import 'AsiSayfasi/VaccinePage.dart';
+import 'BildirimSayfasi/NotificationPage.dart';
 import 'Calendar/CalendarPage.dart';
+import 'EklemeSayfalari/BogaEkleme/AddBogaPage.dart';
+import 'EklemeSayfalari/BuzagiEkleme/AddBirthBuzagiPage.dart';
+import 'EklemeSayfalari/InekEkleme/AddInekPage.dart';
+import 'EklemeSayfalari/InekSutOlcumEkleme/InekSutOlcumPage.dart';
+import 'EklemeSayfalari/KocEkleme/AddKocPage.dart';
+import 'EklemeSayfalari/KocKatim/KocKatimPage.dart';
+import 'EklemeSayfalari/KoyunEkleme/AddSheepPage.dart';
+import 'EklemeSayfalari/KoyunSutOlcumEkleme/KoyunSutOlcumPage.dart';
+import 'EklemeSayfalari/KuzuEkleme/AddBirthKuzuPage.dart';
+import 'EklemeSayfalari/WeanedBuzagiOlcumEkleme/WeanedBuzagiOlcumPage.dart';
 import 'EklemeSayfalari/WeanedKuzuOlcumEkleme/WeanedKuzuOlcumPage.dart';
+import 'GelirGiderHesaplama/FinancePage.dart';
+import 'HastalikSayfalari/DiseasePage.dart';
 import 'Login/LoginPage.dart';
 import 'Profil/ProfilPage.dart';
 import 'Register/RegisterPage.dart';
@@ -23,20 +33,26 @@ import 'bindings.dart';
 import 'iletisim/iletisimPage.dart';
 import 'TestPage.dart';
 import 'models/BottomNavigation.dart';
-import 'initial_bindings.dart'; // Yeni oluşturduğumuz InitialBinding dosyasını import edin
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:flutter_localizations/flutter_localizations.dart'; // Bu satırı ekleyin
-import 'package:flutter/services.dart'; // SystemChrome kullanımı için import edin
+import 'initial_bindings.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('tr', null);
+  tz.initializeTimeZones();
+
+  // Bildirimler için FlutterLocalNotificationsPlugin başlatılması
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   // Navigation bar rengini ayarlamak ve dikey moda zorlamak için SystemChrome kullanıyoruz
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.black, // Burada istediğiniz rengi kullanabilirsiniz
-    systemNavigationBarIconBrightness: Brightness.light, // Simge rengini belirleyin (light/dark)
+    systemNavigationBarColor: Colors.black,
+    systemNavigationBarIconBrightness: Brightness.light,
   ));
 
   // Yalnızca dikey modda çalışmasını sağlamak
@@ -60,19 +76,19 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.black54,
-          selectionColor: Colors.cyan.shade700, // Seçim rengi (yarı saydam)
-          selectionHandleColor: Colors.cyan.shade800, // Seçim imleci rengi
+          selectionColor: Colors.cyan.shade700,
+          selectionHandleColor: Colors.cyan.shade800,
         ),
       ),
-      initialBinding: InitialBinding(), // Tüm bağımlılıkları başlatan binding
+      initialBinding: InitialBinding(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en', 'US'), // İngilizce
-        const Locale('tr', 'TR'), // Türkçe
+        const Locale('en', 'US'),
+        const Locale('tr', 'TR'),
       ],
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
@@ -98,8 +114,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/diseasePage', page: () => DiseasePage()),
         GetPage(name: '/financePage', page: () => FinancePage()),
         GetPage(name: '/vaccinePage', page: () => VaccinePage()),
-
+        GetPage(name: '/notificationPage', page: () => NotificationPage()),
       ],
+      locale: const Locale('tr', 'TR'), // Varsayılan dili ayarlayın
       home: LoginPage(),
     );
   }

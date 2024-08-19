@@ -2,13 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'AddAnimalGroupController.dart';
 import '../FormFields/FormButton.dart';
-import '../HayvanAsiSayfasi/BuildAnimalSelectionField.dart';
+import 'BuildSelectionGroupField.dart';
 
-class AddAnimalGroupPage extends StatelessWidget {
-  final AddAnimalGroupController controller = Get.put(AddAnimalGroupController());
+class AddAnimalGroupPage extends StatefulWidget {
   final String tagNo;
 
   AddAnimalGroupPage({Key? key, required this.tagNo}) : super(key: key);
+
+  @override
+  _AddAnimalGroupPageState createState() => _AddAnimalGroupPageState();
+}
+
+class _AddAnimalGroupPageState extends State<AddAnimalGroupPage> {
+  final AddAnimalGroupController controller = Get.put(AddAnimalGroupController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchGroups();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +53,18 @@ class AddAnimalGroupPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
-                BuildAnimalSelectionField(
-                  label: 'Grup Seçimi *',
-                  value: controller.selectedGroup,
-                  options: ['Grup 1', 'Grup 2', 'Grup 3'],
-                  onSelected: (value) => controller.selectedGroup.value = value,
-                ),
+                Obx(() {
+                  if (controller.groupList.isEmpty) {
+                    return CircularProgressIndicator();
+                  } else {
+                    return BuildSelectionGroupField(
+                      label: 'Grup Seçimi *',
+                      value: controller.selectedGroup,
+                      options: controller.groupList,
+                      onSelected: (value) => controller.selectedGroup.value = value,
+                    );
+                  }
+                }),
                 SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0, left: 8),
@@ -54,7 +72,7 @@ class AddAnimalGroupPage extends StatelessWidget {
                     title: 'Kaydet',
                     onPressed: () async {
                       if (controller.formKey.currentState!.validate()) {
-                        await controller.addGroup(tagNo); // addGroup fonksiyonunu async olarak çağırıyoruz
+                        await controller.addGroup(widget.tagNo); // addGroup fonksiyonunu async olarak çağırıyoruz
                         controller.resetForm();
                         Get.back();
                         Get.snackbar('Başarılı', 'Grup Kaydedildi');

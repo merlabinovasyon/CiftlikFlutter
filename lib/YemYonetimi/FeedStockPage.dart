@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/YemYonetimi/AddFeedPage.dart';
 import 'FeedController.dart';
 import 'FeedDetailController.dart';
 import 'FeedDetailPage.dart';
@@ -36,6 +37,7 @@ class FeedStockPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add, size: 30,),
             onPressed: () {
+              Get.to(() => AddFeedPage(),duration: Duration(milliseconds: 650));
             },
           ),
         ],

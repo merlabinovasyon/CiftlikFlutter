@@ -41,8 +41,11 @@ class AnimalGroupCard extends StatelessWidget {
             shadowColor: Colors.cyan,
             margin: const EdgeInsets.only(bottom: 10.0, right: 5, left: 5),
             child: ListTile(
-              leading: Icon(Icons.group),
-              title: Text(
+              leading: Image.asset(
+                'icons/sheep_and_cow_side_by_side_icon.png', // Buraya asset yolunu koyun
+                width: 40.0, // İstenilen genişliği belirleyin
+                height: 40.0, // İstenilen yüksekliği belirleyin
+              ),              title: Text(
                 'Grup Adı: ${group.groupName.isNotEmpty ? group.groupName : 'Bilinmiyor'}',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),

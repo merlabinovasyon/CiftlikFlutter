@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/FormFields/FormButton.dart';
 import 'AddAnimalVaccineController.dart';
 import 'BuildAnimalDateField.dart';
-import 'BuildAnimalSelectionField.dart';
+import '../../AnimalService/BuildSelectionVaccineField.dart';
 
 class AddAnimalVaccinePage extends StatelessWidget {
   final AddAnimalVaccineController controller = Get.put(AddAnimalVaccineController());
@@ -91,10 +91,10 @@ class AddAnimalVaccinePage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 16),
-                  BuildAnimalSelectionField(
+                  BuildSelectionVaccineField(
                     label: 'Aşı Tipi *',
                     value: controller.vaccineType,
-                    options: ['Aşı Tipi 1', 'Aşı Tipi 2'],
+                    options: controller.vaccines,
                     onSelected: (value) {
                       controller.vaccineType.value = value;
                     },

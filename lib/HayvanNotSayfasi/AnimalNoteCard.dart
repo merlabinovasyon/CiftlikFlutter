@@ -41,8 +41,11 @@ class AnimalNoteCard extends StatelessWidget {
             shadowColor: Colors.cyan,
             margin: const EdgeInsets.only(bottom: 10.0, right: 10),
             child: ListTile(
-              leading: Icon(Icons.event_note),
-              title: Text(note.date.isNotEmpty ? note.date : 'Bilinmiyor'),
+              leading: Image.asset(
+                'icons/notes_icon_black.png', // Buraya asset yolunu koyun
+                width: 30.0, // İstenilen genişliği belirleyin
+                height: 30.0, // İstenilen yüksekliği belirleyin
+              ),              title: Text(note.date.isNotEmpty ? note.date : 'Bilinmiyor'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

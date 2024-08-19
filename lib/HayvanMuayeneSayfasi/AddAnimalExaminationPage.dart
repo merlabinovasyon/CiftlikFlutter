@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'AddAnimalExaminationController.dart';
 import '../FormFields/FormButton.dart';
 import '../HayvanAsiSayfasi/BuildAnimalDateField.dart';
-import '../HayvanAsiSayfasi/BuildAnimalSelectionField.dart';
+import '../../AnimalService/BuildSelectionExaminationField.dart';
 
 class AddAnimalExaminationPage extends StatelessWidget {
   final AddAnimalExaminationController controller = Get.put(AddAnimalExaminationController());
@@ -18,7 +18,7 @@ class AddAnimalExaminationPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         controller.resetForm();
-        return true;
+        return true; // Pop işleminin devam etmesini sağla
       },
       child: Dialog(
         backgroundColor: Colors.white,
@@ -91,10 +91,10 @@ class AddAnimalExaminationPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 16),
-                  BuildAnimalSelectionField(
+                  BuildSelectionExaminationField(
                     label: 'Muayene Türü *',
                     value: controller.examType,
-                    options: ['Muayene Tipi 1', 'Muayene Tipi 2'],
+                    options: controller.examinations,
                     onSelected: (value) {
                       controller.examType.value = value;
                     },

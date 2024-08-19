@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/HayvanAsiSayfasi/AnimalVaccinePage.dart';
 import 'package:merlabciftlikyonetim/HayvanGebelikKontrolSayfasi/PregnancyCheckPage.dart';
 import 'package:merlabciftlikyonetim/HayvanGrupSayfasi/AnimalGroupPage.dart';
+import 'package:merlabciftlikyonetim/HayvanHastalikSayfasi/AnimalDiseasePage.dart';
 import 'package:merlabciftlikyonetim/HayvanKonumSayfasi/AnimalLocationPage.dart';
 import 'package:merlabciftlikyonetim/HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
 import 'package:merlabciftlikyonetim/HayvanNotSayfasi/AnimalNotePage.dart';
@@ -51,10 +52,10 @@ class ActionsGrid extends StatelessWidget {
           },
         ),
         ActionCard(
-          title: 'VKS',
-          assetPath: 'icons/sheep_with_vaccine_icon_black.png',
+          title: 'Hastalık',
+          assetPath: 'icons/sheep_with_illness_icon_black.png',
           onTap: () {
-            print('VKS tapped');
+            Get.to(() => AnimalDiseasePage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(

@@ -27,6 +27,12 @@ class DatabaseAddAnimalGroupHelper {
             groupName TEXT
           )
         ''');
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS groupTable (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            groupName TEXT
+          )
+        ''');
       },
     );
     return merlabDb;
@@ -35,6 +41,11 @@ class DatabaseAddAnimalGroupHelper {
   Future<int> addGroup(Map<String, dynamic> groupDetails) async {
     Database? db = await this.db;
     return await db!.insert('animalGroupDetail', groupDetails);
+  }
+
+  Future<int> addGroupToGroupTable(Map<String, dynamic> groupDetails) async {
+    Database? db = await this.db;
+    return await db!.insert('groupTable', groupDetails);
   }
 
   Future<List<Map<String, dynamic>>> getGroupsByTagNo(String tagNo) async {
@@ -53,5 +64,18 @@ class DatabaseAddAnimalGroupHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+  Future<int> removeGroup(int id) async {
+    Database? db = await this.db;
+    return await db!.delete(
+      'groupTable',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> getGroups() async {
+    Database? db = await this.db;
+    return await db!.query('groupTable');
   }
 }

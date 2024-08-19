@@ -45,6 +45,9 @@ dependencies:
   syncfusion_flutter_charts:
   table_calendar:
   intl:
+  flutter_local_notifications:
+  timezone:
+  permission_handler:
   flutter_blue_plus:
   intl_translation:
   flutter_slidable:

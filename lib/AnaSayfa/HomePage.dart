@@ -3,12 +3,15 @@ import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/AnaSayfa/BuildSubscriptionSection.dart';
 import 'package:merlabciftlikyonetim/AsiSayfasi/VaccinePage.dart';
 import 'package:merlabciftlikyonetim/AsiTakvimi/AsiPage.dart';
+import 'package:merlabciftlikyonetim/BildirimSayfasi/NotificationPage.dart';
+import 'package:merlabciftlikyonetim/DenemeSayfasi/DenemePage.dart';
 import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimPage.dart';
 import 'package:merlabciftlikyonetim/GelirGiderHesaplama/FinancePage.dart';
 import 'package:merlabciftlikyonetim/GraphicPage.dart';
 import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
 import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
+import 'package:merlabciftlikyonetim/MuayeneSayfasi/ExaminationPage.dart';
 import 'package:merlabciftlikyonetim/RasyonHesaplama/RationWizardMainPage.dart';
 import 'package:merlabciftlikyonetim/SutOlcumGosterimiSayfasi/SutOlcumPage.dart';
 import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
@@ -185,9 +188,12 @@ class HomePage extends StatelessWidget {
                   onTap1: () {
                     Get.to(() => FinancePage(), duration: Duration(milliseconds: 650));
                   },
-                  title2: 'Sync',
-                  iconAsset2: 'icons/bank_icon_black.png',
-                  onTap2: () {},
+                  title2: 'Muayene',
+                  iconAsset2: 'icons/stethoscope_icon_black.png',
+                  onTap2: () {
+                    Get.to(() => ExaminationPage(), duration: Duration(milliseconds: 650));
+
+                  },
                 ),
                 const SizedBox(height: 10.0),
                 BuildActionCardRow(
@@ -232,7 +238,10 @@ class HomePage extends StatelessWidget {
                 BuildActionCardRow(
                   title1: 'Raporlar',
                   iconAsset1: 'icons/report_icon.png',
-                  onTap1: () {},
+                  onTap1: () {
+                    Get.to(() => DenemePage(), duration: Duration(milliseconds: 650));
+
+                  },
                   title2: 'Rasyon',
                   iconAsset2: 'icons/magic_wand_with_sparkles_icon.png',
                   onTap2: () {

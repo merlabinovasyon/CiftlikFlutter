@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'AnimalExaminationController.dart';
 import 'DatabaseAddAnimalExaminationHelper.dart';
 
@@ -8,6 +9,18 @@ class AddAnimalExaminationController extends GetxController {
   var notes = ''.obs;
   var examType = Rxn<String>();
   var date = ''.obs;
+
+  var examinations = <Map<String, dynamic>>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchExaminationList();
+  }
+
+  void fetchExaminationList() async {
+    examinations.assignAll(await AnimalService.instance.getExaminationList());
+  }
 
   void resetForm() {
     notes.value = '';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'AnimalVaccineController.dart'; // AnimalVaccineController ve Vaccine modelini burada import ediyoruz
 import 'DatabaseAddAnimalVaccineHelper.dart';
 
@@ -8,6 +9,18 @@ class AddAnimalVaccineController extends GetxController {
   var notes = ''.obs;
   var vaccineType = Rxn<String>();
   var date = ''.obs; // Tarihi tutmak için yeni bir değişken ekledik
+
+  var vaccines = <Map<String, dynamic>>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchVaccineList();
+  }
+
+  void fetchVaccineList() async {
+    vaccines.assignAll(await AnimalService.instance.getVaccineList());
+  }
 
   void resetForm() {
     notes.value = '';

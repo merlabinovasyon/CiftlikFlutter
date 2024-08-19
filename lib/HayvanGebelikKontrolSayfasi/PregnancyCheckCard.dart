@@ -41,7 +41,13 @@ class PregnancyCheckCard extends StatelessWidget {
             shadowColor: Colors.cyan,
             margin: const EdgeInsets.only(bottom: 10.0, right: 10),
             child: ListTile(
-              leading: Icon(kontrol.kontrolSonucu == 'Gebe' ? Icons.check : Icons.clear, color: kontrol.kontrolSonucu == 'Gebe' ? Colors.green : Colors.red),
+              leading: Image.asset(
+                kontrol.kontrolSonucu == 'Gebe'
+                    ? 'icons/cow_check_with_magnifying_glass_icon.png'
+                    : 'icons/cow_crossed_out_with_magnifying_glass_icon.png',
+                width: 50.0, // İstenilen genişliği belirleyin
+                height: 50.0, // İstenilen yüksekliği belirleyin
+              ),
               title: Text(kontrol.date),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -77,16 +77,6 @@ class AnimalService {
     );
   }
 
-  Future<List<Map<String, dynamic>>> getKuzuList() async {
-    Database? db = await this.db;
-    return await db!.query('lambTable');
-  }
-
-  Future<List<Map<String, dynamic>>> getBuzagiList() async {
-    Database? db = await this.db;
-    return await db!.query('buzagiTable');
-  }
-
   Future<List<Map<String, dynamic>>> getKoyunList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
@@ -124,7 +114,7 @@ class AnimalService {
       WHERE ast.animaltypeid = 4
     ''');
   }
-  Future<List<Map<String, dynamic>>> getKuzu1List() async {
+  Future<List<Map<String, dynamic>>> getKuzuList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
       SELECT a.id, a.name, a.tagNo 
@@ -133,7 +123,7 @@ class AnimalService {
       WHERE ast.animaltypeid = 5
     ''');
   }
-  Future<List<Map<String, dynamic>>> getBuzagi1List() async {
+  Future<List<Map<String, dynamic>>> getBuzagiList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
       SELECT a.id, a.name, a.tagNo 
@@ -254,6 +244,38 @@ class AnimalService {
     Database? db = await this.db;
     return await db!.rawQuery('''
       SELECT id,tagNo, date FROM weanedKuzuTable
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getVaccineList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id,vaccinename FROM vaccineTable
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getExaminationList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id,examinationname FROM examinationTable
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getDiseaseList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id,diseasename FROM diseaseTable
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getLocationList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT ahir.name AS Ahir_Name, bolme.name AS Bolme_Name
+      FROM ahir
+      LEFT JOIN bolme ON ahir.id = bolme.ahirId;
+    ''');
+  }
+  Future<List<Map<String, dynamic>>> getGroupList() async {
+    Database? db = await this.db;
+    return await db!.rawQuery('''
+      SELECT id,groupname FROM groupTable
     ''');
   }
 }

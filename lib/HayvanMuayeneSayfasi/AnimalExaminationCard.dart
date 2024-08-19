@@ -41,8 +41,11 @@ class AnimalExaminationCard extends StatelessWidget {
             shadowColor: Colors.cyan,
             margin: const EdgeInsets.only(bottom: 10.0, right: 10),
             child: ListTile(
-              leading: Icon(Icons.medical_services),
-              title: Text(examination.date),
+              leading: Image.asset(
+                'icons/stethoscope_icon_black.png', // Buraya asset yolunu koyun
+                width: 35.0, // İstenilen genişliği belirleyin
+                height: 35.0, // İstenilen yüksekliği belirleyin
+              ),              title: Text(examination.date),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

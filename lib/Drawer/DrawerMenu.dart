@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/BLESayfasi/BleScanPage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/OlcumEkleme/OlcumPage.dart';
-import 'package:merlabciftlikyonetim/HayvanAsiSayfasi/AnimalVaccinePage.dart';
-import 'package:merlabciftlikyonetim/HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
-import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
-import 'package:merlabciftlikyonetim/RasyonHesaplama/RationWizardMainPage.dart';
-import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
-import '../GelirGiderHesaplama/FinancePage.dart';
-import '../HayvanDetaySayfasi/AnimalDetailPage.dart';
+import 'package:merlabciftlikyonetim/BildirimSayfasi/NotificationPage.dart';
+import 'package:merlabciftlikyonetim/KullaniciSayfasi/UsersPage.dart';
 import 'DrawerController.dart';
 
 class DrawerMenu extends StatelessWidget {
@@ -72,7 +66,13 @@ class DrawerMenu extends StatelessWidget {
                   leading: const Icon(Icons.contact_support, color: Colors.black,),
                   title: const Text('Test'),
                   onTap: () {
-                    Get.to(() => BleScanPage()) ;              },
+                    Get.to(() => NotificationPage()) ;              },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.people_alt, color: Colors.black,),
+                  title: const Text('Kullanıcılar'),
+                  onTap: () {
+                    Get.to(() => UsersPage()) ;              },
                 ),
               ],
             ),
