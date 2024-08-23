@@ -27,6 +27,7 @@ import 'HomeController.dart';
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
   final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
 
   HomePage({super.key});
 
@@ -113,6 +114,7 @@ class HomePage extends StatelessWidget {
               children: [
                 Obx(() {
                   return TextField(
+                    focusNode: searchFocusNode,
                     controller: searchController,
                     cursorColor: Colors.black54,
                     decoration: InputDecoration(
@@ -143,6 +145,9 @@ class HomePage extends StatelessWidget {
                     ),
                     onChanged: (value) {
                       controller.isSearching.value = value.isNotEmpty;
+                    },
+                    onTapOutside: (event) {
+                      searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                     },
                   );
                 }),

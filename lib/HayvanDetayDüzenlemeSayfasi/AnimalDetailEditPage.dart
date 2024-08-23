@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/AnimalService/BuildSelectionAnimalField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildCounterField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildDateField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildSelectionField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildTextField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildTimeField.dart';
 import 'package:merlabciftlikyonetim/FormFields/FormButton.dart';
+import '../AnimalService/BuildSelectionSpeciesField.dart';
 import '../FormUtils/FormUtils.dart';
 import 'AnimalDetailEditController.dart';
 
@@ -75,7 +77,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'Durum',
                 value: controller.status,
-                options: ['Durum1', 'Durum2'], // Adjust with real options
+                options: ['Durum1', 'Durum2'],
                 onSelected: (value) {
                   controller.status.value = value;
                 },
@@ -99,12 +101,13 @@ class AnimalDetailEditPage extends StatelessWidget {
                 hint: '',
               ),
               SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionSpeciesField(
                 label: 'Irk',
                 value: controller.speciesController,
-                options: ['Türk Koyunu', 'Merinos','Çine Çoban Koyunu'], // Adjust with real options
+                options: controller.speciesOptions,
                 onSelected: (value) {
-                  controller.speciesController.value = value;
+                  var selectedSpecies = controller.speciesOptions.firstWhere((element) => element['animalsubtypename'] == value);
+                  controller.speciesController.value = selectedSpecies['animalsubtypename'];
                 },
               ),
               SizedBox(height: 16),
@@ -120,28 +123,32 @@ class AnimalDetailEditPage extends StatelessWidget {
                 hint: '',
               ),
               SizedBox(height: 16),
-              BuildSelectionField(
+
+              // Ana ID için doğru hayvan listesi
+              BuildSelectionAnimalField(
                 label: 'Ana ID',
                 value: controller.motherController,
-                options: ['Ana1', 'Ana2'], // Adjust with real options
+                options: controller.motherOptions, // Bu kısmı değiştirdik
                 onSelected: (value) {
-                  controller.motherController.value = value;
+                  var selectedMother = controller.motherOptions.firstWhere((element) => element['tagNo'] == value);
+                  controller.motherController.value = selectedMother['tagNo'].toString();
                 },
               ),
               SizedBox(height: 16),
-              BuildSelectionField(
+              BuildSelectionAnimalField(
                 label: 'Baba ID',
                 value: controller.fatherController,
-                options: ['Baba1', 'Baba2'], // Adjust with real options
+                options: controller.fatherOptions, // Bu kısmı değiştirdik
                 onSelected: (value) {
-                  controller.fatherController.value = value;
+                  var selectedFather = controller.fatherOptions.firstWhere((element) => element['tagNo'] == value);
+                  controller.fatherController.value = selectedFather['tagNo'].toString();
                 },
               ),
               SizedBox(height: 16),
               BuildSelectionField(
                 label: 'Sürüde doğdu',
                 value: controller.bornInHerdController,
-                options: ['Evet', 'Hayır'], // Adjust with real options
+                options: ['Evet', 'Hayır'],
                 onSelected: (value) {
                   controller.bornInHerdController.value = value;
                 },
@@ -150,7 +157,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'Renk',
                 value: controller.colorController,
-                options: ['Beyaz', 'Siyah'], // Adjust with real options
+                options: ['Beyaz', 'Siyah'],
                 onSelected: (value) {
                   controller.colorController.value = value;
                 },
@@ -159,7 +166,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'Oluşma Şekli',
                 value: controller.formationTypeController,
-                options: ['Doğal', 'Yapay'], // Adjust with real options
+                options: ['Suni Tohumlama', 'Doğal Aşım', 'Embriyo Transferi'],
                 onSelected: (value) {
                   controller.formationTypeController.value = value;
                 },
@@ -168,7 +175,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'Boynuz',
                 value: controller.hornController,
-                options: ['Var', 'Yok'], // Adjust with real options
+                options: ['Var', 'Yok'],
                 onSelected: (value) {
                   controller.hornController.value = value;
                 },
@@ -177,7 +184,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'Doğum Türü',
                 value: controller.birthTypeController,
-                options: ['Normal', 'Sezaryen'], // Adjust with real options
+                options: ['Normal', 'Sezaryen'],
                 onSelected: (value) {
                   controller.birthTypeController.value = value;
                 },
@@ -186,7 +193,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'Sigorta',
                 value: controller.insuranceController,
-                options: ['Evet', 'Hayır'], // Adjust with real options
+                options: ['Evet', 'Hayır'],
                 onSelected: (value) {
                   controller.insuranceController.value = value;
                 },
@@ -195,7 +202,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'İkizlik',
                 value: controller.twinsController,
-                options: ['Evet', 'Hayır'], // Adjust with real options
+                options: ['Evet', 'Hayır'],
                 onSelected: (value) {
                   controller.twinsController.value = value;
                 },
@@ -204,7 +211,7 @@ class AnimalDetailEditPage extends StatelessWidget {
               BuildSelectionField(
                 label: 'Cinsiyet',
                 value: controller.genderController,
-                options: ['Erkek', 'Dişi'], // Adjust with real options
+                options: ['Erkek', 'Dişi'],
                 onSelected: (value) {
                   controller.genderController.value = value;
                 },

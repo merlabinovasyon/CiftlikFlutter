@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/FormFields/BuildNumberField.dart';
+import 'package:merlabciftlikyonetim/YemYonetimi/BuildTextFeedField.dart';
 import '../FormFields/FormButton.dart';
-import '../FormFields/BuildTextField.dart';
 import '../FormFields/BuildSelectionField.dart';
 import 'AddFeedController.dart';
+import 'FeedController.dart';
 
 class AddFeedPage extends StatelessWidget {
   final AddFeedController controller = Get.put(AddFeedController());
+  final FeedController feedController = Get.find(); // FeedController'ı bul
 
   @override
   Widget build(BuildContext context) {
@@ -37,120 +40,205 @@ class AddFeedPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: controller.formKey,
-          child: ListView(
-            children: [
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Yeni Yem Adı *',
-                hint: '',
-                controller: controller.yemAdiController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Kuru Madde (%) *',
-                hint: '',
-                controller: controller.kuruMaddeController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'UFL (kg başına) *',
-                hint: '',
-                controller: controller.uflController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Metabolizable Enerji, ME (kcal/kg) *',
-                hint: '',
-                controller: controller.meController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'PDI (g/kg) *',
-                hint: '',
-                controller: controller.pdiController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Ham Protein CP (%) *',
-                hint: '',
-                controller: controller.hamProteinController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Lizin (%/PDI) *',
-                hint: '',
-                controller: controller.lizinController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Metionin (%/PDI) *',
-                hint: '',
-                controller: controller.metioninController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Kalsiyum abs (g/kg) *',
-                hint: '',
-                controller: controller.kalsiyumController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Fosfor abs (g/kg) *',
-                hint: '',
-                controller: controller.fosforController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Alt Limit (kg) *',
-                hint: '',
-                controller: controller.altLimitController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Üst Limit (kg) *',
-                hint: '',
-                controller: controller.ustLimitController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Fiyat *',
-                hint: '',
-                controller: controller.fiyatController,
-              ),
-              const SizedBox(height: 16),
-              BuildTextField(
-                label: 'Notlar',
-                hint: '',
-                controller: controller.notlarController,
-              ),
-              const SizedBox(height: 16),
-              BuildSelectionField(
-                label: 'Tür',
-                value: controller.selectedTur,
-                options: ['Tür 1', 'Tür 2'], // Adjust this list accordingly
-                onSelected: (value) {
-                  controller.selectedTur.value = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
-                child: FormButton(
-                  title: 'Ekle',
-                  onPressed: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      // Add your save logic here
-                      Get.back();
-                      Get.snackbar('Başarılı', 'Yem Stoğu Eklendi');
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 16),
+                BuildTextFeedField(
+                  label: 'Yeni Yem Adı *',
+                  hint: '',
+                  controller: controller.yemAdiController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
                     }
+                    return null;
                   },
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Kuru Madde (%) *',
+                  hint: '',
+                  controller: controller.kuruMaddeController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'UFL (kg başına) *',
+                  hint: '',
+                  controller: controller.uflController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Metabolizable Enerji, ME (kcal/kg) *',
+                  hint: '',
+                  controller: controller.meController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'PDI (g/kg) *',
+                  hint: '',
+                  controller: controller.pdiController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Ham Protein CP (%) *',
+                  hint: '',
+                  controller: controller.hamProteinController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Lizin (%/PDI) *',
+                  hint: '',
+                  controller: controller.lizinController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Metionin (%/PDI) *',
+                  hint: '',
+                  controller: controller.metioninController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Kalsiyum abs (g/kg) *',
+                  hint: '',
+                  controller: controller.kalsiyumController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Fosfor abs (g/kg) *',
+                  hint: '',
+                  controller: controller.fosforController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Alt Limit (kg) *',
+                  hint: '',
+                  controller: controller.altLimitController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildNumberField(
+                  label: 'Üst Limit (kg) *',
+                  hint: '',
+                  controller: controller.ustLimitController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildTextFeedField(
+                  label: 'Notlar',
+                  hint: '',
+                  controller: controller.notlarController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                BuildSelectionField(
+                  label: 'Tür',
+                  value: controller.selectedTur,
+                  options: ['Kaba Yem', 'Konsantre Yem','Diğer'], // Adjust this list accordingly
+                  onSelected: (value) {
+                    controller.selectedTur.value = value;
+                  },
+                ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: SizedBox(
+                    width: double.infinity, // FormButton'un genişliğini tam olarak ayarlar
+                    child: FormButton(
+                      title: 'Ekle',
+                      onPressed: () {
+                        if (controller.formKey.currentState!.validate()) {
+                          controller.saveFeedStock();
+                          feedController.fetchFeedStocks(); // Veriler çekilip UI güncelleniyor
+                          Get.back();
+                          Get.snackbar('Başarılı', 'Yem Stoğu Eklendi');
+                        } else {
+                          Get.snackbar(
+                            'Hata',
+                            'Lütfen tüm alanları doldurunuz',
+                            colorText: Colors.black,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

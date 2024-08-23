@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/YemYonetimi/AddFeedPage.dart';
+import 'AddFeedPage.dart';
 import 'FeedController.dart';
-import 'FeedDetailController.dart';
-import 'FeedDetailPage.dart';
+import 'FeedStockCard.dart';
 
 class FeedStockPage extends StatelessWidget {
   final FeedController controller = Get.put(FeedController());
@@ -36,8 +35,11 @@ class FeedStockPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.add, size: 30,),
-            onPressed: () {
-              Get.to(() => AddFeedPage(),duration: Duration(milliseconds: 650));
+            onPressed: () async {
+              final result = await Get.to(() => AddFeedPage(), duration: Duration(milliseconds: 650));
+              if (result == true) {
+                controller.fetchFeedStocks();
+              }
             },
           ),
         ],
@@ -56,11 +58,11 @@ class FeedStockPage extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
+                  borderSide: BorderSide(color: Colors.black),
                 ),
               ),
               onChanged: (value) {
-                // Arama işlevini burada uygulayın
+                controller.searchQuery.value = value; // Arama sorgusunu güncelle
               },
             ),
             const SizedBox(height: 16),
@@ -71,42 +73,15 @@ class FeedStockPage extends StatelessWidget {
             const SizedBox(height: 16),
             Expanded(
               child: Obx(() {
-                if (controller.feedList.isEmpty) {
+                var filteredList = controller.filteredFeedList; // Filtrelenmiş listeyi al
+                if (filteredList.isEmpty) {
                   return Center(child: Text('Lütfen bir yem stoğu ekleyin'));
                 }
                 return ListView.builder(
-                  itemCount: controller.feedList.length,
+                  itemCount: filteredList.length,
                   itemBuilder: (context, index) {
-                    var feed = controller.feedList[index];
-                    return Card(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      elevation: 4,
-                      shadowColor: Colors.cyan, // Gölge rengi cyan olarak ayarlandı
-                      child: ListTile(
-                        leading: Image.asset(
-                          'icons/clover_icon_black.png', // Kendi ikonunuzun yolu
-                          width: 55, // İkon boyutunda olacak şekilde genişlik
-                          height: 55, // İkon boyutunda olacak şekilde yükseklik
-                        ),
-                        title: Text(feed['name'], style: TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Toplam ${feed['weight']} kg'),
-                            Text(feed['lastPurchase'], style: feed['lastPurchase'] == 'Son Satın Alım Bilgisi Bulunmamaktadır.' ? TextStyle(color: Colors.red) : null),
-                            if (feed['quantity'] != '' && feed['price'] != '')
-                              Text('${feed['quantity']}, ${feed['price']}', style: TextStyle(color: Colors.red)),
-                          ],
-                        ),
-                        trailing: Icon(Icons.arrow_forward_ios),
-                        onTap: () {
-                          Get.to(() => FeedDetailPage(),duration: Duration(milliseconds: 650));
-                        },
-                      ),
-                    );
+                    var feed = filteredList[index];
+                    return FeedStockCard(feed: feed);
                   },
                 );
               }),

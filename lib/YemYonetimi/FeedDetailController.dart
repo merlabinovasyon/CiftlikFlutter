@@ -1,43 +1,34 @@
 import 'package:get/get.dart';
-
+import 'DatabaseFeedStockHelper.dart';
 import 'TransactionModel.dart';
 
 class FeedDetailController extends GetxController {
   var transactions = <Transaction>[].obs;
+  final int feedId;
+
+  FeedDetailController(this.feedId);
 
   @override
   void onInit() {
     super.onInit();
-    addSampleTransactions();
+    fetchTransactions();
   }
 
-  void deleteTransaction(String id) {
-    transactions.removeWhere((transaction) => transaction.id == id);
+  void fetchTransactions() async {
+    List<Map<String, dynamic>> transactionMaps = await DatabaseFeedStockHelper.instance.getTransactionsByFeedId(feedId);
+    transactions.assignAll(transactionMaps.map((map) => Transaction.fromMap(map)).toList());
+    update(); // UI'yı güncelle
   }
 
-  void deleteAllTransactions() {
-    transactions.clear();
+  void deleteTransaction(int id) async {
+    await DatabaseFeedStockHelper.instance.deleteTransaction(id);
+    fetchTransactions(); // Silme işleminden sonra verileri yeniden çek ve güncelle
+    update(); // UI'yı güncelle
   }
 
-  void addSampleTransactions() {
-    transactions.addAll([
-      Transaction(
-        id: '1',
-        type: 'purchase',
-        date: '13/06/2024',
-        quantity: '80',
-        notes: 'Aa',
-        price: '550',
-      ),
-      Transaction(
-        id: '2',
-        type: 'consumption',
-        date: '13/06/2024',
-        quantity: '55',
-        notes: 'Hh',
-        price: '800',
-      ),
-
-    ]);
+  void deleteAllTransactions(int feedId) async {
+    await DatabaseFeedStockHelper.instance.deleteAllTransactions(feedId);
+    fetchTransactions(); // Tüm işlemler silindikten sonra verileri yeniden çek ve güncelle
+    update(); // UI'yı güncelle
   }
 }

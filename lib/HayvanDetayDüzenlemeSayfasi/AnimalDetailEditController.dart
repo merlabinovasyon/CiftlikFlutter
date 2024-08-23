@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
+import '../AnimalService/AnimalService.dart';
 import '../HayvanDetaySayfasi/DatabaseAnimalDetailHelper.dart';
 
 class AnimalDetailEditController extends GetxController {
@@ -28,6 +30,9 @@ class AnimalDetailEditController extends GetxController {
   var govTagNoController = TextEditingController();
   var timeController = TextEditingController();
   var typeController = TextEditingController();
+  var speciesOptions = <Map<String, dynamic>>[].obs;
+  var motherOptions = <Map<String, dynamic>>[].obs;  // Ana ID seçimleri için
+  var fatherOptions = <Map<String, dynamic>>[].obs;  // Baba ID seçimleri için
 
   void loadAnimalDetails(String tableName, int animalId) async {
     var details = await DatabaseAnimalDetailHelper.instance.getAnimalDetails(tableName, animalId);
@@ -54,12 +59,82 @@ class AnimalDetailEditController extends GetxController {
       genderController.value = details['gender'] ?? '';
       govTagNoController.text = details['govTagNo'] ?? '';
       timeController.text = details['time'] ?? '';
-      typeController.text = details['type']!.toString() ;
+      typeController.text = details['type']?.toString() ?? '';
+
+      // Determine the animalsubtypeid
+      int? animalsubtypeid = details['animalsubtypeid'];
+
+      // Fetch species list based on animalsubtypeid
+      await fetchSpeciesListBasedOnSubtype(animalsubtypeid);
+
+      // Ana ve Baba ID için doğru hayvan listesini getir
+      await fetchParentOptionsBasedOnSubtype(animalsubtypeid);
+    }
+  }
+
+  Future<void> fetchSpeciesListBasedOnSubtype(int? animalsubtypeid) async {
+    if (animalsubtypeid == null) return;
+
+    Database? db = await DatabaseAnimalDetailHelper.instance.db;
+
+    var result = await db!.query('AnimalSubType', where: 'id = ?', whereArgs: [animalsubtypeid]);
+
+    if (result.isNotEmpty) {
+      int animaltypeid = result.first['animaltypeid'] as int;
+
+      switch (animaltypeid) {
+        case 1:
+          speciesOptions.assignAll(await AnimalService.instance.getKoyunSpeciesList());
+          break;
+        case 2:
+          speciesOptions.assignAll(await AnimalService.instance.getKocSpeciesList());
+          break;
+        case 3:
+          speciesOptions.assignAll(await AnimalService.instance.getInekSpeciesList());
+          break;
+        case 4:
+          speciesOptions.assignAll(await AnimalService.instance.getBogaSpeciesList());
+          break;
+        case 5:
+          speciesOptions.assignAll(await AnimalService.instance.getKuzuSpeciesList());
+          break;
+        case 6:
+          speciesOptions.assignAll(await AnimalService.instance.getBuzagiSpeciesList());
+          break;
+        default:
+          speciesOptions.clear();
+      }
+    }
+  }
+
+  Future<void> fetchParentOptionsBasedOnSubtype(int? animalsubtypeid) async {
+    if (animalsubtypeid == null) return;
+
+    Database? db = await DatabaseAnimalDetailHelper.instance.db;
+
+    var result = await db!.query('AnimalSubType', where: 'id = ?', whereArgs: [animalsubtypeid]);
+
+    if (result.isNotEmpty) {
+      int animaltypeid = result.first['animaltypeid'] as int;
+
+      // Küçükbaşlar
+      if (animaltypeid == 1 || animaltypeid == 2 || animaltypeid == 5) { // Koyun, Koç, Kuzu
+        motherOptions.assignAll(await AnimalService.instance.getKoyunAnimalList());
+        fatherOptions.assignAll(await AnimalService.instance.getKocAnimalList());
+      }
+      // Büyükbaşlar
+      else if (animaltypeid == 3 || animaltypeid == 4 || animaltypeid == 6) { // İnek, Boğa, Buzağı
+        motherOptions.assignAll(await AnimalService.instance.getInekAnimalList());
+        fatherOptions.assignAll(await AnimalService.instance.getBogaAnimalList());
+      }
     }
   }
 
   void updateAnimalDetails(String tableName, int animalId) async {
     if (formKey.currentState!.validate()) {
+      var selectedSpecies = speciesOptions.firstWhere((element) => element['animalsubtypename'] == speciesController.value);
+      int selectedSpeciesId = selectedSpecies['id']; // Irkın ID'sini alıyoruz
+
       var updatedDetails = {
         'tagNo': tagNoController.text,
         'name': nameController.text,
@@ -69,6 +144,7 @@ class AnimalDetailEditController extends GetxController {
         'lakNo': lakNoController.text,
         'pedometer': pedometerController.text,
         'species': speciesController.value,
+        'animalsubtypeid': selectedSpeciesId,  // Irkın ID'sini güncelliyoruz
         'stall': stallController.text,
         'notes': notesController.text,
         'mother': motherController.value,
@@ -85,7 +161,9 @@ class AnimalDetailEditController extends GetxController {
         'time': timeController.text,
         'type': int.parse(typeController.text),
       };
+
       await DatabaseAnimalDetailHelper.instance.updateAnimalDetails(tableName, animalId, updatedDetails);
     }
   }
 }
+

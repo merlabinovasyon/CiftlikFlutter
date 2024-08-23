@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/YemYonetimi/FeedConsumptionPage.dart';
+import 'package:merlabciftlikyonetim/YemYonetimi/FeedDetailEditPage.dart';
 import 'package:merlabciftlikyonetim/YemYonetimi/FeedPurchasePage.dart';
 import 'FeedDetailController.dart';
-import 'TransactionModel.dart';
-import 'BuildSlidableTransactionFeedCard.dart'; // Yeni widget'ı import ettik
+import 'BuildSlidableTransactionFeedCard.dart';
 
 class FeedDetailPage extends StatelessWidget {
-  final FeedDetailController controller = Get.put(FeedDetailController());
+  final int feedId;
+
+  FeedDetailPage({required this.feedId});
 
   @override
   Widget build(BuildContext context) {
+    final FeedDetailController controller = Get.put(FeedDetailController(feedId));
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -38,18 +42,24 @@ class FeedDetailPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.delete, size: 30),
             onPressed: () {
-              // Delete all functionality
+              // Tüm işlemleri silme işlemi
               Get.defaultDialog(
+                buttonColor: Colors.cyan.shade700,
                 backgroundColor: Colors.white,
                 title: "Silme İşlemi",
                 middleText: "Tüm işlemleri silmek istediğinize emin misiniz?",
                 textConfirm: "Evet",
                 textCancel: "Hayır",
                 confirmTextColor: Colors.white,
-                onConfirm: () {
-                  controller.deleteAllTransactions();
-                  Get.back();
-                  Get.snackbar('Başarılı', 'Tüm İşlemler Silindi');
+                onConfirm: () async {
+                  if (controller.transactions.isNotEmpty) {
+                    controller.deleteAllTransactions(feedId);
+                    Get.back();
+                    Get.snackbar('Başarılı', 'Tüm İşlemler Silindi');
+                  } else {
+                    Get.back();
+                    Get.snackbar('Hata', 'Silinecek işlem bulunamadı');
+                  }
                 },
               );
             },
@@ -71,11 +81,11 @@ class FeedDetailPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     elevation: 4,
-                    shadowColor: Colors.cyan, // Gölge rengi cyan olarak ayarlandı
+                    shadowColor: Colors.cyan,
                     child: InkWell(
                       onTap: () {
-                        // Alış ekleme işlemi
-                        Get.to(() => FeedPurchasePage(), duration: Duration(milliseconds: 650));
+                        // Alış ekleme sayfasına geçiş
+                        Get.to(() => FeedPurchasePage(feedId: feedId), duration: Duration(milliseconds: 650));
                       },
                       borderRadius: BorderRadius.circular(8.0),
                       child: Padding(
@@ -99,11 +109,11 @@ class FeedDetailPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     elevation: 4,
-                    shadowColor: Colors.cyan, // Gölge rengi cyan olarak ayarlandı
+                    shadowColor: Colors.cyan,
                     child: InkWell(
                       onTap: () {
-                        // Tüketim ekleme işlemi
-                        Get.to(() => FeedConsumptionPage(), duration: Duration(milliseconds: 650));
+                        // Tüketim ekleme sayfasına geçiş
+                        Get.to(() => FeedConsumptionPage(feedId: feedId), duration: Duration(milliseconds: 650));
                       },
                       borderRadius: BorderRadius.circular(8.0),
                       child: Padding(
@@ -128,10 +138,12 @@ class FeedDetailPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
               ),
               elevation: 4,
-              shadowColor: Colors.cyan, // Gölge rengi cyan olarak ayarlandı
+              shadowColor: Colors.cyan,
               child: InkWell(
                 onTap: () {
-                  // Yem bileşimleri değeri düzenleme işlemi
+                  // Yem bileşimlerini düzenleme işlemi
+                  Get.to(() => FeedDetailEditPage(feedId: feedId), duration: Duration(milliseconds: 650));
+
                 },
                 borderRadius: BorderRadius.circular(8.0),
                 child: Padding(
@@ -157,7 +169,7 @@ class FeedDetailPage extends StatelessWidget {
                     child: Text(
                       'Bu yemle alakalı geçmiş işleminiz bulunmamaktadır.',
                       style: TextStyle(fontSize: 16, color: Colors.grey),
-                      textAlign: TextAlign.center, // Yazıyı ortalar
+                      textAlign: TextAlign.center,
                     ),
                   );
                 }

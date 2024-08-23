@@ -62,16 +62,37 @@ class AnimalController extends GetxController {
 
   void filterAnimals() {
     if (searchQuery.value.isEmpty) {
-      animals.refresh();
+      // Arama sorgusu boşsa, tüm hayvanları göster
+      if (cachedAnimals.containsKey(currentTableName.value)) {
+        // Eğer cache'te currentTableName'in verisi varsa
+        final animalsList = cachedAnimals[currentTableName.value];
+        if (animalsList != null) {
+          animals.assignAll(animalsList);
+        } else {
+          // Eğer cache'teki veri null ise, veriyi fetch et
+          fetchAnimals(currentTableName.value);
+        }
+      } else {
+        // Eğer cache'te veri yoksa, veriyi fetch et
+        fetchAnimals(currentTableName.value);
+      }
     } else {
-      animals.assignAll(
-        animals.where((animal) {
-          return (animal.tagNo?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false) ||
-              (animal.name?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false);
-        }).toList(),
-      );
+      // Arama sorgusu doluysa, filtreli hayvanları göster
+      final cachedList = cachedAnimals[currentTableName.value];
+      if (cachedList != null) {
+        animals.assignAll(
+          cachedList.where((animal) {
+            return (animal.tagNo?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false) ||
+                (animal.name?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false);
+          }).toList(),
+        );
+      } else {
+        // Eğer cache'teki veri null ise, boş bir liste döndür
+        animals.assignAll([]);
+      }
     }
   }
+
 
   Future<String?> getAnimalTable(String tagNo) async {
     if (await isAnimalInTable(tagNo, 'weanedKuzuTable')) {
