@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/HayvanAsiSayfasi/AnimalVaccinePage.dart';
-import 'package:merlabciftlikyonetim/HayvanGebelikKontrolSayfasi/PregnancyCheckPage.dart';
-import 'package:merlabciftlikyonetim/HayvanGrupSayfasi/AnimalGroupPage.dart';
-import 'package:merlabciftlikyonetim/HayvanHastalikSayfasi/AnimalDiseasePage.dart';
-import 'package:merlabciftlikyonetim/HayvanKonumSayfasi/AnimalLocationPage.dart';
-import 'package:merlabciftlikyonetim/HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
-import 'package:merlabciftlikyonetim/HayvanNotSayfasi/AnimalNotePage.dart';
+import '../HayvanAgirlikSayfasi/AnimalWeightPage.dart';
+import '../HayvanAgirlikSayfasi/DatabaseAddAnimalWeightHelper.dart';
+import '../HayvanAsiSayfasi/AnimalVaccinePage.dart';
+import '../HayvanGebelikKontrolSayfasi/PregnancyCheckPage.dart';
+import '../HayvanGrupSayfasi/AnimalGroupPage.dart';
+import '../HayvanHastalikSayfasi/AnimalDiseasePage.dart';
+import '../HayvanKonumSayfasi/AnimalLocationPage.dart';
+import '../HayvanMuayeneSayfasi/AnimalExaminationPage.dart';
+import '../HayvanNotSayfasi/AnimalNotePage.dart';
 import 'ActionCard.dart';
 import 'AnimalDetailController.dart';
 
 class ActionsGrid extends StatelessWidget {
   final AnimalDetailController controller = Get.put(AnimalDetailController());
+
+  // Veriyi geciktirerek döndüren bir stream oluşturuyoruz
+  Stream<double?> getLastWeightStream(int animalId) async* {
+    while (true) {
+      Map<String, dynamic>? lastWeightRecord = await DatabaseAddAnimalWeightHelper.instance.getLastWeightByAnimalId(animalId);
+
+      if (lastWeightRecord != null) {
+        yield lastWeightRecord['weight']; // Son alınan ağırlık verisini döndürüyoruz
+      } else {
+        yield 0.0; // Veri yoksa sıfır olarak döndürüyoruz
+      }
+
+      await Future.delayed(Duration(seconds: 2)); // 2 saniyelik gecikme
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -41,21 +59,56 @@ class ActionsGrid extends StatelessWidget {
           title: 'Gebelik Kontrolü',
           assetPath: 'icons/cow_with_magnifying_glass_icon.png',
           onTap: () {
-            Get.to(() => PregnancyCheckPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
+            Get.to(() => PregnancyCheckPage(tagNo: controller.animalDetails['tagNo'] ?? ''), duration: Duration(milliseconds: 650));
           },
         ),
-        ActionCard(
-          title: 'Canlı Ağırlık: 57',
-          assetPath: 'icons/scale_icon_black.png',
-          onTap: () {
-            print('Canlı Ağırlık tapped');
+        StreamBuilder<double?>(
+          stream: getLastWeightStream(controller.animalDetails['id'] ?? 0),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator(); // Yalnızca ağırlık için yükleniyor göstergesi
+            } else if (snapshot.hasError) {
+              return Text('Hata: ${snapshot.error}');
+            } else {
+              final lastWeight = snapshot.data;
+
+              // Ağırlık verisi yoksa Son Ağırlık Bulunamadı mesajını göster
+              if (lastWeight == null || lastWeight == 0.0) {
+                return ActionCard(
+                  title: 'Son Ağırlık Bulunamadı',
+                  assetPath: 'icons/scale_icon_black.png',
+                  onTap: () {
+                    int animalId = controller.animalDetails['id'] ?? 0;
+                    if (animalId != 0) {
+                      Get.to(() => AnimalWeightPage(animalId: animalId), duration: Duration(milliseconds: 650));
+                    } else {
+                      Get.snackbar('Hata', 'Animal ID bulunamadı.');
+                    }
+                  },
+                );
+              } else {
+                return ActionCard(
+                  title: 'Son Ağırlık: ${lastWeight.toStringAsFixed(2)} kg',
+                  assetPath: 'icons/scale_icon_black.png',
+                  onTap: () {
+                    int animalId = controller.animalDetails['id'] ?? 0;
+                    if (animalId != 0) {
+                      Get.to(() => AnimalWeightPage(animalId: animalId), duration: Duration(milliseconds: 650));
+                    } else {
+                      Get.snackbar('Hata', 'Animal ID bulunamadı.');
+                    }
+                  },
+                );
+              }
+            }
           },
         ),
+
         ActionCard(
           title: 'Hastalık',
           assetPath: 'icons/sheep_with_illness_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalDiseasePage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalDiseasePage(tagNo: controller.animalDetails['tagNo'] ?? ''), duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
@@ -69,14 +122,14 @@ class ActionsGrid extends StatelessWidget {
           title: 'Muayene',
           assetPath: 'icons/stethoscope_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalExaminationPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalExaminationPage(tagNo: controller.animalDetails['tagNo'] ?? ''), duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Aşılama',
           assetPath: 'icons/vaccine_syringe_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalVaccinePage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalVaccinePage(tagNo: controller.animalDetails['tagNo'] ?? ''), duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
@@ -90,21 +143,21 @@ class ActionsGrid extends StatelessWidget {
           title: 'Lokasyon',
           assetPath: 'icons/barn_with_location_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalLocationPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalLocationPage(tagNo: controller.animalDetails['tagNo'] ?? ''), duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Grup',
           assetPath: 'icons/sheep_and_cow_side_by_side_icon.png',
           onTap: () {
-            Get.to(() => AnimalGroupPage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalGroupPage(tagNo: controller.animalDetails['tagNo'] ?? ''), duration: Duration(milliseconds: 650));
           },
         ),
         ActionCard(
           title: 'Notlar',
           assetPath: 'icons/notes_icon_black.png',
           onTap: () {
-            Get.to(() => AnimalNotePage(tagNo: controller.animalDetails['tagNo'] ?? ''),duration: Duration(milliseconds: 650));
+            Get.to(() => AnimalNotePage(tagNo: controller.animalDetails['tagNo'] ?? ''), duration: Duration(milliseconds: 650));
           },
         ),
       ],
