@@ -5,6 +5,8 @@ import 'AddDiseaseController.dart';
 
 class AddDiseasePage extends StatelessWidget {
   final AddDiseaseController controller = Get.put(AddDiseaseController());
+  final FocusNode searchFocusNodeDiseaseName = FocusNode();
+  final FocusNode searchFocusNodeDiseaseDesc = FocusNode();
 
   AddDiseasePage({super.key});
 
@@ -51,6 +53,7 @@ class AddDiseasePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeDiseaseName,
                 controller: controller.diseaseNameController,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
@@ -71,9 +74,13 @@ class AddDiseasePage extends StatelessWidget {
                   }
                   return null;
                 },
+                onTapOutside: (event) {
+                  searchFocusNodeDiseaseName.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeDiseaseDesc,
                 controller: controller.diseaseDescriptionController,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
@@ -93,6 +100,9 @@ class AddDiseasePage extends StatelessWidget {
                     return 'Hastalık Açıklaması boş bırakılamaz';
                   }
                   return null;
+                },
+                onTapOutside: (event) {
+                  searchFocusNodeDiseaseDesc.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                 },
               ),
               const SizedBox(height: 16),

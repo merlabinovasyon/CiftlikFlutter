@@ -13,6 +13,7 @@ class DiseasePage extends StatefulWidget {
 
 class _DiseasePageState extends State<DiseasePage> {
   final DiseaseController controller = Get.put(DiseaseController());
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -60,6 +61,7 @@ class _DiseasePageState extends State<DiseasePage> {
         child: Column(
           children: [
             TextField(
+              focusNode: searchFocusNode,
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
@@ -74,6 +76,9 @@ class _DiseasePageState extends State<DiseasePage> {
               ),
               onChanged: (value) {
                 controller.searchQuery.value = value;
+              },
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
               },
             ),
             const SizedBox(height: 8.0),

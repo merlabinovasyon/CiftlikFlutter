@@ -13,6 +13,7 @@ class AddAnimalNotePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController dateController = TextEditingController();
+    final FocusNode searchFocusNode = FocusNode();
 
     return WillPopScope(
       onWillPop: () async {
@@ -64,6 +65,7 @@ class AddAnimalNotePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    focusNode: searchFocusNode,
                     cursorColor: Colors.black54,
                     decoration: InputDecoration(
                       labelText: 'Notlar *',
@@ -79,6 +81,9 @@ class AddAnimalNotePage extends StatelessWidget {
                     ),
                     onChanged: (value) {
                       controller.notes.value = value;
+                    },
+                    onTapOutside: (event) {
+                      searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                     },
                   ),
                   const SizedBox(height: 16),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TransactionUtils {
+  final FocusNode searchFocusNode = FocusNode();
   void showTransactionTypeSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
     TextEditingController searchController = TextEditingController();
     List<String> filteredOptions = List.from(options);
@@ -64,6 +65,7 @@ class TransactionUtils {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
+                            focusNode: searchFocusNode,
                             cursorColor: Colors.black54,
                             controller: searchController,
                             decoration: InputDecoration(
@@ -77,6 +79,9 @@ class TransactionUtils {
                                 borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                               ),
                             ),
+                            onTapOutside: (event) {
+                              searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                            },
                           ),
                         ),
                         const SizedBox(height: 10,),

@@ -9,6 +9,7 @@ import 'BuildTimeScheduleField.dart';
 
 class AsiPage extends StatelessWidget {
   final AsiController controller = Get.put(AsiController());
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class AsiPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: TextField(
+              focusNode: searchFocusNode,
               cursorColor: Colors.black54,
               controller: controller.notesController,
               decoration: InputDecoration(
@@ -60,6 +62,9 @@ class AsiPage extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.black),
                 ),
               ),
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+              },
             ),
           ),
           const SizedBox(height: 16),

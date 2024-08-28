@@ -6,7 +6,8 @@ import '../HayvanDetaySayfasi/DatabaseAnimalDetailHelper.dart';
 
 class AnimalDetailEditController extends GetxController {
   final formKey = GlobalKey<FormState>();
-
+  var location = Rxn<String>();
+  var locations = <Map<String, dynamic>>[].obs;
   var tagNoController = TextEditingController();
   var nameController = TextEditingController();
   var dobController = TextEditingController();
@@ -15,7 +16,6 @@ class AnimalDetailEditController extends GetxController {
   var lakNoController = TextEditingController();
   var pedometerController = TextEditingController();
   var speciesController = Rxn<String>();
-  var stallController = TextEditingController();
   var notesController = TextEditingController();
   var motherController = Rxn<String>();
   var fatherController = Rxn<String>();
@@ -33,7 +33,15 @@ class AnimalDetailEditController extends GetxController {
   var speciesOptions = <Map<String, dynamic>>[].obs;
   var motherOptions = <Map<String, dynamic>>[].obs;  // Ana ID seçimleri için
   var fatherOptions = <Map<String, dynamic>>[].obs;  // Baba ID seçimleri için
+  @override
+  void onInit() {
+    super.onInit();
+    fetchLocationList();
+  }
 
+  void fetchLocationList() async {
+    locations.assignAll(await AnimalService.instance.getLocationList());
+  }
   void loadAnimalDetails(String tableName, int animalId) async {
     var details = await DatabaseAnimalDetailHelper.instance.getAnimalDetails(tableName, animalId);
     if (details != null) {
@@ -45,7 +53,7 @@ class AnimalDetailEditController extends GetxController {
       lakNoController.text = details['lakNo'] ?? '';
       pedometerController.text = details['pedometer'] ?? '';
       speciesController.value = details['species'] ?? '';
-      stallController.text = details['stall'] ?? '';
+      location.value = details['stall'] ?? '';
       notesController.text = details['notes'] ?? '';
       motherController.value = details['mother'] ?? '';
       fatherController.value = details['father'] ?? '';
@@ -145,7 +153,7 @@ class AnimalDetailEditController extends GetxController {
         'pedometer': pedometerController.text,
         'species': speciesController.value,
         'animalsubtypeid': selectedSpeciesId,  // Irkın ID'sini güncelliyoruz
-        'stall': stallController.text,
+        'stall': location.value,
         'notes': notesController.text,
         'mother': motherController.value,
         'father': fatherController.value,

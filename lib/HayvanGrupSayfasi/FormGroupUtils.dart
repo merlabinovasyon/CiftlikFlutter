@@ -5,6 +5,7 @@ import 'AddAnimalGroupDialogPage.dart';
 import 'DatabaseAddAnimalGroupHelper.dart';
 
 class FormGroupUtils {
+  final FocusNode searchFocusNode = FocusNode();
   void showSelectionSheet(BuildContext context, String title, List<String> options, Function(String) onSelected) {
     TextEditingController searchController = TextEditingController();
 
@@ -66,6 +67,7 @@ class FormGroupUtils {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
+                            focusNode: searchFocusNode,
                             cursorColor: Colors.black54,
                             controller: searchController,
                             decoration: InputDecoration(
@@ -79,6 +81,9 @@ class FormGroupUtils {
                                 borderSide: BorderSide(color: Colors.black),
                               ),
                             ),
+                            onTapOutside: (event) {
+                              searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                            },
                           ),
                         ),
                         const SizedBox(height: 10,),

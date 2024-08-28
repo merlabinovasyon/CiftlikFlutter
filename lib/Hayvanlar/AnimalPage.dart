@@ -17,6 +17,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
   late final TabController _tabController;
   final AnimalController controller = Get.put(AnimalController());
   final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -106,6 +107,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
             FilterableTabBar(tabController: _tabController),
             const SizedBox(height: 8.0),
             TextField(
+              focusNode: searchFocusNode,
               controller: searchController,
               onChanged: (value) {
                 _filterAnimals(value);
@@ -122,6 +124,9 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
                   borderSide: BorderSide(color: Colors.black),
                 ),
               ),
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+              },
             ),
             const SizedBox(height: 8.0),
             Expanded(

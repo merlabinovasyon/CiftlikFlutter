@@ -14,6 +14,7 @@ class SutOlcumPage extends StatefulWidget {
 class _SutOlcumPageState extends State<SutOlcumPage> with TickerProviderStateMixin {
   late final TabController _tabController;
   final SutOlcumController controller = Get.put(SutOlcumController());
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -89,6 +90,7 @@ class _SutOlcumPageState extends State<SutOlcumPage> with TickerProviderStateMix
             FilterableSutTabBar(tabController: _tabController),
             const SizedBox(height: 8.0),
             TextField(
+              focusNode: searchFocusNode,
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
@@ -103,6 +105,9 @@ class _SutOlcumPageState extends State<SutOlcumPage> with TickerProviderStateMix
               ),
               onChanged: (value) {
                 controller.searchQuery.value = value;
+              },
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
               },
             ),
             const SizedBox(height: 8.0),

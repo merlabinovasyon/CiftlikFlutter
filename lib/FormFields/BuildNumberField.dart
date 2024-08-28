@@ -5,8 +5,9 @@ class BuildNumberField extends StatelessWidget {
   final String hint;
   final TextEditingController? controller;
   final String? Function(String?)? validator; // Validator parametresi eklendi
+  final FocusNode searchFocusNode = FocusNode();
 
-  const BuildNumberField({
+   BuildNumberField({
     super.key,
     required this.label,
     required this.hint,
@@ -17,6 +18,7 @@ class BuildNumberField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: searchFocusNode,
       keyboardType: TextInputType.number,
       controller: controller,
       cursorColor: Colors.black54,
@@ -33,6 +35,9 @@ class BuildNumberField extends StatelessWidget {
         ),
       ),
       validator: validator, // Validator burada kullanılıyor
+      onTapOutside: (event) {
+        searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+      },
     );
   }
 }

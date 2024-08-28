@@ -5,6 +5,8 @@ import 'AddVaccineController.dart';
 
 class AddVaccinePage extends StatelessWidget {
   final AddVaccineController controller = Get.put(AddVaccineController());
+  final FocusNode searchFocusNodeVaccine = FocusNode();
+  final FocusNode searchFocusNodeVaccineDesc = FocusNode();
 
   AddVaccinePage({super.key});
 
@@ -51,6 +53,7 @@ class AddVaccinePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeVaccine,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Aşı Adı *',
@@ -73,9 +76,13 @@ class AddVaccinePage extends StatelessWidget {
                   }
                   return null;
                 },
+                onTapOutside: (event) {
+                  searchFocusNodeVaccine.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeVaccineDesc,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Aşı Açıklaması *',
@@ -97,6 +104,9 @@ class AddVaccinePage extends StatelessWidget {
                     return 'Aşı Açıklaması boş bırakılamaz';
                   }
                   return null;
+                },
+                onTapOutside: (event) {
+                  searchFocusNodeVaccineDesc.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                 },
               ),
               const SizedBox(height: 16),

@@ -4,12 +4,14 @@ class BuildTextField extends StatelessWidget {
   final String label;
   final String hint;
   final TextEditingController? controller;
+  final FocusNode searchFocusNode = FocusNode();
 
-  const BuildTextField({super.key, required this.label, required this.hint, this.controller});
+   BuildTextField({super.key, required this.label, required this.hint, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: searchFocusNode,
       controller: controller,
       cursorColor: Colors.black54,
       decoration: InputDecoration(
@@ -29,6 +31,9 @@ class BuildTextField extends StatelessWidget {
           return 'Lütfen $label girin';
         }
         return null;
+      },
+      onTapOutside: (event) {
+        searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
       },
     );
   }

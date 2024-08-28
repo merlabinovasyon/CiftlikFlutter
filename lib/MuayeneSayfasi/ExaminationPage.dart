@@ -13,6 +13,7 @@ class ExaminationPage extends StatefulWidget {
 
 class _ExaminationPageState extends State<ExaminationPage> {
   final ExaminationController controller = Get.put(ExaminationController());
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class _ExaminationPageState extends State<ExaminationPage> {
         child: Column(
           children: [
             TextField(
+              focusNode: searchFocusNode,
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
@@ -62,6 +64,9 @@ class _ExaminationPageState extends State<ExaminationPage> {
               ),
               onChanged: (value) {
                 controller.searchQuery.value = value;
+              },
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
               },
             ),
             const SizedBox(height: 8.0),

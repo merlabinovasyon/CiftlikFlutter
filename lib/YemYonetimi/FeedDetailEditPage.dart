@@ -4,6 +4,7 @@ import '../FormFields/BuildNumberField.dart';
 import '../FormFields/BuildSelectionField.dart';
 import '../FormFields/BuildTextField.dart';
 import '../FormFields/FormButton.dart';
+import 'BuildTextFeedField.dart';
 import 'FeedController.dart';
 import 'FeedDetailEditController.dart';
 
@@ -52,7 +53,7 @@ class FeedDetailEditPage extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(height: 16),
-              BuildTextField(
+              BuildTextFeedField(
                 label: 'Yem Adı',
                 controller: controller.yemAdiController,
                 hint: '',
@@ -113,7 +114,7 @@ class FeedDetailEditPage extends StatelessWidget {
                 controller: controller.ustLimitController, hint: '',
               ),
               SizedBox(height: 16),
-              BuildTextField(
+              BuildTextFeedField(
                 label: 'Notlar',
                 controller: controller.notlarController,
                 hint: '',

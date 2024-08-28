@@ -8,6 +8,7 @@ import 'BuildSlidableTransactionCard.dart';
 
 class FinancePage extends StatelessWidget {
   final FinanceController controller = Get.put(FinanceController());
+  final FocusNode searchFocusNode = FocusNode();
 
   FinancePage({super.key});
 
@@ -95,6 +96,7 @@ class FinancePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  focusNode: searchFocusNode,
                   cursorColor: Colors.black54,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
@@ -107,6 +109,9 @@ class FinancePage extends StatelessWidget {
                   ),
                   onChanged: (value) {
                     controller.searchQuery.value = value;
+                  },
+                  onTapOutside: (event) {
+                    searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                   },
                 ),
               ),

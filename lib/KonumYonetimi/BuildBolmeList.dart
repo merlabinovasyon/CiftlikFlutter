@@ -6,6 +6,7 @@ import 'BuildBolmeSelectionField.dart';
 class BuildBolmeList extends StatelessWidget {
   final KonumController controller;
   final TextEditingController bolmeController;
+  final FocusNode searchFocusNode = FocusNode();
 
   BuildBolmeList({
     required this.controller,
@@ -46,6 +47,7 @@ class BuildBolmeList extends StatelessWidget {
                           ),
                           SizedBox(height: 10,),
                           TextField(
+                            focusNode: searchFocusNode,
                             cursorColor: Colors.black54,
                             controller: bolmeController,
                             decoration: InputDecoration(
@@ -58,6 +60,9 @@ class BuildBolmeList extends StatelessWidget {
                                 borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                               ),
                             ),
+                            onTapOutside: (event) {
+                              searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                            },
                           ),
                         ],
                       ),

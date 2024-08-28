@@ -6,6 +6,7 @@ import 'AddAnimalGroupController.dart';
 
 class AddAnimalGroupDialogPage extends StatelessWidget {
   final TextEditingController groupNameController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class AddAnimalGroupDialogPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextField(
+              focusNode: searchFocusNode,
               cursorColor: Colors.black54,
               controller: groupNameController,
               decoration: InputDecoration(
@@ -46,6 +48,9 @@ class AddAnimalGroupDialogPage extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                 ),
               ),
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+              },
             ),
             SizedBox(height: 16),
             Padding(

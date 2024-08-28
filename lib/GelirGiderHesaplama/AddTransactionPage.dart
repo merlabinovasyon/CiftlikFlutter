@@ -13,6 +13,9 @@ class AddTransactionPage extends StatelessWidget {
   final _noteController = TextEditingController();
   final _selectedDate = DateTime.now().obs;
   final _transactionType = Rxn<TransactionType>();
+  final FocusNode searchFocusNodeName = FocusNode();
+  final FocusNode searchFocusNodeTotal = FocusNode();
+  final FocusNode searchFocusNodeNotes = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,7 @@ class AddTransactionPage extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               TextFormField(
+                focusNode: searchFocusNodeName,
                 cursorColor: Colors.black54,
                 controller: _nameController,
                 decoration: InputDecoration(
@@ -70,9 +74,13 @@ class AddTransactionPage extends StatelessWidget {
                   }
                   return null;
                 },
+                onTapOutside: (event) {
+                  searchFocusNodeName.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeTotal,
                 cursorColor: Colors.black54,
                 controller: _amountController,
                 decoration: InputDecoration(
@@ -103,9 +111,13 @@ class AddTransactionPage extends StatelessWidget {
 
                   return null;
                 },
+                onTapOutside: (event) {
+                  searchFocusNodeTotal.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeNotes,
                 cursorColor: Colors.black54,
                 controller: _noteController,
                 decoration: InputDecoration(
@@ -119,6 +131,9 @@ class AddTransactionPage extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
+                onTapOutside: (event) {
+                  searchFocusNodeNotes.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               SizedBox(height: 16),
               Obx(

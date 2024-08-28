@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'AddAnimalWeightPage.dart';
-import 'AnimalWeightController.dart';
 import 'AnimalWeightCard.dart';
-import 'AnimalWeightDetailCard.dart'; // Yeni kartı import etmeyi unutmayın
+import 'AnimalWeightDetailCard.dart';
+import 'DatabaseAddAnimalWeightHelper.dart';
+import 'ExcelHelper.dart'; // ExcelHelper dosyasını dahil edin
+import 'AnimalWeightController.dart';
 
 class AnimalWeightPage extends StatefulWidget {
   final int animalId;
@@ -16,11 +18,22 @@ class AnimalWeightPage extends StatefulWidget {
 
 class _AnimalWeightPageState extends State<AnimalWeightPage> {
   final AnimalWeightController controller = Get.put(AnimalWeightController());
+  String? tagNo;
 
   @override
   void initState() {
     super.initState();
     controller.fetchWeightsByAnimalId(widget.animalId);
+    _getTagNo(); // TagNo bilgisini al
+  }
+
+  void _getTagNo() async {
+    var weightDetails = await DatabaseAddAnimalWeightHelper.instance.getAnimalWeightDetails(widget.animalId);
+    if (weightDetails != null && weightDetails.containsKey('tagNo')) {
+      setState(() {
+        tagNo = weightDetails['tagNo'];
+      });
+    }
   }
 
   @override
@@ -37,18 +50,27 @@ class _AnimalWeightPageState extends State<AnimalWeightPage> {
           },
         ),
         title: Center(
-          child: Container(
-            height: 40,
-            width: 130,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('resimler/logo_v2.png'),
-                fit: BoxFit.fill,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 35.0),
+            child: Container(
+              height: 40,
+              width: 130,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('resimler/logo_v2.png'),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),
         ),
         actions: [
+          IconButton(
+            icon: Icon(Icons.file_download),
+            onPressed: tagNo != null ? () {
+              ExcelHelper.exportToExcel(widget.animalId, controller.weights, tagNo!);
+            } : null, // TagNo varsa buton aktif
+          ),
           IconButton(
             icon: Icon(Icons.add, size: 30,),
             onPressed: () {
@@ -61,9 +83,8 @@ class _AnimalWeightPageState extends State<AnimalWeightPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Yeni detay kartını burada gösteriyoruz
             AnimalWeightDetailCard(animalId: widget.animalId),
-            const SizedBox(height: 16), // Araya biraz boşluk ekleyebiliriz
+            const SizedBox(height: 16),
             Expanded(
               child: Obx(
                     () {
@@ -93,3 +114,4 @@ class _AnimalWeightPageState extends State<AnimalWeightPage> {
     );
   }
 }
+

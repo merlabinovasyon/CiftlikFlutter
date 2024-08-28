@@ -6,6 +6,8 @@ class BuildAhirList extends StatelessWidget {
   final KonumController controller;
   final TextEditingController ahirController;
   final _formKey = GlobalKey<FormState>();
+  final FocusNode searchFocusNodeAdd = FocusNode();
+  final FocusNode searchFocusNodeUpdate = FocusNode();
 
   BuildAhirList({
     required this.controller,
@@ -30,6 +32,7 @@ class BuildAhirList extends StatelessWidget {
                       backgroundColor: Colors.white,
                       title: Text('Ahır Ekle'),
                       content: TextField(
+                        focusNode: searchFocusNodeAdd,
                         cursorColor: Colors.black54,
                         controller: ahirController,
                         decoration: InputDecoration(
@@ -42,6 +45,9 @@ class BuildAhirList extends StatelessWidget {
                             borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                           ),
                         ),
+                        onTapOutside: (event) {
+                          searchFocusNodeAdd.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                        },
                       ),
                       actions: [
                         TextButton(
@@ -101,6 +107,7 @@ class BuildAhirList extends StatelessWidget {
                                 content: Form(
                                   key: _formKey,
                                   child: TextFormField(
+                                    focusNode: searchFocusNodeUpdate,
                                     cursorColor: Colors.black54,
                                     controller: ahirController,
                                     decoration: InputDecoration(
@@ -120,6 +127,9 @@ class BuildAhirList extends StatelessWidget {
                                         return 'Aynı adda ahır mevcut';
                                       }
                                       return null;
+                                    },
+                                    onTapOutside: (event) {
+                                      searchFocusNodeUpdate.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                                     },
                                   ),
                                 ),

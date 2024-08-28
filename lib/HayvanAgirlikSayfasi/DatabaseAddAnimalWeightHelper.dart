@@ -1,5 +1,8 @@
+import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+
+import 'ExcelHelper.dart';
 
 class DatabaseAddAnimalWeightHelper {
   static final DatabaseAddAnimalWeightHelper instance = DatabaseAddAnimalWeightHelper._instance();
@@ -249,6 +252,22 @@ SELECT
       return "TagNo bulunamadı";
     }
   }
+  void exportToExcelWithTagNo(int animalId) async {
+    var dbHelper = DatabaseAddAnimalWeightHelper.instance;
+    var weightDetails = await dbHelper.getAnimalWeightDetails(animalId);
+
+    if (weightDetails != null) {
+      String? tagNo = weightDetails['tagNo'];
+      List<dynamic> weights = await dbHelper.getWeightsByAnimalId(animalId);
+
+      if (weights.isNotEmpty && tagNo != null) {
+        ExcelHelper.exportToExcel(animalId, weights, tagNo);
+      } else {
+        Get.snackbar('Uyarı', 'Ağırlık veya tagNo verisi bulunamadı');
+      }
+    }
+  }
+
 
 
 

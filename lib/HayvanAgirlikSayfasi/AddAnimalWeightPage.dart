@@ -7,6 +7,7 @@ import 'AddAnimalWeightController.dart';
 class AddAnimalWeightPage extends StatelessWidget {
   final AddAnimalWeightController controller = Get.put(AddAnimalWeightController());
   final int animalId;
+  final FocusNode searchFocusNode = FocusNode();
 
   AddAnimalWeightPage({Key? key, required this.animalId}) : super(key: key);
 
@@ -48,6 +49,7 @@ class AddAnimalWeightPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    focusNode: searchFocusNode,
                     controller: weightController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -64,6 +66,9 @@ class AddAnimalWeightPage extends StatelessWidget {
                     ),
                     onChanged: (value) {
                       controller.weight.value = double.tryParse(value) ?? 0.0;
+                    },
+                    onTapOutside: (event) {
+                      searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                     },
                   ),
                   const SizedBox(height: 16),

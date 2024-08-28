@@ -13,6 +13,7 @@ class VaccinePage extends StatefulWidget {
 
 class _VaccinePageState extends State<VaccinePage> {
   final VaccineController controller = Get.put(VaccineController());
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class _VaccinePageState extends State<VaccinePage> {
         child: Column(
           children: [
             TextField(
+              focusNode: searchFocusNode,
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
@@ -62,6 +64,9 @@ class _VaccinePageState extends State<VaccinePage> {
               ),
               onChanged: (value) {
                 controller.searchQuery.value = value;
+              },
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
               },
             ),
             const SizedBox(height: 8.0),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiseaseUtils {
+  final FocusNode searchFocusNode = FocusNode();
   void showSelectionDiseaseSheet(BuildContext context, String title, List<Map<String, dynamic>> options, Function(String) onSelected) {
     TextEditingController searchController = TextEditingController();
     List<Map<String, dynamic>> filteredOptions = List.from(options);
@@ -62,6 +63,7 @@ class DiseaseUtils {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
+                            focusNode: searchFocusNode,
                             cursorColor: Colors.black54,
                             controller: searchController,
                             decoration: InputDecoration(
@@ -75,6 +77,9 @@ class DiseaseUtils {
                                 borderSide: BorderSide(color: Colors.black), // Odaklanıldığında border rengi
                               ),
                             ),
+                            onTapOutside: (event) {
+                              searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                            },
                           ),
                         ),
                         const SizedBox(height: 10,),

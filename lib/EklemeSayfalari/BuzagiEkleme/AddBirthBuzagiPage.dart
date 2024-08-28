@@ -172,9 +172,9 @@ class AddBirthBuzagiPage extends StatelessWidget {
                 },
                 buildFields: [
                   const SizedBox(height: 16),
-                  const BuildTextField(label: 'Küpe No *', hint: ''),
+                   BuildTextField(label: 'Küpe No *', hint: ''),
                   const SizedBox(height: 16),
-                  const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+                   BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                   const SizedBox(height: 16),
                   BuildSelectionSpeciesField(
                     label: 'Irk *',
@@ -187,7 +187,7 @@ class AddBirthBuzagiPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 16),
-                  const BuildTextField(label: 'Hayvan Adı', hint: ''),
+                   BuildTextField(label: 'Hayvan Adı', hint: ''),
                   const SizedBox(height: 16),
                   BuildSelectionField(
                     label: 'Cinsiyet *',
@@ -216,9 +216,9 @@ class AddBirthBuzagiPage extends StatelessWidget {
                   },
                   buildFields: [
                     const SizedBox(height: 16),
-                    const BuildTextField(label: 'Küpe No *', hint: ''),
+                     BuildTextField(label: 'Küpe No *', hint: ''),
                     const SizedBox(height: 16),
-                    const BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
+                     BuildTextField(label: 'Devlet Küpe No *', hint: 'GEÇİCİ_NO_16032'),
                     const SizedBox(height: 16),
                     BuildSelectionSpeciesField(
                       label: 'Irk *',
@@ -231,7 +231,7 @@ class AddBirthBuzagiPage extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 16),
-                    const BuildTextField(label: 'Hayvan Adı', hint: ''),
+                     BuildTextField(label: 'Hayvan Adı', hint: ''),
                     const SizedBox(height: 16),
                     BuildSelectionField(
                       label: 'Cinsiyet *',

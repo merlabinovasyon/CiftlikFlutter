@@ -15,6 +15,9 @@ class FeedPurchasePage extends StatelessWidget {
   final _totalCostController = TextEditingController();
   final _notesController = TextEditingController();
   final _dateController = TextEditingController();
+  final FocusNode searchFocusNodeAmount = FocusNode();
+  final FocusNode searchFocusNodeTotal = FocusNode();
+  final FocusNode searchFocusNodeNotes = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,7 @@ class FeedPurchasePage extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               TextFormField(
+                focusNode: searchFocusNodeAmount,
                 controller: _quantityController,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
@@ -74,9 +78,13 @@ class FeedPurchasePage extends StatelessWidget {
                   }
                   return null;
                 },
+                onTapOutside: (event) {
+                  searchFocusNodeAmount.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeTotal,
                 controller: _totalCostController,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
@@ -98,9 +106,13 @@ class FeedPurchasePage extends StatelessWidget {
                   }
                   return null;
                 },
+                onTapOutside: (event) {
+                  searchFocusNodeTotal.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeNotes,
                 controller: _notesController,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
@@ -115,6 +127,9 @@ class FeedPurchasePage extends StatelessWidget {
                   ),
                 ),
                 onChanged: (value) => controller.notes.value = value,
+                onTapOutside: (event) {
+                  searchFocusNodeNotes.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               SizedBox(height: 16),
               Obx(() => InkWell(

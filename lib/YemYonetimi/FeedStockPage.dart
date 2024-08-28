@@ -6,6 +6,7 @@ import 'FeedStockCard.dart';
 
 class FeedStockPage extends StatelessWidget {
   final FeedController controller = Get.put(FeedController());
+  final FocusNode searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class FeedStockPage extends StatelessWidget {
         child: Column(
           children: [
             TextField(
+              focusNode: searchFocusNode,
               cursorColor: Colors.black54,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
@@ -63,6 +65,9 @@ class FeedStockPage extends StatelessWidget {
               ),
               onChanged: (value) {
                 controller.searchQuery.value = value; // Arama sorgusunu güncelle
+              },
+              onTapOutside: (event) {
+                searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
               },
             ),
             const SizedBox(height: 16),

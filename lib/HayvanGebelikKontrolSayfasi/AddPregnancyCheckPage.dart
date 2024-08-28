@@ -8,6 +8,7 @@ import 'AddPregnancyCheckController.dart';
 class AddPregnancyCheckPage extends StatelessWidget {
   final AddPregnancyCheckController controller = Get.put(AddPregnancyCheckController());
   final String tagNo;
+  final FocusNode searchFocusNode = FocusNode();
 
   AddPregnancyCheckPage({Key? key, required this.tagNo}) : super(key: key);
 
@@ -65,6 +66,7 @@ class AddPregnancyCheckPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    focusNode: searchFocusNode,
                     cursorColor: Colors.black54,
                     decoration: InputDecoration(
                       labelText: 'Notlar',
@@ -80,6 +82,9 @@ class AddPregnancyCheckPage extends StatelessWidget {
                     ),
                     onChanged: (value) {
                       controller.notes.value = value;
+                    },
+                    onTapOutside: (event) {
+                      searchFocusNode.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                     },
                   ),
                   const SizedBox(height: 16),

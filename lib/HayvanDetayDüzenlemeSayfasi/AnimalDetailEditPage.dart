@@ -7,6 +7,7 @@ import 'package:merlabciftlikyonetim/FormFields/BuildSelectionField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildTextField.dart';
 import 'package:merlabciftlikyonetim/FormFields/BuildTimeField.dart';
 import 'package:merlabciftlikyonetim/FormFields/FormButton.dart';
+import '../AnimalService/BuildSelectionLocationField.dart';
 import '../AnimalService/BuildSelectionSpeciesField.dart';
 import '../FormUtils/FormUtils.dart';
 import 'AnimalDetailEditController.dart';
@@ -111,10 +112,13 @@ class AnimalDetailEditPage extends StatelessWidget {
                 },
               ),
               SizedBox(height: 16),
-              BuildTextField(
-                label: 'Ahır / Bölme',
-                controller: controller.stallController,
-                hint: '',
+              BuildSelectionLocationField(
+                label: 'Lokasyon *',
+                value: controller.location,
+                options: controller.locations,
+                onSelected: (value) {
+                  controller.location.value = value;
+                },
               ),
               SizedBox(height: 16),
               BuildTextField(

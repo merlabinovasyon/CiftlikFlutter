@@ -5,6 +5,8 @@ import 'AddExaminationController.dart';
 
 class AddExaminationPage extends StatelessWidget {
   final AddExaminationController controller = Get.put(AddExaminationController());
+  final FocusNode searchFocusNodeExam = FocusNode();
+  final FocusNode searchFocusNodeExamDesc = FocusNode();
 
   AddExaminationPage({super.key});
 
@@ -51,6 +53,7 @@ class AddExaminationPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeExam,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Muayene Adı *',
@@ -73,9 +76,13 @@ class AddExaminationPage extends StatelessWidget {
                   }
                   return null;
                 },
+                onTapOutside: (event) {
+                  searchFocusNodeExam.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
+                focusNode: searchFocusNodeExamDesc,
                 cursorColor: Colors.black54,
                 decoration: InputDecoration(
                   labelText: 'Muayene Açıklaması *',
@@ -97,6 +104,9 @@ class AddExaminationPage extends StatelessWidget {
                     return 'Muayene Açıklaması boş bırakılamaz';
                   }
                   return null;
+                },
+                onTapOutside: (event) {
+                  searchFocusNodeExamDesc.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                 },
               ),
               const SizedBox(height: 16),
