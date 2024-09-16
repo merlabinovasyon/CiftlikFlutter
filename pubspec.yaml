@@ -43,6 +43,7 @@ dependencies:
   get:
   flutter_hooks:
   syncfusion_flutter_charts:
+  syncfusion_flutter_sliders:
   table_calendar:
   intl:
   flutter_local_notifications:

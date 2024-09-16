@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/A%C4%9F%C4%B1rl%C4%B1kRaporuSayfasi/WeightReportPage.dart';
 import 'package:merlabciftlikyonetim/AnaSayfa/BuildSubscriptionSection.dart';
 import 'package:merlabciftlikyonetim/AsiSayfasi/VaccinePage.dart';
 import 'package:merlabciftlikyonetim/AsiTakvimi/AsiPage.dart';
@@ -10,6 +11,7 @@ import 'package:merlabciftlikyonetim/GelirGiderHesaplama/FinancePage.dart';
 import 'package:merlabciftlikyonetim/GraphicPage.dart';
 import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
+import 'package:merlabciftlikyonetim/Hayvanlar/S%C3%BCttenKesilmisHayvanlar/WeanedAnimalPage.dart';
 import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
 import 'package:merlabciftlikyonetim/MuayeneSayfasi/ExaminationPage.dart';
 import 'package:merlabciftlikyonetim/RasyonHesaplama/RationWizardMainPage.dart';
@@ -162,9 +164,9 @@ class HomePage extends StatelessWidget {
                         onTap: () => Get.to(AnimalPage(searchQuery: ''), duration: Duration(milliseconds: 650)),
                       ),
                       BuildIconButton(
-                        assetPath: 'resimler/koc_1.png',
-                        label: 'Tohumlanmaya Hazır',
-                        onTap: () => Get.to(TohumlanmayaHazirPage(), duration: Duration(milliseconds: 650)),
+                        assetPath: 'resimler/kuzu_2.png',
+                        label: 'Sütten Kesilmiş',
+                        onTap: () => Get.to(WeanedAnimalPage(searchQuery: ''), duration: Duration(milliseconds: 650)),
                       ),
                       BuildIconButton(
                         assetPath: 'resimler/koc_katim_1.png',
@@ -244,7 +246,7 @@ class HomePage extends StatelessWidget {
                   title1: 'Raporlar',
                   iconAsset1: 'icons/report_icon.png',
                   onTap1: () {
-                    Get.to(() => DenemePage(), duration: Duration(milliseconds: 650));
+                    Get.to(() => WeightReportPage(tagNo: ''), duration: Duration(milliseconds: 650));
 
                   },
                   title2: 'Rasyon',

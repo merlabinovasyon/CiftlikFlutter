@@ -5,13 +5,18 @@ import 'RegisterController.dart';
 import 'FormRegisterButton.dart'; // Yeni oluşturduğumuz dosyayı import edin
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  final FocusNode searchFocusNodeUserName = FocusNode();
+  final FocusNode searchFocusNodeEmail = FocusNode();
+  final FocusNode searchFocusNodeTelephone = FocusNode();
+  final FocusNode searchFocusNodePassword = FocusNode();
+   RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final RegisterController controller = Get.put(RegisterController());
     final double yukseklik = MediaQuery.of(context).size.height;
     final double genislik = MediaQuery.of(context).size.width;
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -62,6 +67,7 @@ class RegisterPage extends StatelessWidget {
                   Image.asset('resimler/login_screen_2.png', height: yukseklik / 4),
                   SizedBox(height: yukseklik / 50),
                   TextFormField(
+                    focusNode: searchFocusNodeUserName,
                     cursorColor: Colors.black54,
                     controller: controller.usernameController,
                     decoration: InputDecoration(
@@ -82,9 +88,13 @@ class RegisterPage extends StatelessWidget {
                       }
                       return null;
                     },
+                    onTapOutside: (event) {
+                      searchFocusNodeUserName.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                    },
                   ),
                   SizedBox(height: yukseklik / 50),
                   TextFormField(
+                    focusNode: searchFocusNodeEmail,
                     cursorColor: Colors.black54,
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -106,6 +116,9 @@ class RegisterPage extends StatelessWidget {
                       }
                       return null;
                     },
+                    onTapOutside: (event) {
+                      searchFocusNodeEmail.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                    },
                   ),
                   SizedBox(height: yukseklik / 50),
                   Row(
@@ -125,6 +138,7 @@ class RegisterPage extends StatelessWidget {
                       Flexible(
                         flex: 5,
                         child: TextFormField(
+                          focusNode: searchFocusNodeTelephone,
                           cursorColor: Colors.black54,
                           controller: controller.phoneController,
                           keyboardType: TextInputType.phone,
@@ -146,12 +160,16 @@ class RegisterPage extends StatelessWidget {
                             }
                             return null;
                           },
+                          onTapOutside: (event) {
+                            searchFocusNodeTelephone.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                          },
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: yukseklik / 50),
                   Obx(() => TextFormField(
+                    focusNode: searchFocusNodePassword,
                     cursorColor: Colors.black54,
                     controller: controller.passwordController,
                     obscureText: controller.obscureText.value,
@@ -176,6 +194,9 @@ class RegisterPage extends StatelessWidget {
                         return 'Şifre boş olamaz';
                       }
                       return null;
+                    },
+                    onTapOutside: (event) {
+                      searchFocusNodePassword.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                     },
                   )),
                   SizedBox(height: yukseklik / 50),

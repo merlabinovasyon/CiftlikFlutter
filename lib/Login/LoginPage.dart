@@ -6,6 +6,8 @@ import 'FormLoginButton.dart'; // Yeni oluşturduğumuz dosyayı import edin
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final FocusNode searchFocusNodeEmail = FocusNode();
+  final FocusNode searchFocusNodePassword = FocusNode();
 
   LoginPage({super.key});
 
@@ -54,6 +56,7 @@ class LoginPage extends StatelessWidget {
                   Image.asset('resimler/login_screen_2.png', height: MediaQuery.of(context).size.height / 4),
                   SizedBox(height: MediaQuery.of(context).size.height / 50),
                   TextFormField(
+                    focusNode: searchFocusNodeEmail,
                     cursorColor: Colors.black54,
                     controller: loginController.emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -75,9 +78,13 @@ class LoginPage extends StatelessWidget {
                       }
                       return null;
                     },
+                    onTapOutside: (event) {
+                      searchFocusNodeEmail.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
+                    },
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 50),
                   Obx(() => TextFormField(
+                    focusNode: searchFocusNodePassword,
                     cursorColor: Colors.black54,
                     controller: loginController.passwordController,
                     obscureText: loginController.obscure2Text.value,
@@ -106,6 +113,9 @@ class LoginPage extends StatelessWidget {
                         return 'Şifre boş olamaz';
                       }
                       return null;
+                    },
+                    onTapOutside: (event) {
+                      searchFocusNodePassword.unfocus(); // Dışarı tıklanırsa klavyeyi kapat ve imleci gizle
                     },
                   )),
                   SizedBox(height: MediaQuery.of(context).size.height / 100),

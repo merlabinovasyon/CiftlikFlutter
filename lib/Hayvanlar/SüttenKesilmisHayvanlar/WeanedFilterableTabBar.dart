@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'AnimalController.dart';
+import 'WeanedAnimalController.dart';
 
-class FilterableTabBar extends StatefulWidget {
+class WeanedFilterableTabBar extends StatefulWidget {
   final TabController tabController;
 
-  const FilterableTabBar({Key? key, required this.tabController}) : super(key: key);
+  const WeanedFilterableTabBar({Key? key, required this.tabController}) : super(key: key);
 
   @override
-  _FilterableTabBarState createState() => _FilterableTabBarState();
+  _WeanedFilterableTabBarState createState() => _WeanedFilterableTabBarState();
 }
 
-class _FilterableTabBarState extends State<FilterableTabBar> {
+class _WeanedFilterableTabBarState extends State<WeanedFilterableTabBar> {
   bool isFilterVisible = false;
-  final AnimalController controller = Get.find();
+  final WeanedAnimalController controller = Get.find();
 
   void toggleFilterVisibility() {
     setState(() {
@@ -25,22 +25,10 @@ class _FilterableTabBarState extends State<FilterableTabBar> {
     String tableName = '';
     switch (widget.tabController.index) {
       case 0:
-        tableName = 'lambTable';
+        tableName = 'weanedKuzuTable';
         break;
       case 1:
-        tableName = 'buzagiTable';
-        break;
-      case 2:
-        tableName = 'koyunTable';
-        break;
-      case 3:
-        tableName = 'kocTable';
-        break;
-      case 4:
-        tableName = 'inekTable';
-        break;
-      case 5:
-        tableName = 'bogaTable';
+        tableName = 'weanedBuzagiTable';
         break;
     }
     controller.fetchAnimals(tableName);
@@ -75,12 +63,8 @@ class _FilterableTabBarState extends State<FilterableTabBar> {
               controller: widget.tabController,
               isScrollable: true,
               tabs: [
-                Tab(text: 'Kuzu'),
-                Tab(text: 'Buzağı'),
-                Tab(text: 'Koyun'),
-                Tab(text: 'Koç'),
-                Tab(text: 'İnek'),
-                Tab(text: 'Boğa'),
+                Tab(text: 'Sütten Kesilmiş Kuzu'),
+                Tab(text: 'Sütten Kesilmiş Buzağı'),
               ],
               labelColor: Colors.black,
               unselectedLabelColor: Colors.black54,

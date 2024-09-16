@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import '../HayvanDetaySayfasi/AnimalDetailPage.dart';
-import 'AnimalController.dart';
+import '../../HayvanDetaySayfasi/AnimalDetailPage.dart';
+import 'WeanedAnimalController.dart';
 
-class AnimalCard extends StatelessWidget {
+class WeanedAnimalCard extends StatelessWidget {
   final Animal animal;
   final String tableName;
 
-  const AnimalCard({Key? key, required this.animal, required this.tableName}) : super(key: key);
+  const WeanedAnimalCard({Key? key, required this.animal, required this.tableName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AnimalController controller = Get.find();
+    final WeanedAnimalController controller = Get.find();
 
     return Slidable(
       key: ValueKey(animal.id),
@@ -84,9 +84,7 @@ class AnimalCard extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 4.0),
-                          Text(animal.name ?? ''),
-                          const SizedBox(height: 4.0),
-                          Text(animal.dob ?? ''),
+                          Text(animal.date ?? ''),
                         ],
                       ),
                     ),

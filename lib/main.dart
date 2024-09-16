@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/test', page: () => const TestPage()),
         GetPage(name: '/login', page: () => LoginPage(), binding: AuthBinding()),
         GetPage(name: '/Home', page: () => HomePage(), binding: HomeBinding()),
-        GetPage(name: '/register', page: () => const RegisterPage(), binding: RegisterBinding()),
+        GetPage(name: '/register', page: () =>  RegisterPage(), binding: RegisterBinding()),
         GetPage(name: '/kockatim', page: () => KocKatimPage(), binding: KocKatimBinding()),
         GetPage(name: '/addBirthKuzuPage', page: () => AddBirthKuzuPage()),
         GetPage(name: '/addBirthBuzagiPage', page: () => AddBirthBuzagiPage()),

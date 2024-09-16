@@ -67,8 +67,8 @@ class _AnimalWeightPageState extends State<AnimalWeightPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.file_download),
-            onPressed: tagNo != null ? () {
-              ExcelHelper.exportToExcel(widget.animalId, controller.weights, tagNo!);
+            onPressed: tagNo != null ? () async {
+              await ExcelHelper.exportToExcel(widget.animalId, controller.weights, tagNo!);
             } : null, // TagNo varsa buton aktif
           ),
           IconButton(
@@ -114,4 +114,3 @@ class _AnimalWeightPageState extends State<AnimalWeightPage> {
     );
   }
 }
-

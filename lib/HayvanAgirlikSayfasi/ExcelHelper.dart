@@ -1,21 +1,62 @@
 import 'package:excel/excel.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ExcelHelper {
+  static Future<bool> requestPermissions() async {
+    if (await Permission.manageExternalStorage.isGranted) {
+      // Android 11 ve sonrası için gerekli izin zaten verilmişse devam edin
+      return true;
+    } else if (await Permission.manageExternalStorage.request().isGranted) {
+      // Android 11 ve sonrası için gerekli izin verildiyse devam edin
+      return true;
+    } else if (await Permission.manageExternalStorage.isDenied) {
+      // Android 11 ve sonrası için gerekli izin reddedildiyse kullanıcıya mesaj gösterin
+      Get.snackbar('İzin Gerekli', 'Excel dosyası olarak kaydetmek için depolama izni gereklidir.');
+      return false;
+    }
+
+    // Android 10 ve öncesi için gerekli izin kontrolü
+    if (await Permission.storage.isGranted) {
+      // Android 10 ve öncesi için gerekli izin zaten verilmişse devam edin
+      return true;
+    } else if (await Permission.storage.request().isGranted) {
+      // Android 10 ve öncesi için gerekli izin verildiyse devam edin
+      return true;
+    } else if (await Permission.storage.isDenied) {
+      // Android 10 ve öncesi için gerekli izin reddedildiyse kullanıcıya mesaj gösterin
+      Get.snackbar('İzin Gerekli', 'Excel dosyası olarak kaydetmek için depolama izni gereklidir.');
+      return false;
+    }
+
+    return false; // Herhangi bir izin verilmezse false döndür
+  }
+
+
+
   static Future<void> exportToExcel(int animalId, List<dynamic> weights, String tagNo) async {
     // İzinleri kontrol edin ve isteyin
-    var status = await Permission.storage.status;
-    if (!status.isGranted) {
-      await Permission.storage.request();
+    bool isPermissionGranted = await requestPermissions();
+    if (!isPermissionGranted) {
+      return; // İzin verilmediyse işlemi durdur
     }
 
     if (weights.isEmpty) {
       Get.snackbar('Uyarı', 'Ağırlık verisi bulunamadı');
       return;
     }
+
+    // /storage/emulated/0/Temp klasörünü al ve oluştur
+    Directory tempDirectory = Directory('/storage/emulated/0/Temp');
+
+    // Eğer Temp klasörü yoksa oluştur
+    if (!(await tempDirectory.exists())) {
+      await tempDirectory.create(recursive: true);
+    }
+
+    // Dosya yolu
+    String outputPath = '${tempDirectory.path}/hayvan_agirliklari_$tagNo.xlsx';
 
     var excel = Excel.createExcel(); // Yeni bir Excel dosyası oluştur
     Sheet sheetObject = excel['Sheet1']; // İlk sayfayı seç
@@ -65,17 +106,17 @@ class ExcelHelper {
       previousDate = weight.date;
     }
 
-    // Genel 'Download' klasörünü alıyoruz
-    Directory? downloadsDir = Directory('/storage/emulated/0/Download');
-    String outputPath = "${downloadsDir.path}/hayvan_agirliklari_$tagNo.xlsx";
-
     // Dosyayı kaydedin
-    File(outputPath)
-      ..createSync(recursive: true)
-      ..writeAsBytesSync(excel.encode()!);
-
-    Get.snackbar('Başarılı', 'Excel dosyası kaydedildi: $outputPath');
-    print('$outputPath');
+    try {
+      File(outputPath)
+        ..createSync(recursive: true)
+        ..writeAsBytesSync(excel.encode()!);
+      Get.snackbar('Başarılı', 'Excel dosyası kaydedildi: $outputPath');
+      print('$outputPath');
+    } catch (e) {
+      print("Dosya kaydedilirken hata oluştu: $e");
+      Get.snackbar('Hata', 'Dosya kaydedilemedi: $outputPath');
+    }
   }
 
   static String convertDateToIsoFormat(String date) {

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'AnimalController.dart';
-import 'FilterableTabBar.dart';
-import 'AnimalCard.dart';
+import 'WeanedAnimalController.dart';
+import 'WeanedAnimalCard.dart';
+import 'WeanedFilterableTabBar.dart';
 
-class AnimalPage extends StatefulWidget {
+class WeanedAnimalPage extends StatefulWidget {
   final String searchQuery;
 
-  AnimalPage({super.key, required this.searchQuery});
+  WeanedAnimalPage({super.key, required this.searchQuery});
 
   @override
-  _AnimalPageState createState() => _AnimalPageState();
+  _WeanedAnimalPageState createState() => _WeanedAnimalPageState();
 }
 
-class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
+class _WeanedAnimalPageState extends State<WeanedAnimalPage> with TickerProviderStateMixin {
   late final TabController _tabController;
-  final AnimalController controller = Get.put(AnimalController());
+  final WeanedAnimalController controller = Get.put(WeanedAnimalController());
   final TextEditingController searchController = TextEditingController();
   final FocusNode searchFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 6, vsync: this);  // 6 tab
+    _tabController = TabController(length: 2, vsync: this);  // 2 tab
     searchController.text = widget.searchQuery;
 
     // Varsayılan tablo verilerini çeker
@@ -51,19 +51,11 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
   String getTableName(int index) {
     switch (index) {
       case 0:
-        return 'lambTable';
+        return 'weanedKuzuTable';
       case 1:
-        return 'buzagiTable';
-      case 2:
-        return 'koyunTable';
-      case 3:
-        return 'kocTable';
-      case 4:
-        return 'inekTable';
-      case 5:
-        return 'bogaTable';
+        return 'weanedBuzagiTable';
       default:
-        return 'Animal';
+        return 'weanedKuzuTable';
     }
   }
 
@@ -100,7 +92,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            FilterableTabBar(tabController: _tabController),
+            WeanedFilterableTabBar(tabController: _tabController),  // Yeni TabBar kullanılıyor
             const SizedBox(height: 8.0),
             TextField(
               focusNode: searchFocusNode,
@@ -137,7 +129,7 @@ class _AnimalPageState extends State<AnimalPage> with TickerProviderStateMixin {
                       itemCount: controller.filteredAnimals.length,
                       itemBuilder: (context, index) {
                         final animal = controller.filteredAnimals[index];
-                        return AnimalCard(animal: animal, tableName: getTableName(_tabController.index));
+                        return WeanedAnimalCard(animal: animal, tableName: getTableName(_tabController.index));
                       },
                     );
                   }
