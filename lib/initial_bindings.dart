@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimController.dart';
 import 'package:merlabciftlikyonetim/HayvanGebelikKontrolSayfasi/PregnancyCheckController.dart';
 import 'package:merlabciftlikyonetim/HayvanGrupSayfasi/AnimalGroupController.dart';
 import 'package:merlabciftlikyonetim/HayvanKonumSayfasi/AnimalLocationController.dart';
@@ -12,6 +11,7 @@ import 'AnaSayfa/HomeController.dart';
 import 'Drawer/DrawerController.dart';
 import 'HayvanAsiSayfasi/AnimalVaccineController.dart';
 import 'HayvanNotSayfasi/AnimalNoteController.dart';
+import 'KocKatim/AddKocKatimController.dart';
 import 'Login/AuthController.dart';
 import 'Login/LoginController.dart';
 import 'Calendar/CalendarController.dart';
@@ -33,7 +33,7 @@ class InitialBinding extends Bindings {
     Get.lazyPut<DrawerMenuController>(() => DrawerMenuController());
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<RegisterController>(() => RegisterController());
-    Get.lazyPut<KocKatimController>(() => KocKatimController());
+    Get.lazyPut<AddKocKatimController>(() => AddKocKatimController());
     Get.put(AnimalVaccineController(), permanent: true);
     Get.put(AnimalExaminationController(), permanent: true);
     Get.put(AnimalNoteController(), permanent: true);

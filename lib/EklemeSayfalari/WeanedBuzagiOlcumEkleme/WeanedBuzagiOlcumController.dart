@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'DatabaseWeanedBuzagiHelper.dart';
 
 class WeanedBuzagiOlcumController extends GetxController {
@@ -48,7 +48,17 @@ class WeanedBuzagiOlcumController extends GetxController {
         'time': timeController.text,
       };
 
-      await DatabaseWeanedBuzagiHelper.instance.insertWeanedBuzagi(weanedBuzagiData);
+      // Step 1: Hayvanın `weaned` durumunu güncelle
+      await DatabaseWeanedBuzagiHelper.instance.updateAnimalWeanedStatus(selectedTagNo.value, 1);
+
+      // Step 2: WeanedBuzagi tablosuna ekle ya da güncelle
+      await DatabaseWeanedBuzagiHelper.instance.insertOrUpdateWeanedBuzagi(
+        selectedTagNo.value,
+        dateController.text,
+        timeController.text,
+      );
+
+      // Başarı mesajı göster ve ana sayfaya dön
       Get.snackbar('Başarılı', 'Kayıt başarılı');
       Future.delayed(const Duration(seconds: 1), () {
         Get.offAllNamed('/bottomNavigation');

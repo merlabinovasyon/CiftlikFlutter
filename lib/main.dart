@@ -11,14 +11,13 @@ import 'package:timezone/timezone.dart' as tz;
 // Sayfa ve diğer importlar
 import 'AnaSayfa/HomePage.dart';
 import 'AsiSayfasi/VaccinePage.dart';
-import 'BildirimSayfasi/NotificationPage.dart';
+import 'BildirimDenemeSayfasi/NotificationDenemePage.dart';
 import 'Calendar/CalendarPage.dart';
 import 'EklemeSayfalari/BogaEkleme/AddBogaPage.dart';
 import 'EklemeSayfalari/BuzagiEkleme/AddBirthBuzagiPage.dart';
 import 'EklemeSayfalari/InekEkleme/AddInekPage.dart';
 import 'EklemeSayfalari/InekSutOlcumEkleme/InekSutOlcumPage.dart';
 import 'EklemeSayfalari/KocEkleme/AddKocPage.dart';
-import 'EklemeSayfalari/KocKatim/KocKatimPage.dart';
 import 'EklemeSayfalari/KoyunEkleme/AddSheepPage.dart';
 import 'EklemeSayfalari/KoyunSutOlcumEkleme/KoyunSutOlcumPage.dart';
 import 'EklemeSayfalari/KuzuEkleme/AddBirthKuzuPage.dart';
@@ -26,6 +25,7 @@ import 'EklemeSayfalari/WeanedBuzagiOlcumEkleme/WeanedBuzagiOlcumPage.dart';
 import 'EklemeSayfalari/WeanedKuzuOlcumEkleme/WeanedKuzuOlcumPage.dart';
 import 'GelirGiderHesaplama/FinancePage.dart';
 import 'HastalikSayfalari/DiseasePage.dart';
+import 'KocKatim/AddKocKatimPage.dart';
 import 'Login/LoginPage.dart';
 import 'Profil/ProfilPage.dart';
 import 'Register/RegisterPage.dart';
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => LoginPage(), binding: AuthBinding()),
         GetPage(name: '/Home', page: () => HomePage(), binding: HomeBinding()),
         GetPage(name: '/register', page: () =>  RegisterPage(), binding: RegisterBinding()),
-        GetPage(name: '/kockatim', page: () => KocKatimPage(), binding: KocKatimBinding()),
+        GetPage(name: '/kockatim', page: () => AddKocKatimPage(), binding: KocKatimBinding()),
         GetPage(name: '/addBirthKuzuPage', page: () => AddBirthKuzuPage()),
         GetPage(name: '/addBirthBuzagiPage', page: () => AddBirthBuzagiPage()),
         GetPage(name: '/addSheepPage', page: () => AddSheepPage()),
@@ -114,7 +114,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/diseasePage', page: () => DiseasePage()),
         GetPage(name: '/financePage', page: () => FinancePage()),
         GetPage(name: '/vaccinePage', page: () => VaccinePage()),
-        GetPage(name: '/notificationPage', page: () => NotificationPage()),
+        GetPage(name: '/notificationPage', page: () => NotificationDenemePage()),
       ],
       locale: const Locale('tr', 'TR'), // Varsayılan dili ayarlayın
       home: LoginPage(),

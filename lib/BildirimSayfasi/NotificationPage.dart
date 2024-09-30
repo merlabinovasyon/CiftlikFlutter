@@ -1,99 +1,76 @@
-import 'package:flutter/cupertino.dart';
+// NotificationPage.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'NotificationController.dart';
+import 'NotificationCard.dart';
 
-class NotificationPage extends StatelessWidget {
+class NotificationPage extends StatefulWidget {
+  NotificationPage({Key? key}) : super(key: key);
+
+  @override
+  _NotificationPageState createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
   final NotificationController controller = Get.put(NotificationController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchNotifications();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Notification Page'),
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        title: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 60.0),
+            child: Container(
+              height: 40,
+              width: 130,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('resimler/logo_v2.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              onChanged: (value) {
-                controller.firstTextField.value = value;
-              },
-              decoration: InputDecoration(
-                labelText: 'Birinci Alan',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              onChanged: (value) {
-                controller.secondTextField.value = value;
-              },
-              decoration: InputDecoration(
-                labelText: 'İkinci Alan',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Obx(() {
-              return Text('Seçilen Tarih ve Saat: ${controller.selectedDateTime.value}');
-            }),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                showCupertinoModalPopup(
-                  context: context,
-                  builder: (_) => Container(
-                    height: 250,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 180,
-                          child: CupertinoDatePicker(
-                            initialDateTime: controller.selectedDateTime.value,
-                            onDateTimeChanged: (DateTime newDateTime) {
-                              controller.selectedDateTime.value = newDateTime;
-                            },
-                            use24hFormat: true,
-                            mode: CupertinoDatePickerMode.dateAndTime,
-                          ),
-                        ),
-                        CupertinoButton(
-                          child: Text('Tamam'),
-                          onPressed: () => Navigator.of(context).pop(),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
-              child: Text('Tarih ve Saat Seç'),
-            ),
-            SizedBox(height: 16.0),
-            Obx(() {
-              return Column(
-                children: [
-                  Text('Bildirim Sayısı: ${controller.numberOfNotifications.value}'),
-                  Slider(
-                    value: controller.numberOfNotifications.value.toDouble(),
-                    min: 1,
-                    max: 10,
-                    divisions: 9,
-                    onChanged: (value) {
-                      controller.numberOfNotifications.value = value.toInt();
-                    },
-                  ),
-                ],
+        padding: const EdgeInsets.all(16.0),
+        child: Obx(
+              () {
+            if (controller.notifications.isEmpty) {
+              return Center(
+                child: Text(
+                  'Bildirim bulunamadı',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
               );
-            }),
-            SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () {
-                controller.scheduleMultipleNotifications();
-              },
-              child: Text('Bildirimleri Planla'),
-            ),
-          ],
+            } else {
+              return ListView.builder(
+                itemCount: controller.notifications.length,
+                itemBuilder: (context, index) {
+                  final notification = controller.notifications[index];
+                  return NotificationCard(notification: notification);
+                },
+              );
+            }
+          },
         ),
       ),
     );

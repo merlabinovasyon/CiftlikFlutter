@@ -699,7 +699,8 @@ class DatabaseWeightReportHelper {
       List<Map<String, dynamic>> result = await db!.rawQuery('''
     SELECT W.animalid,
            A.tagNo, 
-           AT.animaltype, 
+           AT.animaltype,
+           A.weaned, 
            ROUND((
                 (SELECT w1.weight 
                  FROM Weight w1 
@@ -790,7 +791,7 @@ class DatabaseWeightReportHelper {
     JOIN AnimalSubType AST ON A.animalsubtypeid = AST.id
     JOIN AnimalType AT ON AST.animaltypeid = AT.id
     WHERE AT.animaltype IN ($animalTypes)
-    GROUP BY W.animalid,A.tagNo, AT.animaltype
+    GROUP BY W.animalid,A.tagNo, AT.animaltype,A.weaned
     HAVING COUNT(W.id) > 1
        AND weight_diff_last BETWEEN ? AND ?;
     ''', [minWeight, maxWeight]);
@@ -815,7 +816,8 @@ class DatabaseWeightReportHelper {
       List<Map<String, dynamic>> result = await db!.rawQuery('''
     SELECT W.animalid,
            A.tagNo, 
-           AT.animaltype, 
+           AT.animaltype,
+           A.weaned, 
            ROUND((
                 (SELECT w1.weight 
                  FROM Weight w1 
@@ -906,7 +908,7 @@ class DatabaseWeightReportHelper {
     JOIN AnimalSubType AST ON A.animalsubtypeid = AST.id
     JOIN AnimalType AT ON AST.animaltypeid = AT.id
     WHERE AT.animaltype IN ($animalTypes)
-    GROUP BY W.animalid,A.tagNo, AT.animaltype
+    GROUP BY W.animalid,A.tagNo, AT.animaltype,A.weaned
     HAVING COUNT(W.id) > 1
        AND weight_diff_last BETWEEN ? AND ?
     ORDER BY weight_diff_last DESC;
@@ -931,7 +933,8 @@ class DatabaseWeightReportHelper {
       List<Map<String, dynamic>> result = await db!.rawQuery('''
     SELECT W.animalid, 
            A.tagNo,
-           AT.animaltype, 
+           AT.animaltype,
+           A.weaned, 
            ROUND((
                 (SELECT w1.weight 
                  FROM Weight w1 
@@ -1022,7 +1025,7 @@ class DatabaseWeightReportHelper {
     JOIN AnimalSubType AST ON A.animalsubtypeid = AST.id
     JOIN AnimalType AT ON AST.animaltypeid = AT.id
     WHERE AT.animaltype IN ($animalTypes)
-    GROUP BY W.animalid,A.tagNo, AT.animaltype
+    GROUP BY W.animalid,A.tagNo, AT.animaltype,A.weaned
     HAVING COUNT(W.id) > 1
        AND weight_diff_last BETWEEN ? AND ?
     ORDER BY weight_diff_last ASC;
@@ -1047,7 +1050,8 @@ class DatabaseWeightReportHelper {
       List<Map<String, dynamic>> result = await db!.rawQuery('''
     SELECT W.animalid,
            A.tagNo, 
-           AT.animaltype, 
+           AT.animaltype,
+           A.weaned, 
            ROUND((
                 (SELECT w1.weight 
                  FROM Weight w1 
@@ -1138,7 +1142,7 @@ class DatabaseWeightReportHelper {
     JOIN AnimalSubType AST ON A.animalsubtypeid = AST.id
     JOIN AnimalType AT ON AST.animaltypeid = AT.id
     WHERE AT.animaltype IN ($animalTypes)
-    GROUP BY W.animalid,A.tagNo, AT.animaltype
+    GROUP BY W.animalid,A.tagNo, AT.animaltype,A.weaned
     HAVING COUNT(W.id) > 1
        AND weight_diff_general BETWEEN ? AND ?;
     ''', [minWeight, maxWeight]);
@@ -1163,7 +1167,8 @@ class DatabaseWeightReportHelper {
       List<Map<String, dynamic>> result = await db!.rawQuery('''
     SELECT W.animalid,
            A.tagNo, 
-           AT.animaltype, 
+           AT.animaltype,
+           A.weaned, 
            ROUND((
                 (SELECT w1.weight 
                  FROM Weight w1 
@@ -1254,7 +1259,7 @@ class DatabaseWeightReportHelper {
     JOIN AnimalSubType AST ON A.animalsubtypeid = AST.id
     JOIN AnimalType AT ON AST.animaltypeid = AT.id
     WHERE AT.animaltype IN ($animalTypes)
-    GROUP BY W.animalid,A.tagNo, AT.animaltype
+    GROUP BY W.animalid,A.tagNo, AT.animaltype,A.weaned
     HAVING COUNT(W.id) > 1
        AND weight_diff_general BETWEEN ? AND ?
     ORDER BY weight_diff_general DESC;
@@ -1280,7 +1285,8 @@ class DatabaseWeightReportHelper {
       List<Map<String, dynamic>> result = await db!.rawQuery('''
     SELECT W.animalid,
            A.tagNo, 
-           AT.animaltype, 
+           AT.animaltype,
+           A.weaned, 
            ROUND((
                 (SELECT w1.weight 
                  FROM Weight w1 
@@ -1371,7 +1377,7 @@ class DatabaseWeightReportHelper {
     JOIN AnimalSubType AST ON A.animalsubtypeid = AST.id
     JOIN AnimalType AT ON AST.animaltypeid = AT.id
     WHERE AT.animaltype IN ($animalTypes)
-    GROUP BY W.animalid,A.tagNo, AT.animaltype
+    GROUP BY W.animalid,A.tagNo, AT.animaltype,A.weaned
     HAVING COUNT(W.id) > 1
        AND weight_diff_general BETWEEN ? AND ?
     ORDER BY weight_diff_general ASC;

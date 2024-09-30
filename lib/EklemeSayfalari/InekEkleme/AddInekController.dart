@@ -52,7 +52,13 @@ class AddInekController extends GetxController {
   Future<void> saveInekData() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+      // Aynı tagNo'ya sahip bir hayvan olup olmadığını kontrol et
+      bool isAnimalExists = await DatabaseInekHelper.instance.isAnimalExists(tagNoController.text);
 
+      if (isAnimalExists) {
+        Get.snackbar('Uyarı', 'Bu küpe numarasına sahip bir hayvanınız kayıtlı');
+        return; // Kayıt işlemini durdur
+      }
       Map<String, dynamic> inekData = {
         'weight': double.tryParse(countController.text) ?? 0.0,
         'tagNo': tagNoController.text,
@@ -63,6 +69,7 @@ class AddInekController extends GetxController {
         'type': countController.text,
         'dob': dobController.text,
         'time': timeController.text,
+        'weaned': 0,
       };
 
       await DatabaseInekHelper.instance.insertInek(inekData);

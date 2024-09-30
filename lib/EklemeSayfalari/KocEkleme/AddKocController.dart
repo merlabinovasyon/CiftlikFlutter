@@ -53,7 +53,13 @@ class AddKocController extends GetxController {
   Future<void> saveKocData() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+      // Aynı tagNo'ya sahip bir hayvan olup olmadığını kontrol et
+      bool isAnimalExists = await DatabaseKocHelper.instance.isAnimalExists(tagNoController.text);
 
+      if (isAnimalExists) {
+        Get.snackbar('Uyarı', 'Bu küpe numarasına sahip bir hayvanınız kayıtlı');
+        return; // Kayıt işlemini durdur
+      }
       Map<String, dynamic> kocData = {
         'weight': countController.text,
         'tagNo': tagNoController.text,
@@ -64,6 +70,7 @@ class AddKocController extends GetxController {
         'type': countController.text,
         'dob': dobController.text,
         'time': timeController.text,
+        'weaned': 0,
       };
 
       await DatabaseKocHelper.instance.insertKoc(kocData);

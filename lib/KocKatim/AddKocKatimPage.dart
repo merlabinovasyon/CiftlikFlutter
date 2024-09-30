@@ -4,14 +4,14 @@ import 'package:merlabciftlikyonetim/FormUtils/FormUtils.dart';
 import '../../FormFields/FormButton.dart';
 import '../../FormFields/BuildDateField.dart';
 import '../../FormFields/BuildTimeField.dart';
-import '../../AnimalService/BuildSelectionAnimalField.dart';
-import 'KocKatimController.dart';
+import 'AddKocKatimController.dart';
+import 'BuildSelectionKocKatimField.dart';
 
-class KocKatimPage extends StatelessWidget {
-  final KocKatimController controller = Get.put(KocKatimController());
+class AddKocKatimPage extends StatelessWidget {
+  final AddKocKatimController controller = Get.put(AddKocKatimController());
   final FormUtils utils = FormUtils();
 
-  KocKatimPage({super.key});
+  AddKocKatimPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,21 +55,23 @@ class KocKatimPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
-              BuildSelectionAnimalField(
+              BuildSelectionKocKatimField(
                 label: 'Koyununuz *',
                 value: controller.selectedKoyun,
                 options: controller.koyun,
-                onSelected: (value) {
-                  controller.selectedKoyun.value = value;
+                onSelected: (tagNo, name) {
+                  controller.selectedKoyun.value = tagNo;  // Koyunun tagNo'sunu kaydet
+                  controller.selectedKoyunAdi.value = name; // Koyunun adını kaydet
                 },
               ),
               const SizedBox(height: 16),
-              BuildSelectionAnimalField(
+              BuildSelectionKocKatimField(
                 label: 'Koçunuz *',
                 value: controller.selectedKoc,
                 options: controller.koc,
-                onSelected: (value) {
-                  controller.selectedKoc.value = value;
+                onSelected: (tagNo, name) {
+                  controller.selectedKoc.value = tagNo;  // Koçun tagNo'sunu kaydet
+                  controller.selectedKocAdi.value = name; // Koçun adını kaydet
                 },
               ),
               const SizedBox(height: 16),

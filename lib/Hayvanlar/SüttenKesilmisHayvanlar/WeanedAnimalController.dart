@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
 import '../DatabaseAnimalHelper.dart';
 
 class WeanedAnimalController extends GetxController {
@@ -21,11 +22,13 @@ class WeanedAnimalController extends GetxController {
         List<Map<String, dynamic>> data;
         switch (tableName) {
           case 'weanedKuzuTable':
+            data = await AnimalService.instance.getWeanedKuzuAnimalList();
+            break;
           case 'weanedBuzagiTable':
-            data = await DatabaseAnimalHelper.instance.getAnimals(tableName);
+            data = await AnimalService.instance.getWeanedBuzagiAnimalList();
             break;
           default:
-            data = await DatabaseAnimalHelper.instance.getAnimals(tableName);
+            data = await AnimalService.instance.getWeanedKuzuAnimalList();
         }
         List<Animal> fetchedAnimals = data.map((item) => Animal.fromMap(item, tableName)).toList();
         animals.assignAll(fetchedAnimals);
@@ -40,6 +43,7 @@ class WeanedAnimalController extends GetxController {
     }
     filterAnimals();
   }
+
 
   void filterAnimals() {
     if (searchQuery.value.isEmpty) {
@@ -70,10 +74,10 @@ class WeanedAnimalController extends GetxController {
   }
 
   Future<String?> getAnimalTable(String tagNo) async {
-    if (await isAnimalInTable(tagNo, 'weanedKuzuTable')) {
-      return 'weanedKuzuTable';
-    } else if (await isAnimalInTable(tagNo, 'weanedBuzagiTable')) {
-      return 'weanedBuzagiTable';
+    if (await isAnimalInTable(tagNo, 'WeanedAnimal')) {
+      return 'WeanedAnimal';
+    } else if (await isAnimalInTable(tagNo, 'WeanedAnimal')) {
+      return 'WeanedAnimal';
     }
     return null;
   }
@@ -84,15 +88,21 @@ class WeanedAnimalController extends GetxController {
   }
 
   Future<void> removeAnimal(int id, String tagNo) async {
+    // Hayvanın bulunduğu tabloyu kontrol ediyoruz
     String? tableName = await getAnimalTable(tagNo);
     if (tableName != null) {
       print('Silinmeye çalışılan hayvan ID: $id, Tablonun adı: $tableName');
-      await DatabaseAnimalHelper.instance.deleteAnimal(id, tableName);
+
+      // 1. Animal tablosundaki weaned değerini 0 yapıyoruz
+      await DatabaseAnimalHelper.instance.updateAnimalWeanedStatus(tagNo, 0);
+
+      // 2. Hayvanı liste ve önbellekten (cachedAnimals) sil
       animals.removeWhere((animal) => animal.id == id);
       if (cachedAnimals.containsKey(tableName)) {
         cachedAnimals[tableName]?.removeWhere((animal) => animal.id == id);
       }
-      // Önbelleği güncelle
+
+      // 3. Önbelleği güncelle ve listeyi yenile
       if (cachedAnimals.containsKey(currentTableName.value)) {
         cachedAnimals[currentTableName.value] = List<Animal>.from(animals);
       }
@@ -101,6 +111,7 @@ class WeanedAnimalController extends GetxController {
       print('Hayvan bulunamadı: ID $id, TagNo $tagNo');
     }
   }
+
 
   void updateAnimal(int id, String tableName, Map<String, dynamic> updatedDetails) {
     int index = animals.indexWhere((animal) => animal.id == id);
@@ -130,21 +141,22 @@ class Animal {
   final String? tagNo;
   final String? name;
   final String? dob;
-  final String? date;
+  final String? weaneddate;
 
   Animal({
     required this.id,
     this.tagNo,
     this.name,
     this.dob,
-    this.date,
+    this.weaneddate,
   });
 
   factory Animal.fromMap(Map<String, dynamic> map, String tableName) {
     return Animal(
       id: map['id'],
+      name: map['name'],
       tagNo: map['tagNo'],
-      date: map['date'],
+      weaneddate: map['weaneddate'],
     );
   }
 }

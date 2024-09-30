@@ -13,7 +13,16 @@ class WeightReportController extends GetxController {
     } else {
       return reports.where((report) {
         String tagNo = report['tagNo']?.toString() ?? '';
-        return tagNo.contains(searchTerm.value);
+        String animalType = report['animaltype']?.toString().toLowerCase() ?? '';
+        String searchLower = searchTerm.value.toLowerCase(); // Arama terimini küçük harf yaparak karşılaştır
+
+        // Eğer hayvan sütten kesilmişse, türün başına "Sütten Kesilmiş" ekleniyor
+        String displayAnimalType = report['weaned'] == 1
+            ? "sütten kesilmiş $animalType"
+            : animalType;
+
+        // Hem küpe numarasını, hem hayvan türünü, hem de "Sütten Kesilmiş" ifadesini aramaya dahil et
+        return tagNo.contains(searchTerm.value) || displayAnimalType.contains(searchLower);
       }).toList();
     }
   }

@@ -73,6 +73,16 @@ class DatabaseAnimalHelper {
     Database? db = await this.db;
     return await db!.query(tableName);
   }
+  Future<void> updateAnimalWeanedStatus(String tagNo, int weanedStatus) async {
+    Database? db = await this.db;
+    await db!.update(
+      'Animal',  // Animal tablosu
+      {'weaned': weanedStatus},  // weaned değerini güncelliyoruz
+      where: 'tagNo = ?',  // Hangi hayvanın güncelleneceğini tagNo'ya göre belirliyoruz
+      whereArgs: [tagNo],
+    );
+  }
+
 
   Future<void> deleteAnimal(int id, String tableName) async {
     Database? db = await this.db;

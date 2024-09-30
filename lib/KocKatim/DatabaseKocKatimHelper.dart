@@ -9,10 +9,12 @@ class DatabaseKocKatimHelper {
 
   String kocKatimTable = 'kocKatimTable';
   String colId = 'id';
-  String colKoyun = 'koyun';
-  String colKoc = 'koc';
-  String colDate = 'date';
-  String colTime = 'time';
+  String colKoyun = 'koyunKupeNo';
+  String colKoyunAdi = 'koyunAdi'; // Yeni sütun: Koyun Adı
+  String colKoc = 'kocKupeNo';
+  String colKocAdi = 'kocAdi';     // Yeni sütun: Koç Adı
+  String colDate = 'katimTarihi';
+  String colTime = 'katimSaati';
 
   Future<Database?> get db async {
     if (_db == null) {
@@ -33,7 +35,14 @@ class DatabaseKocKatimHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $kocKatimTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colKoyun TEXT, $colKoc TEXT, $colDate TEXT, $colTime TEXT)',
+      'CREATE TABLE IF NOT EXISTS $kocKatimTable('
+          '$colId INTEGER PRIMARY KEY AUTOINCREMENT, '
+          '$colKoyun TEXT, '
+          '$colKoyunAdi TEXT, '  // Koyun Adı sütunu
+          '$colKoc TEXT, '
+          '$colKocAdi TEXT, '    // Koç Adı sütunu
+          '$colDate TEXT, '
+          '$colTime TEXT)',
     );
   }
 
@@ -41,5 +50,16 @@ class DatabaseKocKatimHelper {
     Database? db = await this.db;
     final int result = await db!.insert(kocKatimTable, kocKatim);
     return result;
+  }
+
+  Future<bool> isKocKoyunPairExists(String koyunKupeNo, String kocKupeNo) async {
+    final db = await instance.db;
+    final List<Map<String, dynamic>> result = await db!.query(
+      'kocKatimTable',
+      where: 'koyunKupeNo = ? AND kocKupeNo = ?',
+      whereArgs: [koyunKupeNo, kocKupeNo],
+    );
+
+    return result.isNotEmpty;
   }
 }

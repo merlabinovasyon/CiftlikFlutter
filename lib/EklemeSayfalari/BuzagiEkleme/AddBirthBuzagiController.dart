@@ -114,6 +114,13 @@ class AddBirthBuzagiController extends GetxController {
   Future<void> saveBuzagiData() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+// Aynı tagNo'ya sahip bir hayvan olup olmadığını kontrol et
+      bool isAnimalExists = await DatabaseBuzagiHelper.instance.isAnimalExists(tagNoController.text);
+
+      if (isAnimalExists) {
+        Get.snackbar('Uyarı', 'Bu küpe numarasına sahip bir hayvanınız kayıtlı');
+        return; // Kayıt işlemini durdur
+      }
 
       Map<String, dynamic> buzagiData = {
         'weight': double.tryParse(countController.text) ?? 0.0,
@@ -128,6 +135,7 @@ class AddBirthBuzagiController extends GetxController {
         'name': nameController.text,
         'gender': selectedGender1.value ?? '',
         'type': countController.text,
+        'weaned': 0,
       };
 
       await DatabaseBuzagiHelper.instance.insertBuzagi(buzagiData);

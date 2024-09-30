@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/DatabaseKocKatimHelper.dart';
+import 'DatabaseKocKatimHelper.dart';
 
-class KocKatimController extends GetxController {
+class AddKocKatimController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
 
   var selectedKoyun = Rxn<String>();
+  var selectedKoyunAdi = Rxn<String>(); // Koyun Adı
   var selectedKoc = Rxn<String>();
+  var selectedKocAdi = Rxn<String>();   // Koç Adı
   var koyun = <Map<String, dynamic>>[].obs;
   var koc = <Map<String, dynamic>>[].obs;
 
@@ -37,7 +39,9 @@ class KocKatimController extends GetxController {
 
   void resetForm() {
     selectedKoyun.value = null;
+    selectedKoyunAdi.value = null;
     selectedKoc.value = null;
+    selectedKocAdi.value = null;
     dateController.clear();
     timeController.clear();
   }
@@ -46,18 +50,37 @@ class KocKatimController extends GetxController {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
+      // Koç ve koyunun zaten eşlenip eşlenmediğini kontrol et
+      bool isAlreadyMatched = await DatabaseKocKatimHelper.instance.isKocKoyunPairExists(
+        selectedKoyun.value!,
+        selectedKoc.value!,
+      );
+
+      if (isAlreadyMatched) {
+        Get.snackbar(
+          'Uyarı',
+          'Bu hayvanlarınız zaten eşlenmiştir',
+        );
+        return; // İşlemi durdur
+      }
+
       Map<String, dynamic> kocKatimData = {
-        'koyun': selectedKoyun.value,
-        'koc': selectedKoc.value,
-        'date': dateController.text,
-        'time': timeController.text,
+        'koyunKupeNo': selectedKoyun.value,
+        'koyunAdi': selectedKoyunAdi.value,  // Koyun Adı ekleniyor
+        'kocKupeNo': selectedKoc.value,
+        'kocAdi': selectedKocAdi.value,      // Koç Adı ekleniyor
+        'katimTarihi': dateController.text,
+        'katimSaati': timeController.text,
       };
 
       await DatabaseKocKatimHelper.instance.insertKocKatim(kocKatimData);
-      Get.snackbar('Başarılı', 'Eşleme başarılı');
-      Future.delayed(const Duration(seconds: 1), () {
-        Get.offAllNamed('/bottomNavigation');
+
+      // 600 milisaniye gecikmeden sonra geri dön ve snackbar göster
+      Future.delayed(const Duration(milliseconds: 600), () {
+        Get.back(result: true); // Get.offAllNamed yerine Get.back ile geri dön
+        Get.snackbar('Başarılı', 'Koç Katım kaydı başarılı');
       });
     }
   }
+
 }

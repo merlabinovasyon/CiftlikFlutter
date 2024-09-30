@@ -17,6 +17,7 @@ class DatabaseKocHelper {
   String colType = 'type';
   String colDob = 'dob';
   String colTime = 'time';
+  String colWeaned = 'weaned';
   String colAnimalSubTypeId = 'animalsubtypeid'; // Yeni alan
 
   Future<Database?> get db async {
@@ -38,7 +39,7 @@ class DatabaseKocHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE IF NOT EXISTS $animalTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colType TEXT, $colDob TEXT, $colTime TEXT, $colAnimalSubTypeId INTEGER, FOREIGN KEY($colAnimalSubTypeId) REFERENCES AnimalSubType(id))',
+      'CREATE TABLE IF NOT EXISTS $animalTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colWeight REAL, $colTagNo TEXT, $colGovTagNo TEXT, $colSpecies TEXT, $colName TEXT, $colType TEXT,$colWeaned INTEGER, $colDob TEXT, $colTime TEXT, $colAnimalSubTypeId INTEGER, FOREIGN KEY($colAnimalSubTypeId) REFERENCES AnimalSubType(id))',
     );
   }
 
@@ -47,4 +48,14 @@ class DatabaseKocHelper {
     final int result = await db!.insert(animalTable, koc);
     return result;
   }
+  Future<bool> isAnimalExists(String tagNo) async {
+    Database? db = await this.db;
+    final List<Map<String, dynamic>> result = await db!.query(
+      animalTable,
+      where: '$colTagNo = ?',
+      whereArgs: [tagNo],
+    );
+    return result.isNotEmpty;
+  }
+
 }

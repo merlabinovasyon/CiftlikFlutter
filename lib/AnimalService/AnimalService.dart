@@ -121,6 +121,7 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 5
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getBuzagiList() async {
@@ -130,6 +131,7 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 6
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getKoyunSpeciesList() async {
@@ -187,6 +189,7 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 1
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getKocAnimalList() async {
@@ -196,6 +199,7 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 2
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getInekAnimalList() async {
@@ -205,6 +209,7 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 3
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getBogaAnimalList() async {
@@ -214,6 +219,7 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 4
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getKuzuAnimalList() async {
@@ -223,6 +229,7 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 5
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getBuzagiAnimalList() async {
@@ -232,18 +239,27 @@ class AnimalService {
       FROM Animal a
       JOIN AnimalSubType ast ON a.animalsubtypeid = ast.id
       WHERE ast.animaltypeid = 6
+      AND a.weaned = 0;
     ''');
   }
   Future<List<Map<String, dynamic>>> getWeanedBuzagiAnimalList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
-      SELECT id,tagNo, date FROM weanedBuzagiTable
+      SELECT w.id, w.name, w.tagNo,w.weaneddate 
+      FROM WeanedAnimal w
+      JOIN AnimalSubType ast ON w.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 6
+      AND w.weaned = 1;
     ''');
   }
   Future<List<Map<String, dynamic>>> getWeanedKuzuAnimalList() async {
     Database? db = await this.db;
     return await db!.rawQuery('''
-      SELECT id,tagNo, date FROM weanedKuzuTable
+      SELECT w.id, w.name, w.tagNo,w.weaneddate 
+      FROM WeanedAnimal w
+      JOIN AnimalSubType ast ON w.animalsubtypeid = ast.id
+      WHERE ast.animaltypeid = 5
+      AND w.weaned = 1;
     ''');
   }
   Future<List<Map<String, dynamic>>> getVaccineList() async {

@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimController.dart';
 import 'package:merlabciftlikyonetim/Register/RegisterController.dart';
 import 'package:merlabciftlikyonetim/services/AuthService.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseController.dart';
 import 'package:merlabciftlikyonetim/services/DatabaseService.dart';
 import 'AnaSayfa/HomeController.dart';
+import 'KocKatim/AddKocKatimController.dart';
 import 'Login/AuthController.dart';
 import 'Login/LoginController.dart';
 import 'Calendar/CalendarController.dart';
@@ -64,7 +64,7 @@ class RegisterBinding extends Bindings {
 class KocKatimBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<KocKatimController>(() => KocKatimController());
+    Get.lazyPut<AddKocKatimController>(() => AddKocKatimController());
   }
 }
 

@@ -4,20 +4,22 @@ import 'package:merlabciftlikyonetim/A%C4%9F%C4%B1rl%C4%B1kRaporuSayfasi/WeightR
 import 'package:merlabciftlikyonetim/AnaSayfa/BuildSubscriptionSection.dart';
 import 'package:merlabciftlikyonetim/AsiSayfasi/VaccinePage.dart';
 import 'package:merlabciftlikyonetim/AsiTakvimi/AsiPage.dart';
+import 'package:merlabciftlikyonetim/BildirimDenemeSayfasi/NotificationDenemePage.dart';
 import 'package:merlabciftlikyonetim/BildirimSayfasi/NotificationPage.dart';
 import 'package:merlabciftlikyonetim/DenemeSayfasi/DenemePage.dart';
-import 'package:merlabciftlikyonetim/EklemeSayfalari/KocKatim/KocKatimPage.dart';
 import 'package:merlabciftlikyonetim/GelirGiderHesaplama/FinancePage.dart';
 import 'package:merlabciftlikyonetim/GraphicPage.dart';
 import 'package:merlabciftlikyonetim/HastalikSayfalari/DiseasePage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/AnimalPage.dart';
 import 'package:merlabciftlikyonetim/Hayvanlar/S%C3%BCttenKesilmisHayvanlar/WeanedAnimalPage.dart';
+import 'package:merlabciftlikyonetim/KocKatim/KocKatimG%C3%B6sterimiSayfasi/KocKatimPage.dart';
 import 'package:merlabciftlikyonetim/KonumYonetimi/KonumYonetimiPage.dart';
 import 'package:merlabciftlikyonetim/MuayeneSayfasi/ExaminationPage.dart';
 import 'package:merlabciftlikyonetim/RasyonHesaplama/RationWizardMainPage.dart';
 import 'package:merlabciftlikyonetim/SutOlcumGosterimiSayfasi/SutOlcumPage.dart';
 import 'package:merlabciftlikyonetim/YemYonetimi/FeedStockPage.dart';
 import '../Drawer/DrawerMenu.dart';
+import '../KocKatim/AddKocKatimPage.dart';
 import '../gebelik_kontrol_page.dart';
 import '../pedometer_page.dart';
 import '../tohumlanmaya_hazir_page.dart';
@@ -78,7 +80,9 @@ class HomePage extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.notifications, size: 35),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(NotificationPage(), duration: Duration(milliseconds: 650));
+                  },
                 ),
                 Positioned(
                   right: 11,

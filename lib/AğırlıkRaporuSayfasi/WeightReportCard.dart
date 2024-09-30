@@ -94,7 +94,8 @@ class WeightReportCard extends StatelessWidget {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Hayvan Türü: ${capitalize(report['animaltype'])}', // capitalize fonksiyonunu burada uyguladık
+                      // "Hayvan Türü: Sütten Kesilmiş Kuzu" formatında göstermek için düzenlendi
+                      'Hayvan Türü: ${report['weaned'] == 1 ? "Sütten Kesilmiş " : ""}${capitalize(report['animaltype'])}',
                     ),
                   ),
                 ],
@@ -135,6 +136,7 @@ class WeightReportCard extends StatelessWidget {
               ),
               SizedBox(height: 8),
             ],
+
             // Son Ağırlık Değişimi
             if (report.containsKey('weight_diff_last')) ...[
               Row(

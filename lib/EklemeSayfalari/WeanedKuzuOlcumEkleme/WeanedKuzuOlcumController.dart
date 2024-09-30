@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:merlabciftlikyonetim/AnimalService/AnimalService.dart';
+import '../../AnimalService/AnimalService.dart';
 import 'DatabaseWeanedKuzuHelper.dart';
 
 class WeanedKuzuOlcumController extends GetxController {
@@ -40,15 +40,16 @@ class WeanedKuzuOlcumController extends GetxController {
   Future<void> saveWeanedKuzuData() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+      // Step 1: Update the Animal table to set `weaned = 1`
+      await DatabaseWeanedKuzuHelper.instance.updateAnimalWeanedStatus(selectedTagNo.value, 1);
 
-      Map<String, dynamic> weanedKuzuData = {
-        'weight': weightController.text,
-        'tagNo': selectedTagNo.value,
-        'date': dateController.text,
-        'time': timeController.text,
-      };
-
-      await DatabaseWeanedKuzuHelper.instance.insertWeanedKuzu(weanedKuzuData);
+      // Step 2: Insert or update WeanedAnimal table with the date and time
+      await DatabaseWeanedKuzuHelper.instance.insertOrUpdateWeanedKuzu(
+        selectedTagNo.value,
+        dateController.text,
+        timeController.text,
+      );
+      // Başarı mesajı göster ve ana sayfaya dön
       Get.snackbar('Başarılı', 'Kayıt başarılı');
       Future.delayed(const Duration(seconds: 1), () {
         Get.offAllNamed('/bottomNavigation');

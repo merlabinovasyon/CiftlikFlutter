@@ -22,8 +22,8 @@ class WeanedAnimalCard extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) async {
-              await controller.removeAnimal(animal.id, animal.tagNo!);
-              Get.snackbar('Başarılı', 'Hayvan silindi');
+              await controller.removeAnimal(animal.id, animal.tagNo!);  // Sadece weaned değerini 0 yapar
+              Get.snackbar('Başarılı', 'Hayvanınız sütten kesilmişlerden çıkarıldı');
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -84,7 +84,9 @@ class WeanedAnimalCard extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 4.0),
-                          Text(animal.date ?? ''),
+                          Text(animal.name ?? ''),
+                          const SizedBox(height: 4.0),
+                          Text(animal.weaneddate ?? ''),
                         ],
                       ),
                     ),

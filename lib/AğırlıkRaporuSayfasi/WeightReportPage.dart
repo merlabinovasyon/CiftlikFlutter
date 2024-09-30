@@ -108,7 +108,7 @@ class _WeightReportPageState extends State<WeightReportPage> {
                   cursorColor: Colors.black54,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
-                    hintText: 'Küpe No',
+                    hintText: 'Küpe No, Hayvan Türü',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),

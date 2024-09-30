@@ -115,6 +115,14 @@ class AddBirthKuzuController extends GetxController {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
+      // Aynı tagNo'ya sahip bir hayvan olup olmadığını kontrol et
+      bool isAnimalExists = await DatabaseKuzuHelper.instance.isAnimalExists(tagNoController.text);
+
+      if (isAnimalExists) {
+        Get.snackbar('Uyarı', 'Bu küpe numarasına sahip bir hayvanınız kayıtlı');
+        return; // Kayıt işlemini durdur
+      }
+
       Map<String, dynamic> lambData = {
         'weight': double.tryParse(countController.text) ?? 0.0,
         'mother': selectedAnimal.value ?? '',
@@ -128,6 +136,7 @@ class AddBirthKuzuController extends GetxController {
         'name': nameController.text,
         'gender': selectedGender1.value ?? '',
         'type': countController.text,
+        'weaned': 0,
       };
 
       await DatabaseKuzuHelper.instance.insertLamb(lambData);
@@ -137,4 +146,5 @@ class AddBirthKuzuController extends GetxController {
       });
     }
   }
+
 }
