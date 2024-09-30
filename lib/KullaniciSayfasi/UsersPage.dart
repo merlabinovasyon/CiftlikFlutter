@@ -42,7 +42,7 @@ class UsersPage extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         children: [
           UserCard(
-            email: 'ardaaltun200298@gmail.com',
+            email: 'ab@gmail.com',
             name: 'Çiftlik Sahibi',
             phone: '+905555555555',
             status: 'Aktif',
